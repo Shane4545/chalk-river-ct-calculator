@@ -109,21 +109,23 @@
     }
     .partner-logos img {
       display: block;
-      max-height: 46px;
+      max-height: 52px;
       width: auto;
-      max-width: min(280px, 100%);
+      max-width: min(300px, 100%);
       object-fit: contain;
     }
-    .partner-logos .logo-veolia {
-      max-height: 28px;
-      filter: sepia(0.35) saturate(0.5) hue-rotate(325deg) brightness(0.95);
+    .partner-logos .logo-town {
+      max-height: 72px;
+      max-width: 72px;
     }
-    .partner-logos-caption {
-      font-size: 0.72rem;
-      color: var(--muted);
-      margin: 0 0 0.5rem;
-      max-width: 52ch;
-      line-height: 1.45;
+    .partner-logos .logo-veolia {
+      max-height: 42px;
+      width: auto;
+    }
+    .partner-logos .cc-wordmark {
+      display: block;
+      height: 44px;
+      width: auto;
     }
 
     .badge {
@@ -1629,18 +1631,20 @@
   <div class="wrap">
     <header class="hero">
       <div class="badge">Operator reference · Ontario</div>
-      <p class="partner-logos-caption no-print">
-        Trademarks belong to their owners. Veolia: <a href="https://commons.wikimedia.org/wiki/File:Veolia_logo.svg">Wikimedia Commons</a> (public-domain textlogo). “Capital Controls” is a simple text reference to the De Nora brand, not copied registered artwork.
-      </p>
       <div class="partner-logos no-print" aria-label="Municipality and industry references">
-        <a href="https://www.laurentianhills.ca/" target="_blank" rel="noopener noreferrer" title="Town of Laurentian Hills">
-          <img src="images/laurentian-hills-chalk-river.svg" width="320" height="58" alt="Chalk River WTP — Town of Laurentian Hills, Ontario" loading="lazy" decoding="async" />
+        <a href="https://www.laurentianhills.ca/" target="_blank" rel="noopener noreferrer" title="Town of Laurentian Hills — official site">
+          <img class="logo-town" src="images/laurentian-hills-logo.jpg" width="572" height="600" alt="Town of Laurentian Hills, Ontario" loading="lazy" decoding="async" />
         </a>
-        <a href="https://www.veolia.com/" target="_blank" rel="noopener noreferrer" title="Veolia">
-          <img class="logo-veolia" src="images/veolia-logo.svg" width="100" height="25" alt="Veolia" loading="lazy" decoding="async" />
+        <a href="https://www.watertechnologies.com/" target="_blank" rel="noopener noreferrer" title="Veolia Water Technologies — official site">
+          <img class="logo-veolia" src="images/veolia-capsule-logo.svg" width="304" height="166" alt="Veolia" loading="lazy" decoding="async" />
         </a>
         <a href="https://www.denora.com/our-brands/Capital-Controls/" target="_blank" rel="noopener noreferrer" title="Capital Controls — De Nora">
-          <img src="images/capital-controls-wordmark.svg" width="300" height="52" alt="Capital Controls — De Nora water technologies" loading="lazy" decoding="async" />
+          <svg class="cc-wordmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 268 46" width="240" height="46" role="img" aria-labelledby="ccLogoTitle">
+            <title id="ccLogoTitle">Capital Controls — De Nora</title>
+            <rect x="0.5" y="0.5" width="267" height="45" rx="8" fill="#fffdf9" stroke="rgba(55,38,28,0.22)" />
+            <text x="12" y="27" font-family="Syne, system-ui, sans-serif" font-size="14" font-weight="800" fill="#2b221c">Capital Controls&#174;</text>
+            <text x="12" y="40" font-family="system-ui, sans-serif" font-size="9" fill="#6b5e54">De Nora</text>
+          </svg>
         </a>
       </div>
       <h1 class="hero-title">
