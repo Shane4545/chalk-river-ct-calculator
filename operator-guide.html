@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
   <title>Chalk River WTP — Ontario chlorine contact operator guide</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -39,27 +41,22 @@
       scroll-behavior: smooth;
     }
 
+    html {
+      background-color: var(--bg-deep);
+    }
+
     body {
       margin: 0;
       font-family: var(--font-body);
       font-size: 1.05rem;
       line-height: 1.55;
       color: var(--text);
-      background: var(--bg-deep);
+      /* Single non-tiled wash — avoids any grid-like moiré from layered radials */
+      background-color: var(--bg-deep);
+      background-image: linear-gradient(165deg, #f6fbf8 0%, #eef4f1 42%, #e2ede6 100%);
+      background-attachment: fixed;
       min-height: 100vh;
       overflow-x: hidden;
-    }
-
-    /* Soft green / navy atmosphere (no grid) */
-    .bg-mesh {
-      position: fixed;
-      inset: 0;
-      z-index: -2;
-      background:
-        radial-gradient(ellipse 88% 58% at 0% -10%, rgba(0, 158, 79, 0.14), transparent 55%),
-        radial-gradient(ellipse 72% 52% at 100% 8%, rgba(26, 54, 93, 0.1), transparent 50%),
-        radial-gradient(ellipse 80% 48% at 50% 105%, rgba(0, 158, 79, 0.07), transparent 48%),
-        var(--bg-deep);
     }
 
     .wrap {
@@ -79,7 +76,11 @@
       align-items: center;
       gap: 1.1rem 1.6rem;
       margin: 0 0 1.35rem;
-      padding: 0.65rem 0 0.25rem;
+      padding: 0.85rem 1rem;
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
     }
     .partner-logos a {
       display: inline-flex;
@@ -1068,7 +1069,6 @@
     /* Print — uses system dialog; default printer is pre-selected */
     @media print {
       .no-print,
-      .bg-mesh,
       nav.toc,
       .hotspot,
       .wizard-nav,
@@ -2031,8 +2031,6 @@
   </style>
 </head>
 <body>
-  <div class="bg-mesh" aria-hidden="true"></div>
-
   <div class="wrap">
     <div class="app-mode-tabs no-print" role="tablist" aria-label="Main views">
       <button type="button" class="app-mode-tab is-active" role="tab" aria-selected="true" data-mode="guide" id="tab-mode-guide">

@@ -61,14 +61,14 @@
   <div id="qrcode" aria-label="QR code linking to operator guide"></div>
   <p class="url" id="urlLine"></p>
   <p class="sub" style="margin-top:1.5rem;font-size:0.8rem">
-    <a href="operator-guide.html">Open in browser</a> ·
-    <a href="operator-guide.html#live-ct">Live CT only</a>
+    <a href="operator-guide.html?v=20260328">Open in browser</a> ·
+    <a href="operator-guide.html?v=20260328#live-ct">Live CT only</a>
   </p>
   <script src="https://unpkg.com/qrcodejs@1.0.0/qrcode.min.js"></script>
   <script>
     (function () {
       /* Always encode the public Pages URL so a phone scan works from a printout or local file. */
-      var base = "https://shane4545.github.io/chalk-river-ct-calculator/operator-guide.html";
+      var base = "https://shane4545.github.io/chalk-river-ct-calculator/operator-guide.html?v=20260328";
       document.getElementById("urlLine").textContent = base;
       new QRCode(document.getElementById("qrcode"), {
         text: base,
