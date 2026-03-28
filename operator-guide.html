@@ -1342,34 +1342,36 @@
       font-family: var(--font-display);
       font-weight: 600;
       font-size: 0.72rem;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--muted);
       margin-bottom: 0.3rem;
     }
     .ct-tool .page-title__main {
-      font-family: var(--font-display);
-      font-weight: 800;
-      font-size: clamp(1.35rem, 3.2vw, 1.85rem);
-      line-height: 1.2;
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: clamp(1.15rem, 1.1vw + 0.95rem, 1.5rem);
+      line-height: 1.28;
       margin: 0;
       color: var(--text);
       letter-spacing: -0.02em;
+      max-width: min(34rem, 100%);
     }
     .ct-tool .page-title__main::after {
       content: "";
       display: block;
-      width: 2.5rem;
-      height: 3px;
-      margin-top: 0.5rem;
+      width: 2.75rem;
+      height: 2px;
+      margin-top: 0.45rem;
       border-radius: 2px;
       background: linear-gradient(90deg, var(--accent), var(--mint));
     }
     .ct-tool .sub {
       color: var(--muted);
-      font-size: 0.95rem;
-      margin-bottom: 1.25rem;
-      max-width: 52ch;
+      font-size: 0.92rem;
+      margin-bottom: 1.15rem;
+      max-width: 48ch;
+      line-height: 1.5;
     }
     .ct-tool .row {
       display: grid;
@@ -1388,8 +1390,8 @@
     }
     .ct-tool label strong {
       color: var(--text);
-      font-size: 0.9rem;
-      font-weight: 700;
+      font-size: 0.88rem;
+      font-weight: 600;
       line-height: 1.25;
     }
     .ct-tool .flow-help {
@@ -1406,10 +1408,10 @@
       color: var(--text);
     }
     .ct-tool .section-label {
-      font-family: var(--font-display);
-      font-size: 0.7rem;
+      font-family: var(--font-body);
+      font-size: 0.72rem;
       font-weight: 700;
-      letter-spacing: 0.11em;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
       color: var(--ct-ink);
       margin: 1rem 0 0.5rem;
@@ -1462,11 +1464,11 @@
       backdrop-filter: blur(4px);
     }
     .ct-tool legend {
-      font-family: var(--font-display);
+      font-family: var(--font-body);
       font-weight: 700;
       padding: 0 0.5rem;
       color: var(--ct-ink);
-      font-size: 0.95rem;
+      font-size: 0.92rem;
     }
     .ct-tool .results {
       display: grid;
@@ -1487,16 +1489,18 @@
     }
     .ct-tool .tile h3 {
       margin: 0 0 0.5rem;
-      font-family: var(--font-display);
-      font-size: 0.8rem;
+      font-family: var(--font-body);
+      font-size: 0.76rem;
+      font-weight: 600;
       color: var(--muted);
       text-transform: uppercase;
-      letter-spacing: 0.07em;
+      letter-spacing: 0.05em;
     }
     .ct-tool .tile .val {
-      font-size: 1.55rem;
+      font-size: 1.4rem;
       font-weight: 700;
-      font-family: var(--font-display);
+      font-family: var(--font-body);
+      font-variant-numeric: tabular-nums;
       color: var(--accent);
     }
     .ct-tool .tile .val.warn {
@@ -1550,18 +1554,18 @@
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: 0.6rem;
-      margin-bottom: 1.25rem;
-      padding: 0.85rem 1rem;
+      gap: 0.4rem 0.5rem;
+      margin-bottom: 1.1rem;
+      padding: 0.65rem 0.85rem;
       background: rgba(255, 255, 255, 0.92);
       border: 1px solid rgba(26, 54, 93, 0.12);
       border-radius: 12px;
     }
     .ct-tool .btn-em {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 0.85rem;
-      padding: 0.6rem 1.1rem;
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.8rem;
+      padding: 0.5rem 0.95rem;
       border-radius: 10px;
       border: none;
       cursor: pointer;
@@ -1587,11 +1591,12 @@
       opacity: 0.92;
     }
     .ct-tool .action-bar .btn-link {
-      font-family: var(--font-display);
-      font-size: 0.8rem;
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      font-weight: 600;
       color: var(--muted);
       text-decoration: none;
-      padding: 0.5rem 0.75rem;
+      padding: 0.4rem 0.55rem;
       border-radius: 8px;
       border: 1px solid transparent;
     }
@@ -1635,8 +1640,9 @@
       margin-top: 0.5rem;
     }
     .ct-tool .formula-panel h2 {
-      font-family: var(--font-display);
-      font-size: 1.2rem;
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 1.08rem;
       margin: 0 0 0.5rem;
     }
     .ct-tool .formula-panel .lead {
@@ -1766,12 +1772,12 @@
       box-shadow: var(--shadow);
     }
     .app-mode-tab {
-      font-family: var(--font-display);
-      font-weight: 700;
+      font-family: var(--font-body);
+      font-weight: 600;
       font-size: 0.72rem;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
-      padding: 0.5rem 0.85rem;
+      padding: 0.45rem 0.75rem;
       border-radius: 10px;
       border: 1px solid transparent;
       background: transparent;
