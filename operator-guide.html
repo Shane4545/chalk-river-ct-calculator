@@ -9,19 +9,19 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg-deep: #e9eef2;
-      --bg-panel: #ffffff;
-      --bg-elevated: #f3f6f9;
-      --border: rgba(20, 60, 80, 0.12);
-      --accent: #0a6f8e;
-      --accent-dim: rgba(10, 111, 142, 0.4);
-      --accent-soft: rgba(10, 111, 142, 0.1);
+      --bg-deep: #f3ebe3;
+      --bg-panel: #fffdf9;
+      --bg-elevated: #f7efe8;
+      --border: rgba(55, 38, 28, 0.14);
+      --accent: #a63b20;
+      --accent-dim: rgba(166, 59, 32, 0.42);
+      --accent-soft: rgba(166, 59, 32, 0.12);
       --amber: #b45309;
-      --mint: #0f766e;
-      --text: #15232d;
-      --muted: #5a6b78;
-      --danger: #b91c1c;
-      --shadow: 0 10px 40px rgba(20, 50, 70, 0.08);
+      --mint: #8a5a2b;
+      --text: #2b221c;
+      --muted: #6b5e54;
+      --danger: #b42318;
+      --shadow: 0 12px 42px rgba(45, 28, 18, 0.09);
       --on-accent: #ffffff;
       --radius: 14px;
       --font-display: "Syne", system-ui, sans-serif;
@@ -49,15 +49,15 @@
       overflow-x: hidden;
     }
 
-    /* Light page wash */
+    /* Warm clay / paper wash (no teal) */
     .bg-mesh {
       position: fixed;
       inset: 0;
       z-index: -2;
       background:
-        radial-gradient(ellipse 80% 50% at 0% 0%, rgba(10, 111, 142, 0.08), transparent 55%),
-        radial-gradient(ellipse 60% 45% at 100% 10%, rgba(15, 118, 110, 0.06), transparent 50%),
-        radial-gradient(ellipse 70% 40% at 50% 100%, rgba(180, 83, 9, 0.04), transparent 45%),
+        radial-gradient(ellipse 80% 50% at 0% 0%, rgba(166, 59, 32, 0.09), transparent 55%),
+        radial-gradient(ellipse 60% 45% at 100% 12%, rgba(138, 90, 43, 0.07), transparent 50%),
+        radial-gradient(ellipse 70% 40% at 50% 100%, rgba(180, 120, 70, 0.06), transparent 45%),
         var(--bg-deep);
     }
 
@@ -66,8 +66,8 @@
       inset: 0;
       z-index: -1;
       background-image:
-        linear-gradient(rgba(20, 60, 80, 0.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(20, 60, 80, 0.035) 1px, transparent 1px);
+        linear-gradient(rgba(55, 38, 28, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(55, 38, 28, 0.045) 1px, transparent 1px);
       background-size: 48px 48px;
       mask-image: radial-gradient(ellipse 85% 75% at 50% 25%, black, transparent);
       pointer-events: none;
@@ -82,6 +82,48 @@
     header.hero {
       padding: 2.5rem 0 2rem;
       position: relative;
+    }
+
+    .partner-logos {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1.1rem 1.6rem;
+      margin: 0 0 1.35rem;
+      padding: 0.65rem 0 0.25rem;
+    }
+    .partner-logos a {
+      display: inline-flex;
+      align-items: center;
+      line-height: 0;
+      border-radius: 8px;
+      transition: opacity 0.15s ease, transform 0.12s ease;
+    }
+    .partner-logos a:hover {
+      opacity: 1;
+      transform: translateY(-1px);
+    }
+    .partner-logos a:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+    .partner-logos img {
+      display: block;
+      max-height: 46px;
+      width: auto;
+      max-width: min(280px, 100%);
+      object-fit: contain;
+    }
+    .partner-logos .logo-veolia {
+      max-height: 28px;
+      filter: sepia(0.35) saturate(0.5) hue-rotate(325deg) brightness(0.95);
+    }
+    .partner-logos-caption {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin: 0 0 0.5rem;
+      max-width: 52ch;
+      line-height: 1.45;
     }
 
     .badge {
@@ -108,7 +150,7 @@
       height: 6px;
       border-radius: 50%;
       background: var(--mint);
-      box-shadow: 0 0 0 2px rgba(15, 118, 110, 0.2);
+      box-shadow: 0 0 0 2px rgba(138, 90, 43, 0.25);
       animation: pulse 2s ease infinite;
     }
 
@@ -192,12 +234,12 @@
     .btn-primary {
       background: var(--accent);
       color: var(--on-accent);
-      box-shadow: 0 4px 16px rgba(10, 111, 142, 0.28);
+      box-shadow: 0 4px 16px rgba(166, 59, 32, 0.32);
     }
 
     .btn-primary:hover {
       filter: brightness(1.05);
-      box-shadow: 0 6px 22px rgba(10, 111, 142, 0.35);
+      box-shadow: 0 6px 22px rgba(166, 59, 32, 0.4);
     }
 
     .btn-secondary {
@@ -323,7 +365,7 @@
 
     .callout.safe {
       border-left-color: var(--mint);
-      background: rgba(94, 233, 168, 0.08);
+      background: rgba(138, 90, 43, 0.1);
     }
 
     .history-panels {
@@ -678,7 +720,7 @@
     }
 
     .pill.input {
-      border-color: rgba(94, 233, 168, 0.4);
+      border-color: rgba(138, 90, 43, 0.45);
       color: var(--mint);
     }
 
@@ -727,7 +769,7 @@
 
     .quiz-options button.correct {
       border-color: var(--mint);
-      background: rgba(94, 233, 168, 0.12);
+      background: rgba(212, 165, 80, 0.18);
     }
 
     .quiz-options button.wrong {
@@ -823,7 +865,7 @@
       background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.35), var(--accent));
       box-shadow:
         0 0 0 2px rgba(255, 255, 255, 0.95),
-        0 0 20px rgba(10, 111, 142, 0.45);
+        0 0 20px rgba(166, 59, 32, 0.4);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
       z-index: 2;
     }
@@ -834,14 +876,14 @@
       outline: none;
       box-shadow:
         0 0 0 2px var(--mint),
-        0 0 32px rgba(94, 233, 168, 0.55);
+        0 0 32px rgba(212, 165, 80, 0.45);
     }
 
     .hotspot[aria-pressed="true"] {
       background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.45), var(--mint));
       box-shadow:
         0 0 0 3px var(--mint),
-        0 0 28px rgba(94, 233, 168, 0.65);
+        0 0 28px rgba(212, 165, 80, 0.5);
     }
 
     .hotspot-ring {
@@ -891,7 +933,7 @@
     .scada-chip[aria-pressed="true"] {
       border-color: var(--mint);
       color: var(--mint);
-      background: rgba(15, 118, 110, 0.1);
+      background: rgba(138, 90, 43, 0.12);
     }
 
     .scada-detail {
@@ -1065,11 +1107,11 @@
       }
 
       .hero-title__main {
-        color: #0a4d66 !important;
+        color: #5c3018 !important;
       }
 
       .hero-title__main::after {
-        background: #0a6f8e !important;
+        background: #a63b20 !important;
       }
 
       .muted,
@@ -1105,7 +1147,7 @@
         border-color: #ccc !important;
       }
       .ct-tool .tile .val {
-        color: #006080 !important;
+        color: #8a3d18 !important;
       }
       .ct-tool .page-title__kicker {
         color: #444 !important;
@@ -1114,7 +1156,7 @@
         color: #000 !important;
       }
       .ct-tool .page-title__main::after {
-        background: #0a6f8e !important;
+        background: #a63b20 !important;
       }
 
       @page {
@@ -1128,19 +1170,19 @@
       box-sizing: border-box;
     }
     .ct-tool {
-      --ct-field-border: rgba(12, 75, 95, 0.28);
+      --ct-field-border: rgba(55, 35, 25, 0.28);
       --ct-field-bg: #ffffff;
-      --ct-band: rgba(10, 111, 142, 0.12);
-      --ct-ink: #0c4a5c;
+      --ct-band: rgba(166, 59, 32, 0.14);
+      --ct-ink: #5c3018;
       margin: 2.5rem 0 2rem;
       padding: 2rem 0 1rem;
-      border-top: 1px solid rgba(10, 111, 142, 0.2);
+      border-top: 1px solid rgba(166, 59, 32, 0.22);
     }
     .ct-tool .ct-inner {
       max-width: 960px;
       margin: 0 auto;
-      background: linear-gradient(165deg, #fbfdfe 0%, #f3f8fa 45%, #eef5f7 100%);
-      border: 1px solid rgba(20, 60, 80, 0.12);
+      background: linear-gradient(165deg, #fff9f5 0%, #f4ebe3 48%, #eadfd4 100%);
+      border: 1px solid rgba(75, 48, 38, 0.14);
       border-radius: var(--radius);
       padding: 1.6rem 1.4rem 2rem;
       box-shadow: var(--shadow);
@@ -1205,9 +1247,9 @@
     }
     .ct-tool .flow-help {
       font-size: 0.86rem;
-      color: #3d4f59;
-      background: linear-gradient(90deg, rgba(10, 111, 142, 0.1), rgba(15, 118, 110, 0.06));
-      border: 1px solid rgba(10, 111, 142, 0.2);
+      color: #4a3d36;
+      background: linear-gradient(90deg, rgba(166, 59, 32, 0.1), rgba(138, 90, 43, 0.08));
+      border: 1px solid rgba(166, 59, 32, 0.22);
       border-radius: 10px;
       padding: 0.85rem 1.05rem;
       margin: 0 0 1rem;
@@ -1236,7 +1278,7 @@
     .ct-tool label .hint {
       flex: 1 1 auto;
       font-size: 0.72rem;
-      color: #5a6d78;
+      color: #6b5e54;
       line-height: 1.4;
       margin-top: 0;
       min-height: 2.8rem;
@@ -1253,19 +1295,19 @@
       background: var(--ct-field-bg);
       color: var(--text);
       font-size: 0.95rem;
-      box-shadow: inset 0 1px 2px rgba(15, 50, 70, 0.05);
+      box-shadow: inset 0 1px 2px rgba(45, 28, 18, 0.06);
       transition: border-color 0.15s ease, box-shadow 0.15s ease;
     }
     .ct-tool input:hover {
-      border-color: rgba(10, 111, 142, 0.45);
+      border-color: rgba(166, 59, 32, 0.5);
     }
     .ct-tool input:focus {
       outline: none;
       border-color: var(--accent);
-      box-shadow: inset 0 1px 2px rgba(15, 50, 70, 0.04), 0 0 0 3px var(--accent-soft);
+      box-shadow: inset 0 1px 2px rgba(45, 28, 18, 0.05), 0 0 0 3px var(--accent-soft);
     }
     .ct-tool fieldset {
-      border: 1px solid rgba(20, 60, 80, 0.14);
+      border: 1px solid rgba(75, 48, 38, 0.16);
       border-radius: 12px;
       padding: 1.15rem 1.1rem;
       margin: 0 0 1.1rem;
@@ -1290,17 +1332,17 @@
       align-items: stretch;
     }
     .ct-tool .tile {
-      border: 1px solid rgba(20, 60, 80, 0.12);
+      border: 1px solid rgba(75, 48, 38, 0.12);
       border-radius: 12px;
       padding: 1.05rem 1.1rem;
       background: #fff;
-      box-shadow: 0 2px 12px rgba(20, 50, 70, 0.05);
+      box-shadow: 0 2px 12px rgba(45, 28, 18, 0.06);
     }
     .ct-tool .tile h3 {
       margin: 0 0 0.5rem;
       font-family: var(--font-display);
       font-size: 0.8rem;
-      color: #4a5c66;
+      color: #5c4d44;
       text-transform: uppercase;
       letter-spacing: 0.07em;
     }
@@ -1346,9 +1388,9 @@
     }
     .ct-tool .glossary {
       font-size: 0.86rem;
-      color: #3d4f59;
-      background: rgba(15, 118, 110, 0.08);
-      border: 1px solid rgba(15, 118, 110, 0.22);
+      color: #4a3d36;
+      background: rgba(138, 90, 43, 0.1);
+      border: 1px solid rgba(138, 90, 43, 0.28);
       border-radius: 10px;
       padding: 0.85rem 1.05rem;
       margin: 0 0 1rem;
@@ -1364,8 +1406,8 @@
       gap: 0.6rem;
       margin-bottom: 1.25rem;
       padding: 0.85rem 1rem;
-      background: rgba(255, 255, 255, 0.9);
-      border: 1px solid rgba(20, 60, 80, 0.12);
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(75, 48, 38, 0.12);
       border-radius: 12px;
     }
     .ct-tool .btn-em {
@@ -1384,7 +1426,7 @@
     .ct-tool .btn-print {
       background: var(--mint);
       color: var(--on-accent);
-      box-shadow: 0 3px 14px rgba(15, 118, 110, 0.25);
+      box-shadow: 0 3px 14px rgba(138, 90, 43, 0.28);
     }
     .ct-tool .btn-print:hover {
       filter: brightness(1.05);
@@ -1392,7 +1434,7 @@
     .ct-tool .btn-formula {
       background: var(--accent);
       color: var(--on-accent);
-      box-shadow: 0 3px 14px rgba(10, 111, 142, 0.28);
+      box-shadow: 0 3px 14px rgba(166, 59, 32, 0.32);
     }
     .ct-tool .btn-formula:hover {
       opacity: 0.92;
@@ -1427,7 +1469,7 @@
       justify-content: center;
       padding: 1.5rem;
       overflow-y: auto;
-      background: rgba(20, 35, 45, 0.55);
+      background: rgba(35, 22, 16, 0.52);
       backdrop-filter: blur(6px);
     }
     .ct-tool .formula-modal[hidden] {
@@ -1442,7 +1484,7 @@
       border: 1px solid var(--border);
       border-radius: 16px;
       padding: 1.35rem 1.5rem 1.5rem;
-      box-shadow: 0 20px 50px rgba(20, 50, 70, 0.18);
+      box-shadow: 0 20px 50px rgba(45, 28, 18, 0.14);
       margin-top: 0.5rem;
     }
     .ct-tool .formula-panel h2 {
@@ -1494,13 +1536,13 @@
     .ct-tool .math-key code {
       font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
       font-size: 0.78rem;
-      color: var(--mint);
+      color: #6b4d2e;
     }
     .ct-tool .formula-complete {
       margin: 1.25rem 0 1.5rem;
       padding: 1rem 1.1rem;
       background: var(--bg-elevated);
-      border: 1px solid rgba(15, 118, 110, 0.25);
+      border: 1px solid rgba(138, 90, 43, 0.28);
       border-radius: 12px;
     }
     .ct-tool .formula-complete h3 {
@@ -1508,7 +1550,7 @@
       font-size: 1rem;
       font-weight: 700;
       margin: 0 0 0.35rem;
-      color: var(--mint);
+      color: #6b4423;
     }
     .ct-tool .formula-complete .sub {
       font-size: 0.82rem;
@@ -1525,7 +1567,7 @@
       font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
       font-size: 0.74rem;
       line-height: 1.6;
-      color: #1a3a45;
+      color: #3d2f27;
       white-space: pre-wrap;
       word-break: break-word;
       overflow-x: auto;
@@ -1587,6 +1629,20 @@
   <div class="wrap">
     <header class="hero">
       <div class="badge">Operator reference · Ontario</div>
+      <p class="partner-logos-caption no-print">
+        Trademarks belong to their owners. Veolia: <a href="https://commons.wikimedia.org/wiki/File:Veolia_logo.svg">Wikimedia Commons</a> (public-domain textlogo). “Capital Controls” is a simple text reference to the De Nora brand, not copied registered artwork.
+      </p>
+      <div class="partner-logos no-print" aria-label="Municipality and industry references">
+        <a href="https://www.laurentianhills.ca/" target="_blank" rel="noopener noreferrer" title="Town of Laurentian Hills">
+          <img src="images/laurentian-hills-chalk-river.svg" width="320" height="58" alt="Chalk River WTP — Town of Laurentian Hills, Ontario" loading="lazy" decoding="async" />
+        </a>
+        <a href="https://www.veolia.com/" target="_blank" rel="noopener noreferrer" title="Veolia">
+          <img class="logo-veolia" src="images/veolia-logo.svg" width="100" height="25" alt="Veolia" loading="lazy" decoding="async" />
+        </a>
+        <a href="https://www.denora.com/our-brands/Capital-Controls/" target="_blank" rel="noopener noreferrer" title="Capital Controls — De Nora">
+          <img src="images/capital-controls-wordmark.svg" width="300" height="52" alt="Capital Controls — De Nora water technologies" loading="lazy" decoding="async" />
+        </a>
+      </div>
       <h1 class="hero-title">
         <span class="hero-title__kicker">Chalk River WTP</span>
         <span class="hero-title__main">Chlorine contact — operator guide</span>
