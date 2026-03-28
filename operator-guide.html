@@ -66,8 +66,8 @@
       inset: 0;
       z-index: -1;
       background-image:
-        linear-gradient(rgba(20, 60, 80, 0.06) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(20, 60, 80, 0.06) 1px, transparent 1px);
+        linear-gradient(rgba(20, 60, 80, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(20, 60, 80, 0.035) 1px, transparent 1px);
       background-size: 48px 48px;
       mask-image: radial-gradient(ellipse 85% 75% at 50% 25%, black, transparent);
       pointer-events: none;
@@ -1128,13 +1128,22 @@
       box-sizing: border-box;
     }
     .ct-tool {
+      --ct-field-border: rgba(12, 75, 95, 0.28);
+      --ct-field-bg: #ffffff;
+      --ct-band: rgba(10, 111, 142, 0.12);
+      --ct-ink: #0c4a5c;
       margin: 2.5rem 0 2rem;
       padding: 2rem 0 1rem;
-      border-top: 1px solid var(--border);
+      border-top: 1px solid rgba(10, 111, 142, 0.2);
     }
     .ct-tool .ct-inner {
       max-width: 960px;
       margin: 0 auto;
+      background: linear-gradient(165deg, #fbfdfe 0%, #f3f8fa 45%, #eef5f7 100%);
+      border: 1px solid rgba(20, 60, 80, 0.12);
+      border-radius: var(--radius);
+      padding: 1.6rem 1.4rem 2rem;
+      box-shadow: var(--shadow);
     }
     .ct-tool .page-title {
       margin: 0 0 0.5rem;
@@ -1175,28 +1184,32 @@
     }
     .ct-tool .row {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-      gap: 0.65rem;
-      margin-bottom: 0.65rem;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem 1.25rem;
+      margin-bottom: 1rem;
+      align-items: stretch;
     }
     .ct-tool label {
       display: flex;
       flex-direction: column;
-      gap: 0.2rem;
+      gap: 0.35rem;
       font-size: 0.78rem;
       color: var(--muted);
+      min-width: 0;
     }
     .ct-tool label strong {
       color: var(--text);
       font-size: 0.9rem;
+      font-weight: 700;
+      line-height: 1.25;
     }
     .ct-tool .flow-help {
       font-size: 0.86rem;
-      color: var(--muted);
-      background: var(--accent-soft);
-      border: 1px solid var(--border);
+      color: #3d4f59;
+      background: linear-gradient(90deg, rgba(10, 111, 142, 0.1), rgba(15, 118, 110, 0.06));
+      border: 1px solid rgba(10, 111, 142, 0.2);
       border-radius: 10px;
-      padding: 0.75rem 1rem;
+      padding: 0.85rem 1.05rem;
       margin: 0 0 1rem;
       line-height: 1.45;
     }
@@ -1205,42 +1218,66 @@
     }
     .ct-tool .section-label {
       font-family: var(--font-display);
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 700;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.11em;
       text-transform: uppercase;
-      color: var(--accent);
-      margin: 0.5rem 0 0.4rem;
+      color: var(--ct-ink);
+      margin: 1rem 0 0.5rem;
+      padding: 0.5rem 0.75rem;
       grid-column: 1 / -1;
+      background: var(--ct-band);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 10px 10px 0;
     }
     .ct-tool .section-label:first-of-type {
       margin-top: 0;
     }
     .ct-tool label .hint {
+      flex: 1 1 auto;
       font-size: 0.72rem;
-      color: var(--muted);
-      line-height: 1.35;
-      margin-top: 0.15rem;
+      color: #5a6d78;
+      line-height: 1.4;
+      margin-top: 0;
+      min-height: 2.8rem;
+    }
+    .ct-tool label input {
+      margin-top: auto;
+      flex-shrink: 0;
+      width: 100%;
     }
     .ct-tool input {
-      padding: 0.45rem 0.5rem;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      background: #fff;
+      padding: 0.5rem 0.6rem;
+      border-radius: 9px;
+      border: 1px solid var(--ct-field-border);
+      background: var(--ct-field-bg);
       color: var(--text);
       font-size: 0.95rem;
+      box-shadow: inset 0 1px 2px rgba(15, 50, 70, 0.05);
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    .ct-tool input:hover {
+      border-color: rgba(10, 111, 142, 0.45);
+    }
+    .ct-tool input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: inset 0 1px 2px rgba(15, 50, 70, 0.04), 0 0 0 3px var(--accent-soft);
     }
     .ct-tool fieldset {
-      border: 1px solid var(--border);
+      border: 1px solid rgba(20, 60, 80, 0.14);
       border-radius: 12px;
-      padding: 1rem;
-      margin: 0 0 1rem;
-      background: var(--bg-panel);
+      padding: 1.15rem 1.1rem;
+      margin: 0 0 1.1rem;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(4px);
     }
     .ct-tool legend {
       font-family: var(--font-display);
       font-weight: 700;
       padding: 0 0.5rem;
+      color: var(--ct-ink);
+      font-size: 0.95rem;
     }
     .ct-tool .results {
       display: grid;
@@ -1248,22 +1285,24 @@
     }
     .ct-tool .big {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 0.75rem;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem;
+      align-items: stretch;
     }
     .ct-tool .tile {
-      border: 1px solid var(--border);
+      border: 1px solid rgba(20, 60, 80, 0.12);
       border-radius: 12px;
-      padding: 1rem;
-      background: var(--bg-elevated);
+      padding: 1.05rem 1.1rem;
+      background: #fff;
+      box-shadow: 0 2px 12px rgba(20, 50, 70, 0.05);
     }
     .ct-tool .tile h3 {
       margin: 0 0 0.5rem;
       font-family: var(--font-display);
-      font-size: 0.85rem;
-      color: var(--muted);
+      font-size: 0.8rem;
+      color: #4a5c66;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.07em;
     }
     .ct-tool .tile .val {
       font-size: 1.55rem;
@@ -1307,11 +1346,11 @@
     }
     .ct-tool .glossary {
       font-size: 0.86rem;
-      color: var(--muted);
-      background: rgba(15, 118, 110, 0.06);
-      border: 1px solid rgba(15, 118, 110, 0.18);
+      color: #3d4f59;
+      background: rgba(15, 118, 110, 0.08);
+      border: 1px solid rgba(15, 118, 110, 0.22);
       border-radius: 10px;
-      padding: 0.75rem 1rem;
+      padding: 0.85rem 1.05rem;
       margin: 0 0 1rem;
       line-height: 1.5;
     }
@@ -1324,9 +1363,9 @@
       align-items: center;
       gap: 0.6rem;
       margin-bottom: 1.25rem;
-      padding: 0.75rem 1rem;
-      background: var(--bg-panel);
-      border: 1px solid var(--border);
+      padding: 0.85rem 1rem;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(20, 60, 80, 0.12);
       border-radius: 12px;
     }
     .ct-tool .btn-em {
