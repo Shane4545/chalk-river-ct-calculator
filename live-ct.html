@@ -171,7 +171,14 @@
       font-family: ui-monospace, monospace;
       font-size: 0.72rem;
     }
-    table.map code { font-size: 0.7rem; color: var(--muted); }
+    .map .desc strong { font-size: 0.82rem; }
+    .map .hint-inline {
+      display: block;
+      margin-top: 0.2rem;
+      font-size: 0.72rem;
+      color: var(--muted);
+      line-height: 1.35;
+    }
     .live-val {
       font-family: ui-monospace, monospace;
       font-size: 0.75rem;
@@ -247,7 +254,7 @@
       <div class="kicker">Any site · map PLC / OPC tags to CT inputs</div>
       <h1>Live chlorine contact (CT) dashboard</h1>
       <p>
-        Map <strong>your</strong> controller or OPC tag paths to the same calculator fields as the operator guide. Use <strong>Demo</strong> for motion without a server, or point <strong>Tag API URL</strong> at a small HTTP service that returns JSON <code>{"Your.Tag.Name": 12.3, ...}</code> (your bridge from FactoryTalk Linx / OPC UA, etc.).
+        Map <strong>your</strong> controller or OPC tag paths to each CT input below. Use <strong>Demo</strong> for motion without a server, or point <strong>Tag API URL</strong> at a small HTTP service that returns JSON <code>{"Your.Tag.Name": 12.3, ...}</code> (your bridge from FactoryTalk Linx / OPC UA, etc.).
       </p>
     </header>
 
@@ -312,8 +319,7 @@
         <table class="map" id="mapTable">
           <thead>
             <tr>
-              <th>Calculator field</th>
-              <th>Description</th>
+              <th>Input</th>
               <th>Tag path (OPC / HMI)</th>
               <th>Live</th>
               <th>Fallback value</th>
@@ -468,14 +474,15 @@
       function buildTable() {
         var tb = document.getElementById("mapBody");
         tb.innerHTML = FIELDS.map(function (f) {
+          var hintHtml = f.hint
+            ? "<span class=\"hint-inline\">" + f.hint + "</span>"
+            : "";
           return (
-            "<tr><td><code>" +
-            f.id +
-            "</code></td><td>" +
+            "<tr><td class=\"desc\"><strong>" +
             f.label +
-            "<br/><code>" +
-            (f.hint || "—") +
-            "</code></td><td><input class=\"tag-path\" type=\"text\" id=\"tag-" +
+            "</strong>" +
+            hintHtml +
+            "</td><td><input class=\"tag-path\" type=\"text\" id=\"tag-" +
             f.id +
             "\" placeholder=\"e.g. LIT02.Value\" autocomplete=\"off\" /></td><td class=\"live-val stale\" id=\"live-" +
             f.id +
