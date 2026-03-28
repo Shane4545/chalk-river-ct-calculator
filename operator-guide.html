@@ -1189,6 +1189,135 @@
       @page {
         margin: 12mm;
       }
+
+      /* Sign-off print: only CT outputs + header + signatures (hide rest of guide & inputs) */
+      body.print-ct-signoff .wrap > *:not(#ct-calculator) {
+        display: none !important;
+      }
+      body.print-ct-signoff #ct-calculator .page-title,
+      body.print-ct-signoff #ct-calculator .sub,
+      body.print-ct-signoff #ct-calculator .glossary,
+      body.print-ct-signoff #ct-calculator .ct-calculator-note,
+      body.print-ct-signoff #ct-calculator form#f,
+      body.print-ct-signoff #ct-calculator .ct-detailed-breakdown,
+      body.print-ct-signoff #ct-calculator .ct-signoff-screen-only {
+        display: none !important;
+      }
+      body.print-ct-signoff #ct-calculator .ct-signoff-print-header {
+        display: block !important;
+        margin: 0 0 0.85rem;
+        padding-bottom: 0.65rem;
+        border-bottom: 1px solid #999;
+      }
+      body.print-ct-signoff #ct-calculator .ct-signoff-mini-wrap {
+        display: block !important;
+        margin: 0.75rem 0 1rem;
+      }
+      body.print-ct-signoff #ct-calculator .ct-signoff-signatures {
+        margin-top: 1rem;
+        padding-top: 0.5rem;
+        break-inside: avoid;
+      }
+      body.print-ct-signoff #ct-calculator .ct-inner {
+        background: #fff !important;
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+      }
+      body.print-ct-signoff #ct-calculator .ct-signoff-mini-table {
+        font-size: 9pt !important;
+      }
+      body.print-ct-signoff #ct-calculator .ct-signoff-mini-table th,
+      body.print-ct-signoff #ct-calculator .ct-signoff-mini-table td {
+        border: 1px solid #999 !important;
+        padding: 0.25rem 0.4rem !important;
+      }
+    }
+
+    .ct-signoff-bundle {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .ct-signoff-print-header {
+      display: none;
+    }
+    .ct-signoff-sheet-title {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 800;
+      margin: 0 0 0.35rem;
+      color: var(--text);
+    }
+    .ct-signoff-print-meta {
+      margin: 0 0 0.5rem;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+    .ct-signoff-print-note {
+      margin: 0;
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.45;
+      max-width: 55ch;
+    }
+    .ct-signoff-mini-wrap {
+      display: none;
+    }
+    .ct-signoff-mini-title {
+      margin: 0 0 0.4rem;
+      font-size: 0.85rem;
+      color: var(--text);
+    }
+    .ct-signoff-mini-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.78rem;
+    }
+    .ct-signoff-mini-table th,
+    .ct-signoff-mini-table td {
+      border: 1px solid var(--border);
+      padding: 0.35rem 0.45rem;
+      text-align: left;
+    }
+    .ct-signoff-mini-table th {
+      background: var(--bg-elevated);
+      font-weight: 700;
+    }
+    .ct-signoff-signatures {
+      margin-top: 0.25rem;
+      padding: 1rem 1.1rem;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+    .ct-signoff-signatures h2 {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      margin: 0 0 0.5rem;
+      color: var(--text);
+    }
+    .ct-signoff-lines {
+      margin-top: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+    }
+    .ct-signoff-line {
+      display: grid;
+      grid-template-columns: 11rem 1fr;
+      gap: 0.5rem;
+      align-items: flex-end;
+      font-size: 0.82rem;
+      color: var(--text);
+    }
+    .ct-signoff-line .line {
+      border-bottom: 1px solid var(--text);
+      min-height: 1.35rem;
+    }
+    .ct-signoff-legal {
+      margin: 0.85rem 0 0;
+      font-size: 0.72rem;
+      line-height: 1.4;
     }
 
     /* CT calculator (scoped — same logic as former ct-calculator.html) */
@@ -1775,6 +1904,15 @@
         <button type="button" class="btn-em btn-print js-print">Print this page</button>
       </div>
 
+      <div class="ct-signoff-bundle">
+      <div class="ct-signoff-print-header" aria-hidden="true">
+        <h1 class="ct-signoff-sheet-title">Chalk River WTP — chlorine contact (CT) sign-off</h1>
+        <p class="ct-signoff-print-meta">Printed: <span id="ctSignoffDateStamp"></span></p>
+        <p class="ct-signoff-print-note">
+          Calculated outputs from this browser CT tool only. For official compliance records, use the plant-approved CT worksheet, logbook, and procedure.
+        </p>
+      </div>
+
       <form id="f" onsubmit="return false;">
         <fieldset>
           <legend>Tank &amp; pipe sizes (cubic metres)</legend>
@@ -1899,17 +2037,45 @@
 
       <div class="results">
         <div class="big" id="summaryTiles"></div>
-        <fieldset>
+        <div id="ctSignoffMiniWrap" class="ct-signoff-mini-wrap" aria-live="polite"></div>
+        <fieldset class="ct-detailed-breakdown">
           <legend>Breakdown by step (clearwell → pipe → tower)</legend>
           <div class="results-toolbar no-print">
             <button type="button" class="btn-em btn-print js-print">Print</button>
+            <button type="button" class="btn-em btn-print-signoff js-print-signoff no-print">Print sign-off</button>
           </div>
           <p class="no-print" style="margin:0 0 0.75rem;font-size:0.82rem;color:var(--muted);">Tip: use <strong>Print</strong> above or in the top bar — your printer dialog opens from the browser.</p>
           <div style="overflow-x:auto"><table id="segTable"><thead></thead><tbody></tbody></table></div>
         </fieldset>
       </div>
 
-      <p class="note">
+      <div class="ct-signoff-signatures">
+        <h2>Sign-off sheet</h2>
+        <p class="ct-signoff-screen-only muted" style="margin:0 0 0.65rem;font-size:0.82rem;line-height:1.45;">
+          <strong>Print sign-off</strong> opens the print dialog with <strong>only</strong> the summary results, a short step table, and the lines below — not the rest of this guide or the input form.
+        </p>
+        <button type="button" class="btn-em btn-print-signoff js-print-signoff no-print">Print sign-off sheet</button>
+        <div class="ct-signoff-lines">
+          <div class="ct-signoff-line">
+            <span class="label">Operator / verified by</span>
+            <span class="line" role="presentation"></span>
+          </div>
+          <div class="ct-signoff-line">
+            <span class="label">Date &amp; time (handwritten)</span>
+            <span class="line" role="presentation"></span>
+          </div>
+          <div class="ct-signoff-line">
+            <span class="label">Supervisor (if required)</span>
+            <span class="line" role="presentation"></span>
+          </div>
+        </div>
+        <p class="ct-signoff-legal muted">
+          This page is for training and quick checks. It is not a substitute for the approved calculation package or your licence conditions.
+        </p>
+      </div>
+      </div>
+
+      <p class="note ct-calculator-note">
         Use this tool for quick checks and training. For official records and sign-off, follow <strong>your site’s procedure</strong> (usually the plant’s main CT file and logbook).
       </p>
       </div>
@@ -2657,12 +2823,57 @@
             '">' +
             (Number.isFinite(D27) ? fmt(D27, 3) : "—") +
             "</div></div>";
+
+          var signWrap = document.getElementById("ctSignoffMiniWrap");
+          if (signWrap) {
+            signWrap.innerHTML =
+              '<p class="ct-signoff-mini-title">Results by step</p>' +
+              '<table class="ct-signoff-mini-table" aria-label="CT results by step">' +
+              "<thead><tr><th>Step</th><th>Effective contact (min)</th><th>Chlorine × contact</th><th>Giardia score</th><th>Virus score</th></tr></thead><tbody>" +
+              segs
+                .map(function (s, i) {
+                  return (
+                    "<tr><td>" +
+                    names[i] +
+                    "</td><td>" +
+                    fmt(s.G, 4) +
+                    "</td><td>" +
+                    fmt(s.JG, 3) +
+                    "</td><td>" +
+                    fmt(s.Q, 4) +
+                    "</td><td>" +
+                    fmt(s.U, 4) +
+                    "</td></tr>"
+                  );
+                })
+                .join("") +
+              "</tbody></table>";
+          }
+
+          var stampEl = document.getElementById("ctSignoffDateStamp");
+          if (stampEl) {
+            stampEl.textContent = new Date().toLocaleString(undefined, {
+              dateStyle: "long",
+              timeStyle: "short",
+            });
+          }
         }
 
         document.querySelectorAll(".js-print").forEach(function (btn) {
           btn.addEventListener("click", function () {
             window.print();
           });
+        });
+
+        document.querySelectorAll(".js-print-signoff").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            document.body.classList.add("print-ct-signoff");
+            window.print();
+          });
+        });
+
+        window.addEventListener("afterprint", function () {
+          document.body.classList.remove("print-ct-signoff");
         });
 
         var formulaModal = document.getElementById("formulaModal");
