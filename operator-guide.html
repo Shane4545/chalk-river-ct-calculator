@@ -9,19 +9,20 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg-deep: #f3ebe3;
-      --bg-panel: #fffdf9;
-      --bg-elevated: #f7efe8;
-      --border: rgba(55, 38, 28, 0.14);
-      --accent: #a63b20;
-      --accent-dim: rgba(166, 59, 32, 0.42);
-      --accent-soft: rgba(166, 59, 32, 0.12);
-      --amber: #b45309;
-      --mint: #8a5a2b;
-      --text: #2b221c;
-      --muted: #6b5e54;
-      --danger: #b42318;
-      --shadow: 0 12px 42px rgba(45, 28, 18, 0.09);
+      /* Capital Controls–style: navy + vibrant green on cool neutrals */
+      --bg-deep: #eef4f1;
+      --bg-panel: #ffffff;
+      --bg-elevated: #e4f0ea;
+      --border: rgba(22, 58, 86, 0.12);
+      --accent: #009e4f;
+      --accent-dim: rgba(0, 158, 79, 0.45);
+      --accent-soft: rgba(0, 158, 79, 0.14);
+      --amber: #c78f1a;
+      --mint: #1a365d;
+      --text: #142b40;
+      --muted: #4a6678;
+      --danger: #c41e3a;
+      --shadow: 0 12px 40px rgba(22, 58, 86, 0.1);
       --on-accent: #ffffff;
       --radius: 14px;
       --font-display: "Syne", system-ui, sans-serif;
@@ -49,28 +50,16 @@
       overflow-x: hidden;
     }
 
-    /* Warm clay / paper wash (no teal) */
+    /* Soft green / navy atmosphere (no grid) */
     .bg-mesh {
       position: fixed;
       inset: 0;
       z-index: -2;
       background:
-        radial-gradient(ellipse 80% 50% at 0% 0%, rgba(166, 59, 32, 0.09), transparent 55%),
-        radial-gradient(ellipse 60% 45% at 100% 12%, rgba(138, 90, 43, 0.07), transparent 50%),
-        radial-gradient(ellipse 70% 40% at 50% 100%, rgba(180, 120, 70, 0.06), transparent 45%),
+        radial-gradient(ellipse 88% 58% at 0% -10%, rgba(0, 158, 79, 0.14), transparent 55%),
+        radial-gradient(ellipse 72% 52% at 100% 8%, rgba(26, 54, 93, 0.1), transparent 50%),
+        radial-gradient(ellipse 80% 48% at 50% 105%, rgba(0, 158, 79, 0.07), transparent 48%),
         var(--bg-deep);
-    }
-
-    .bg-grid {
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      background-image:
-        linear-gradient(rgba(55, 38, 28, 0.045) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(55, 38, 28, 0.045) 1px, transparent 1px);
-      background-size: 48px 48px;
-      mask-image: radial-gradient(ellipse 85% 75% at 50% 25%, black, transparent);
-      pointer-events: none;
     }
 
     .wrap {
@@ -177,7 +166,7 @@
       height: 6px;
       border-radius: 50%;
       background: var(--mint);
-      box-shadow: 0 0 0 2px rgba(138, 90, 43, 0.25);
+      box-shadow: 0 0 0 2px rgba(26, 54, 93, 0.22);
       animation: pulse 2s ease infinite;
     }
 
@@ -261,12 +250,12 @@
     .btn-primary {
       background: var(--accent);
       color: var(--on-accent);
-      box-shadow: 0 4px 16px rgba(166, 59, 32, 0.32);
+      box-shadow: 0 4px 16px rgba(0, 158, 79, 0.28);
     }
 
     .btn-primary:hover {
       filter: brightness(1.05);
-      box-shadow: 0 6px 22px rgba(166, 59, 32, 0.4);
+      box-shadow: 0 6px 22px rgba(0, 158, 79, 0.35);
     }
 
     .btn-secondary {
@@ -392,7 +381,7 @@
 
     .callout.safe {
       border-left-color: var(--mint);
-      background: rgba(138, 90, 43, 0.1);
+      background: rgba(26, 54, 93, 0.1);
     }
 
     .history-panels {
@@ -747,7 +736,7 @@
     }
 
     .pill.input {
-      border-color: rgba(138, 90, 43, 0.45);
+      border-color: rgba(26, 54, 93, 0.45);
       color: var(--mint);
     }
 
@@ -892,7 +881,7 @@
       background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.35), var(--accent));
       box-shadow:
         0 0 0 2px rgba(255, 255, 255, 0.95),
-        0 0 20px rgba(166, 59, 32, 0.4);
+        0 0 20px rgba(0, 158, 79, 0.4);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
       z-index: 2;
     }
@@ -960,7 +949,7 @@
     .scada-chip[aria-pressed="true"] {
       border-color: var(--mint);
       color: var(--mint);
-      background: rgba(138, 90, 43, 0.12);
+      background: rgba(26, 54, 93, 0.12);
     }
 
     .scada-detail {
@@ -1080,7 +1069,6 @@
     @media print {
       .no-print,
       .bg-mesh,
-      .bg-grid,
       nav.toc,
       .hotspot,
       .wizard-nav,
@@ -1134,11 +1122,11 @@
       }
 
       .hero-title__main {
-        color: #5c3018 !important;
+        color: #142b40 !important;
       }
 
       .hero-title__main::after {
-        background: #a63b20 !important;
+        background: linear-gradient(90deg, #009e4f, #1a365d) !important;
       }
 
       .muted,
@@ -1174,7 +1162,7 @@
         border-color: #ccc !important;
       }
       .ct-tool .tile .val {
-        color: #8a3d18 !important;
+        color: #009e4f !important;
       }
       .ct-tool .page-title__kicker {
         color: #444 !important;
@@ -1183,7 +1171,7 @@
         color: #000 !important;
       }
       .ct-tool .page-title__main::after {
-        background: #a63b20 !important;
+        background: linear-gradient(90deg, #009e4f, #1a365d) !important;
       }
 
       @page {
@@ -1326,19 +1314,19 @@
       box-sizing: border-box;
     }
     .ct-tool {
-      --ct-field-border: rgba(55, 35, 25, 0.28);
+      --ct-field-border: rgba(22, 58, 86, 0.22);
       --ct-field-bg: #ffffff;
-      --ct-band: rgba(166, 59, 32, 0.14);
-      --ct-ink: #5c3018;
+      --ct-band: rgba(0, 158, 79, 0.14);
+      --ct-ink: #142b40;
       margin: 2.5rem 0 2rem;
       padding: 2rem 0 1rem;
-      border-top: 1px solid rgba(166, 59, 32, 0.22);
+      border-top: 1px solid rgba(0, 158, 79, 0.22);
     }
     .ct-tool .ct-inner {
       max-width: 960px;
       margin: 0 auto;
-      background: linear-gradient(165deg, #fff9f5 0%, #f4ebe3 48%, #eadfd4 100%);
-      border: 1px solid rgba(75, 48, 38, 0.14);
+      background: linear-gradient(165deg, #fbfffd 0%, #eef6f2 48%, #e2efe8 100%);
+      border: 1px solid rgba(26, 54, 93, 0.12);
       border-radius: var(--radius);
       padding: 1.6rem 1.4rem 2rem;
       box-shadow: var(--shadow);
@@ -1403,9 +1391,9 @@
     }
     .ct-tool .flow-help {
       font-size: 0.86rem;
-      color: #4a3d36;
-      background: linear-gradient(90deg, rgba(166, 59, 32, 0.1), rgba(138, 90, 43, 0.08));
-      border: 1px solid rgba(166, 59, 32, 0.22);
+      color: #3d5566;
+      background: linear-gradient(90deg, rgba(0, 158, 79, 0.1), rgba(26, 54, 93, 0.08));
+      border: 1px solid rgba(0, 158, 79, 0.22);
       border-radius: 10px;
       padding: 0.85rem 1.05rem;
       margin: 0 0 1rem;
@@ -1434,7 +1422,7 @@
     .ct-tool label .hint {
       flex: 1 1 auto;
       font-size: 0.72rem;
-      color: #6b5e54;
+      color: var(--muted);
       line-height: 1.4;
       margin-top: 0;
       min-height: 2.8rem;
@@ -1451,19 +1439,19 @@
       background: var(--ct-field-bg);
       color: var(--text);
       font-size: 0.95rem;
-      box-shadow: inset 0 1px 2px rgba(45, 28, 18, 0.06);
+      box-shadow: inset 0 1px 2px rgba(22, 58, 86, 0.06);
       transition: border-color 0.15s ease, box-shadow 0.15s ease;
     }
     .ct-tool input:hover {
-      border-color: rgba(166, 59, 32, 0.5);
+      border-color: rgba(0, 158, 79, 0.5);
     }
     .ct-tool input:focus {
       outline: none;
       border-color: var(--accent);
-      box-shadow: inset 0 1px 2px rgba(45, 28, 18, 0.05), 0 0 0 3px var(--accent-soft);
+      box-shadow: inset 0 1px 2px rgba(22, 58, 86, 0.05), 0 0 0 3px var(--accent-soft);
     }
     .ct-tool fieldset {
-      border: 1px solid rgba(75, 48, 38, 0.16);
+      border: 1px solid rgba(26, 54, 93, 0.16);
       border-radius: 12px;
       padding: 1.15rem 1.1rem;
       margin: 0 0 1.1rem;
@@ -1488,17 +1476,17 @@
       align-items: stretch;
     }
     .ct-tool .tile {
-      border: 1px solid rgba(75, 48, 38, 0.12);
+      border: 1px solid rgba(26, 54, 93, 0.12);
       border-radius: 12px;
       padding: 1.05rem 1.1rem;
       background: #fff;
-      box-shadow: 0 2px 12px rgba(45, 28, 18, 0.06);
+      box-shadow: 0 2px 12px rgba(22, 58, 86, 0.06);
     }
     .ct-tool .tile h3 {
       margin: 0 0 0.5rem;
       font-family: var(--font-display);
       font-size: 0.8rem;
-      color: #5c4d44;
+      color: var(--muted);
       text-transform: uppercase;
       letter-spacing: 0.07em;
     }
@@ -1544,9 +1532,9 @@
     }
     .ct-tool .glossary {
       font-size: 0.86rem;
-      color: #4a3d36;
-      background: rgba(138, 90, 43, 0.1);
-      border: 1px solid rgba(138, 90, 43, 0.28);
+      color: var(--muted);
+      background: rgba(26, 54, 93, 0.1);
+      border: 1px solid rgba(26, 54, 93, 0.28);
       border-radius: 10px;
       padding: 0.85rem 1.05rem;
       margin: 0 0 1rem;
@@ -1563,7 +1551,7 @@
       margin-bottom: 1.25rem;
       padding: 0.85rem 1rem;
       background: rgba(255, 255, 255, 0.92);
-      border: 1px solid rgba(75, 48, 38, 0.12);
+      border: 1px solid rgba(26, 54, 93, 0.12);
       border-radius: 12px;
     }
     .ct-tool .btn-em {
@@ -1582,7 +1570,7 @@
     .ct-tool .btn-print {
       background: var(--mint);
       color: var(--on-accent);
-      box-shadow: 0 3px 14px rgba(138, 90, 43, 0.28);
+      box-shadow: 0 3px 14px rgba(26, 54, 93, 0.28);
     }
     .ct-tool .btn-print:hover {
       filter: brightness(1.05);
@@ -1590,7 +1578,7 @@
     .ct-tool .btn-formula {
       background: var(--accent);
       color: var(--on-accent);
-      box-shadow: 0 3px 14px rgba(166, 59, 32, 0.32);
+      box-shadow: 0 3px 14px rgba(0, 158, 79, 0.32);
     }
     .ct-tool .btn-formula:hover {
       opacity: 0.92;
@@ -1625,7 +1613,7 @@
       justify-content: center;
       padding: 1.5rem;
       overflow-y: auto;
-      background: rgba(35, 22, 16, 0.52);
+      background: rgba(22, 40, 58, 0.52);
       backdrop-filter: blur(6px);
     }
     .ct-tool .formula-modal[hidden] {
@@ -1640,7 +1628,7 @@
       border: 1px solid var(--border);
       border-radius: 16px;
       padding: 1.35rem 1.5rem 1.5rem;
-      box-shadow: 0 20px 50px rgba(45, 28, 18, 0.14);
+      box-shadow: 0 20px 50px rgba(22, 58, 86, 0.14);
       margin-top: 0.5rem;
     }
     .ct-tool .formula-panel h2 {
@@ -1698,7 +1686,7 @@
       margin: 1.25rem 0 1.5rem;
       padding: 1rem 1.1rem;
       background: var(--bg-elevated);
-      border: 1px solid rgba(138, 90, 43, 0.28);
+      border: 1px solid rgba(26, 54, 93, 0.28);
       border-radius: 12px;
     }
     .ct-tool .formula-complete h3 {
@@ -1847,7 +1835,7 @@
       color: var(--text);
     }
     .live-ct-app .lc-err {
-      color: var(--accent);
+      color: var(--danger);
       font-weight: 700;
     }
     .live-ct-app details.lc-card {
@@ -1931,7 +1919,7 @@
       vertical-align: top;
     }
     .live-ct-app table.lc-map th {
-      background: rgba(166, 59, 32, 0.08);
+      background: rgba(0, 158, 79, 0.08);
       font-family: var(--font-display);
       font-size: 0.72rem;
     }
@@ -1957,7 +1945,7 @@
       color: var(--muted);
     }
     .live-ct-app .lc-live-val.missing {
-      color: var(--accent);
+      color: var(--danger);
       font-weight: 700;
     }
     .live-ct-app .lc-tiles {
@@ -1991,7 +1979,7 @@
       color: #1d6b3a;
     }
     .live-ct-app .lc-tile .lc-val.fail {
-      color: var(--accent);
+      color: var(--danger);
     }
     .live-ct-app .lc-mini-wrap {
       overflow-x: auto;
@@ -2016,7 +2004,7 @@
       padding: 0.3rem 0.4rem;
     }
     .live-ct-app table.lc-mini th {
-      background: rgba(55, 38, 28, 0.06);
+      background: rgba(22, 58, 86, 0.06);
     }
     .live-ct-app .lc-hint {
       font-size: 0.72rem;
@@ -2044,7 +2032,6 @@
 </head>
 <body>
   <div class="bg-mesh" aria-hidden="true"></div>
-  <div class="bg-grid" aria-hidden="true"></div>
 
   <div class="wrap">
     <div class="app-mode-tabs no-print" role="tablist" aria-label="Main views">
