@@ -14,8 +14,8 @@
       align-items: center;
       justify-content: center;
       padding: 1.5rem;
-      background: #eef4f1;
-      color: #142b40;
+      background: #f8f9fa;
+      color: #202124;
     }
     h1 {
       font-size: 1.15rem;
@@ -35,7 +35,7 @@
       padding: 0.75rem;
       background: #fff;
       border-radius: 12px;
-      box-shadow: 0 8px 28px rgba(22, 58, 86, 0.1);
+      box-shadow: 0 8px 28px rgba(60, 64, 67, 0.12);
     }
     #qrcode img {
       display: block;
@@ -50,7 +50,7 @@
       line-height: 1.4;
     }
     a {
-      color: #009e4f;
+      color: #1a73e8;
       font-weight: 600;
     }
   </style>
@@ -61,14 +61,14 @@
   <div id="qrcode" aria-label="QR code linking to operator guide"></div>
   <p class="url" id="urlLine"></p>
   <p class="sub" style="margin-top:1.5rem;font-size:0.8rem">
-    <a href="operator-guide.html?v=20260329">Open in browser</a> ·
-    <a href="operator-guide.html?v=20260329#live-ct">Live CT only</a>
+    <a href="operator-guide.html?v=20260330">Open in browser</a> ·
+    <a href="operator-guide.html?v=20260330#live-ct">Live CT only</a>
   </p>
   <script src="https://unpkg.com/qrcodejs@1.0.0/qrcode.min.js"></script>
   <script>
     (function () {
       /* Always encode the public Pages URL so a phone scan works from a printout or local file. */
-      var base = "https://shane4545.github.io/chalk-river-ct-calculator/operator-guide.html?v=20260329";
+      var base = "https://shane4545.github.io/chalk-river-ct-calculator/operator-guide.html?v=20260330";
       document.getElementById("urlLine").textContent = base;
       new QRCode(document.getElementById("qrcode"), {
         text: base,
