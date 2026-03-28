@@ -1762,6 +1762,270 @@
       border-color: var(--accent);
     }
 
+    /* Guide · Manual CT · Live CT — mode tabs */
+    .app-mode-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin: 0 0 1.15rem;
+      padding: 0.35rem;
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .app-mode-tab {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.5rem 0.85rem;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+    }
+    .app-mode-tab:hover {
+      color: var(--text);
+      background: var(--bg-elevated);
+    }
+    .app-mode-tab.is-active {
+      color: var(--on-accent);
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+    .wrap.is-live-ct-view {
+      max-width: 1040px;
+    }
+    #guide-shell[hidden] {
+      display: none !important;
+    }
+    #live-ct[hidden] {
+      display: none !important;
+    }
+
+    /* Embedded live CT panel (scoped) */
+    .live-ct-app {
+      padding-bottom: 2rem;
+    }
+    .live-ct-app .lc-kicker {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+    }
+    .live-ct-app .lc-title {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.35rem;
+      margin: 0 0 0.5rem;
+      letter-spacing: -0.02em;
+    }
+    .live-ct-app .lc-lead {
+      margin: 0 0 1rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+      max-width: 62ch;
+      line-height: 1.5;
+    }
+    .live-ct-app .lc-status {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem 1.25rem;
+      padding: 0.65rem 0.85rem;
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 0.82rem;
+      margin-bottom: 1rem;
+    }
+    .live-ct-app .lc-status strong {
+      color: var(--text);
+    }
+    .live-ct-app .lc-err {
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .live-ct-app details.lc-card {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.75rem 1rem;
+      margin-bottom: 1rem;
+    }
+    .live-ct-app details.lc-card summary {
+      font-family: var(--font-display);
+      font-weight: 700;
+      cursor: pointer;
+      list-style: none;
+    }
+    .live-ct-app details.lc-card summary::-webkit-details-marker {
+      display: none;
+    }
+    .live-ct-app .lc-grid2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 0.75rem;
+      margin-top: 0.85rem;
+    }
+    .live-ct-app label.lc-f {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+    .live-ct-app label.lc-f strong {
+      color: var(--text);
+      font-size: 0.82rem;
+    }
+    .live-ct-app input[type="text"],
+    .live-ct-app input[type="number"],
+    .live-ct-app input[type="url"] {
+      font: inherit;
+      padding: 0.4rem 0.5rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--text);
+    }
+    .live-ct-app select {
+      font: inherit;
+      padding: 0.4rem 0.5rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+    .live-ct-app .lc-btn {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 0.45rem 0.85rem;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      background: var(--accent);
+      color: #fff;
+    }
+    .live-ct-app .lc-btn.secondary {
+      background: transparent;
+      color: var(--accent);
+      border: 1px solid var(--border);
+    }
+    .live-ct-app table.lc-map {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.78rem;
+      margin-top: 0.75rem;
+    }
+    .live-ct-app table.lc-map th,
+    .live-ct-app table.lc-map td {
+      border: 1px solid var(--border);
+      padding: 0.35rem 0.45rem;
+      text-align: left;
+      vertical-align: top;
+    }
+    .live-ct-app table.lc-map th {
+      background: rgba(166, 59, 32, 0.08);
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+    }
+    .live-ct-app .lc-tag-path {
+      width: 100%;
+      min-width: 10rem;
+      font-family: ui-monospace, monospace;
+      font-size: 0.72rem;
+    }
+    .live-ct-app .lc-hint-inline {
+      display: block;
+      margin-top: 0.2rem;
+      font-size: 0.72rem;
+      color: var(--muted);
+      line-height: 1.35;
+    }
+    .live-ct-app .lc-live-val {
+      font-family: ui-monospace, monospace;
+      font-size: 0.75rem;
+      white-space: nowrap;
+    }
+    .live-ct-app .lc-live-val.stale {
+      color: var(--muted);
+    }
+    .live-ct-app .lc-live-val.missing {
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .live-ct-app .lc-tiles {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 0.65rem;
+      margin-bottom: 1rem;
+    }
+    .live-ct-app .lc-tile {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.65rem 0.75rem;
+    }
+    .live-ct-app .lc-tile h3 {
+      margin: 0 0 0.35rem;
+      font-family: var(--font-display);
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+    }
+    .live-ct-app .lc-tile .lc-val {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.15rem;
+      color: var(--accent);
+    }
+    .live-ct-app .lc-tile .lc-val.pass {
+      color: #1d6b3a;
+    }
+    .live-ct-app .lc-tile .lc-val.fail {
+      color: var(--accent);
+    }
+    .live-ct-app .lc-mini-wrap {
+      overflow-x: auto;
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.75rem;
+    }
+    .live-ct-app .lc-mini-wrap h2 {
+      margin: 0 0 0.5rem;
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+    }
+    .live-ct-app table.lc-mini {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.78rem;
+    }
+    .live-ct-app table.lc-mini th,
+    .live-ct-app table.lc-mini td {
+      border: 1px solid var(--border);
+      padding: 0.3rem 0.4rem;
+    }
+    .live-ct-app table.lc-mini th {
+      background: rgba(55, 38, 28, 0.06);
+    }
+    .live-ct-app .lc-hint {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-top: 0.75rem;
+      max-width: 70ch;
+      line-height: 1.45;
+    }
+
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
         animation-duration: 0.01ms !important;
@@ -1783,6 +2047,19 @@
   <div class="bg-grid" aria-hidden="true"></div>
 
   <div class="wrap">
+    <div class="app-mode-tabs no-print" role="tablist" aria-label="Main views">
+      <button type="button" class="app-mode-tab is-active" role="tab" aria-selected="true" data-mode="guide" id="tab-mode-guide">
+        Guide
+      </button>
+      <button type="button" class="app-mode-tab" role="tab" aria-selected="false" data-mode="manual-ct" id="tab-mode-manual-ct">
+        Manual CT
+      </button>
+      <button type="button" class="app-mode-tab" role="tab" aria-selected="false" data-mode="live-ct" id="tab-mode-live-ct">
+        Live CT
+      </button>
+    </div>
+
+    <div id="guide-shell">
     <header class="hero">
       <div class="badge">Operator reference · Ontario</div>
       <div
@@ -1844,7 +2121,7 @@
     <nav class="toc" aria-label="Page sections">
       <a href="#quick-facts">Overview</a>
       <a href="#ct-calculator">CT calculator</a>
-      <a href="live-ct.html">Live CT</a>
+      <a href="#live-ct">Live CT</a>
       <a href="#history-briefing">History</a>
       <a href="#laws-penalties">Laws &amp; fines</a>
       <a href="#scada-map">SCADA</a>
@@ -1902,7 +2179,7 @@
         <a href="#history-briefing" class="btn-link">Brief history</a>
         <a href="#laws-penalties" class="btn-link">Laws &amp; fines</a>
         <button type="button" class="btn-em btn-formula" id="btnShowFormulas">How the math works</button>
-        <a href="live-ct.html" class="btn-link">Live CT dashboard</a>
+        <a href="#live-ct" class="btn-link">Live CT</a>
         <button type="button" class="btn-em btn-print js-print">Print this page</button>
       </div>
 
@@ -2571,6 +2848,96 @@
     <footer>
       Chalk River CT — operator guide. The plant picture file <code style="color:var(--accent);">images/scada-plant-overview.png</code> should sit beside this page so the map loads.
     </footer>
+    </div>
+
+    <section id="live-ct" class="live-ct-app" hidden aria-label="Live CT dashboard">
+      <div class="lc-kicker">Tag-driven · any PLC / site</div>
+      <h2 class="lc-title">Live chlorine contact (CT)</h2>
+      <p class="lc-lead">
+        Map OPC / HMI tag paths to CT inputs. Use <strong>Demo</strong> without a server, or set <strong>Tag API URL</strong> to a service that returns JSON
+        <code>{"Your.Tag": 12.3, ...}</code> (keys must match the paths you enter below).
+      </p>
+
+      <div class="lc-status" id="lc-statusBar" aria-live="polite">
+        <span><strong>Mode:</strong> <span id="lc-stMode">—</span></span>
+        <span><strong>Last update:</strong> <span id="lc-stTime">—</span></span>
+        <span id="lc-stErr" class="lc-err" hidden></span>
+      </div>
+
+      <details class="lc-card" open>
+        <summary>Connection &amp; site</summary>
+        <div class="lc-grid2">
+          <label class="lc-f">
+            <strong>Site label</strong>
+            <input type="text" id="lc-siteName" placeholder="e.g. Chalk River WTP" />
+          </label>
+          <label class="lc-f">
+            <strong>Preset</strong>
+            <select id="lc-presetSelect">
+              <option value="custom">Custom (saved)</option>
+              <option value="chalk-river">Chalk River WTP (suggested tags)</option>
+              <option value="blank">Blank mapping</option>
+            </select>
+          </label>
+          <label class="lc-f">
+            <strong>Data source</strong>
+            <select id="lc-dataMode">
+              <option value="demo">Demo (simulated values)</option>
+              <option value="api">Tag API (HTTP GET JSON)</option>
+            </select>
+          </label>
+          <label class="lc-f">
+            <strong>Tag API URL</strong>
+            <input type="url" id="lc-apiUrl" placeholder="http://127.0.0.1:8787/api/tags" />
+          </label>
+          <label class="lc-f">
+            <strong>Poll interval (ms)</strong>
+            <input type="number" id="lc-pollMs" min="500" step="100" value="2000" />
+          </label>
+        </div>
+        <div style="margin-top: 0.85rem; display: flex; flex-wrap: wrap; gap: 0.5rem">
+          <button type="button" class="lc-btn" id="lc-btnSave">Save settings</button>
+          <button type="button" class="lc-btn secondary" id="lc-btnApplyPreset">Apply preset</button>
+        </div>
+        <p class="lc-hint">
+          <strong>OPC / Linx:</strong> use a small bridge service. Mock: <code>node server/live-tags.mjs</code>
+        </p>
+      </details>
+
+      <details class="lc-card" open>
+        <summary>Tag mapping &amp; fallbacks</summary>
+        <p class="lc-hint" style="margin: 0 0 0.5rem">
+          <strong>Tag path</strong> = JSON key from your API. Leave blank to use the numeric fallback only.
+        </p>
+        <div style="overflow-x: auto">
+          <table class="lc-map" id="lc-mapTable">
+            <thead>
+              <tr>
+                <th>Input</th>
+                <th>Tag path (OPC / HMI)</th>
+                <th>Live</th>
+                <th>Fallback value</th>
+              </tr>
+            </thead>
+            <tbody id="lc-mapBody"></tbody>
+          </table>
+        </div>
+      </details>
+
+      <section class="lc-results" aria-label="CT results">
+        <h3 style="font-family: var(--font-display); font-size: 1.1rem; margin: 0 0 0.65rem">Results</h3>
+        <div class="lc-tiles" id="lc-summaryTiles"></div>
+        <div class="lc-mini-wrap">
+          <h2>By step</h2>
+          <div style="overflow-x: auto">
+            <table class="lc-mini" id="lc-stepTable">
+              <thead></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </section>
   </div>
 
   <div class="lightbox" id="scadaLightbox" role="dialog" aria-modal="true" aria-labelledby="lightboxTitle" aria-hidden="true">
@@ -2582,6 +2949,7 @@
   </div>
 
   <script src="ct-tables.js"></script>
+  <script src="scripts/ct-engine.js"></script>
   <script>
       (function () {
         "use strict";
@@ -2937,6 +3305,8 @@
       })();
     </script>
 
+  <script src="scripts/live-ct-panel.js"></script>
+
   <script>
     document.querySelectorAll(".js-print").forEach(function (btn) {
       btn.addEventListener("click", function () {
@@ -3239,6 +3609,73 @@
           closeLightbox();
         }
       });
+    })();
+  </script>
+
+  <script>
+    (function () {
+      var shell = document.getElementById("guide-shell");
+      var live = document.getElementById("live-ct");
+      var wrap = document.querySelector(".wrap");
+      var tabs = document.querySelectorAll(".app-mode-tab");
+
+      function setMode(mode, opts) {
+        opts = opts || {};
+        tabs.forEach(function (t) {
+          var on = t.getAttribute("data-mode") === mode;
+          t.classList.toggle("is-active", on);
+          t.setAttribute("aria-selected", on ? "true" : "false");
+        });
+        if (mode === "live-ct") {
+          shell.setAttribute("hidden", "");
+          live.removeAttribute("hidden");
+          wrap.classList.add("is-live-ct-view");
+          if (window.activateLiveCtPanel) window.activateLiveCtPanel();
+        } else {
+          shell.removeAttribute("hidden");
+          live.setAttribute("hidden", "");
+          wrap.classList.remove("is-live-ct-view");
+          if (window.deactivateLiveCtPanel) window.deactivateLiveCtPanel();
+          if (mode === "manual-ct" && !opts.skipScroll) {
+            var el = document.getElementById("ct-calculator");
+            if (el) {
+              requestAnimationFrame(function () {
+                el.scrollIntoView({ behavior: "smooth", block: "start" });
+              });
+            }
+          }
+        }
+        if (!opts.replaceStateOff) {
+          var h = mode === "live-ct" ? "#live-ct" : mode === "manual-ct" ? "#ct-calculator" : "";
+          history.replaceState(null, "", location.pathname + location.search + h);
+        }
+      }
+
+      tabs.forEach(function (t) {
+        t.addEventListener("click", function () {
+          setMode(t.getAttribute("data-mode"));
+        });
+      });
+
+      function syncFromHash() {
+        var h = (location.hash || "").replace(/^#/, "");
+        if (h === "live-ct") setMode("live-ct", { replaceStateOff: true });
+        else if (h === "ct-calculator") setMode("manual-ct", { replaceStateOff: true });
+        else {
+          setMode("guide", { replaceStateOff: true, skipScroll: true });
+          if (h) {
+            var target = document.getElementById(h);
+            if (target) {
+              requestAnimationFrame(function () {
+                target.scrollIntoView({ behavior: "smooth", block: "start" });
+              });
+            }
+          }
+        }
+      }
+
+      window.addEventListener("hashchange", syncFromHash);
+      syncFromHash();
     })();
   </script>
 </body>
