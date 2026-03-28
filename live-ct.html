@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Live CT — tag-driven dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-deep: #f3ebe3;
+      --bg-panel: #fffdf9;
+      --border: rgba(55, 38, 28, 0.14);
+      --accent: #a63b20;
+      --text: #2b221c;
+      --muted: #6b5e54;
+      --ok: #1d6b3a;
+      --warn: #a63b20;
+      --radius: 12px;
+      --font-display: "Syne", system-ui, sans-serif;
+      --font-body: "Atkinson Hyperlegible", Georgia, serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      line-height: 1.5;
+      color: var(--text);
+      background: var(--bg-deep);
+      min-height: 100vh;
+    }
+    .wrap {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 1.25rem 1.1rem 3rem;
+    }
+    header {
+      margin-bottom: 1.25rem;
+    }
+    header h1 {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.5rem;
+      margin: 0 0 0.35rem;
+      letter-spacing: -0.02em;
+    }
+    header .kicker {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    header p {
+      margin: 0.5rem 0 0;
+      color: var(--muted);
+      max-width: 62ch;
+      font-size: 0.95rem;
+    }
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .toolbar a {
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 0.88rem;
+    }
+    .status {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem 1.25rem;
+      padding: 0.65rem 0.85rem;
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 0.82rem;
+      margin-bottom: 1rem;
+    }
+    .status strong { color: var(--text); }
+    .status .err { color: var(--warn); font-weight: 700; }
+    .status .ok { color: var(--ok); font-weight: 700; }
+    details.card {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.75rem 1rem;
+      margin-bottom: 1rem;
+    }
+    details.card summary {
+      font-family: var(--font-display);
+      font-weight: 700;
+      cursor: pointer;
+      list-style: none;
+    }
+    details.card summary::-webkit-details-marker { display: none; }
+    .grid2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 0.75rem;
+      margin-top: 0.85rem;
+    }
+    label.f {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+    label.f strong { color: var(--text); font-size: 0.82rem; }
+    input[type="text"],
+    input[type="number"],
+    input[type="url"] {
+      font: inherit;
+      padding: 0.4rem 0.5rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--text);
+    }
+    select {
+      font: inherit;
+      padding: 0.4rem 0.5rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+    button.btn {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 0.45rem 0.85rem;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      background: var(--accent);
+      color: #fff;
+    }
+    button.btn.secondary {
+      background: transparent;
+      color: var(--accent);
+      border: 1px solid var(--border);
+    }
+    table.map {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.78rem;
+      margin-top: 0.75rem;
+    }
+    table.map th,
+    table.map td {
+      border: 1px solid var(--border);
+      padding: 0.35rem 0.45rem;
+      text-align: left;
+      vertical-align: top;
+    }
+    table.map th {
+      background: rgba(166, 59, 32, 0.08);
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+    }
+    table.map input.tag-path {
+      width: 100%;
+      min-width: 12rem;
+      font-family: ui-monospace, monospace;
+      font-size: 0.72rem;
+    }
+    table.map code { font-size: 0.7rem; color: var(--muted); }
+    .live-val {
+      font-family: ui-monospace, monospace;
+      font-size: 0.75rem;
+      white-space: nowrap;
+    }
+    .live-val.stale { color: var(--muted); }
+    .live-val.missing { color: var(--warn); font-weight: 700; }
+    .results {
+      margin-top: 1.25rem;
+    }
+    .tiles {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 0.65rem;
+      margin-bottom: 1rem;
+    }
+    .tile {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.65rem 0.75rem;
+    }
+    .tile h3 {
+      margin: 0 0 0.35rem;
+      font-family: var(--font-display);
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+    }
+    .tile .val {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.15rem;
+      color: var(--accent);
+    }
+    .tile .val.pass { color: var(--ok); }
+    .tile .val.fail { color: var(--warn); }
+    .mini-wrap {
+      overflow-x: auto;
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.75rem;
+    }
+    .mini-wrap h2 {
+      margin: 0 0 0.5rem;
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+    }
+    table.mini {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.78rem;
+    }
+    table.mini th, table.mini td {
+      border: 1px solid var(--border);
+      padding: 0.3rem 0.4rem;
+    }
+    table.mini th { background: rgba(55, 38, 28, 0.06); }
+    .hint {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-top: 0.75rem;
+      max-width: 70ch;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="kicker">Any site · map PLC / OPC tags to CT inputs</div>
+      <h1>Live chlorine contact (CT) dashboard</h1>
+      <p>
+        Map <strong>your</strong> controller or OPC tag paths to the same calculator fields as the operator guide. Use <strong>Demo</strong> for motion without a server, or point <strong>Tag API URL</strong> at a small HTTP service that returns JSON <code>{"Your.Tag.Name": 12.3, ...}</code> (your bridge from FactoryTalk Linx / OPC UA, etc.).
+      </p>
+    </header>
+
+    <div class="toolbar">
+      <a href="operator-guide.html#ct-calculator">Operator guide · manual CT calculator</a>
+      <a href="index.html">Home</a>
+    </div>
+
+    <div class="status" id="statusBar" aria-live="polite">
+      <span><strong>Mode:</strong> <span id="stMode">—</span></span>
+      <span><strong>Last update:</strong> <span id="stTime">—</span></span>
+      <span id="stErr" class="err" hidden></span>
+    </div>
+
+    <details class="card" open>
+      <summary>Connection &amp; site</summary>
+      <div class="grid2">
+        <label class="f">
+          <strong>Site label</strong>
+          <input type="text" id="siteName" placeholder="e.g. Chalk River WTP" />
+        </label>
+        <label class="f">
+          <strong>Preset</strong>
+          <select id="presetSelect">
+            <option value="custom">Custom (saved)</option>
+            <option value="chalk-river">Chalk River WTP (suggested tags)</option>
+            <option value="blank">Blank mapping</option>
+          </select>
+        </label>
+        <label class="f">
+          <strong>Data source</strong>
+          <select id="dataMode">
+            <option value="demo">Demo (simulated values)</option>
+            <option value="api">Tag API (HTTP GET JSON)</option>
+          </select>
+        </label>
+        <label class="f">
+          <strong>Tag API URL</strong>
+          <input type="url" id="apiUrl" placeholder="http://127.0.0.1:8787/api/tags" />
+        </label>
+        <label class="f">
+          <strong>Poll interval (ms)</strong>
+          <input type="number" id="pollMs" min="500" step="100" value="2000" />
+        </label>
+      </div>
+      <div style="margin-top:0.85rem;display:flex;flex-wrap:wrap;gap:0.5rem;">
+        <button type="button" class="btn" id="btnSave">Save settings</button>
+        <button type="button" class="btn secondary" id="btnApplyPreset">Apply preset</button>
+      </div>
+      <p class="hint">
+        <strong>OPC / Linx:</strong> Browsers cannot read OPC directly. Run (or deploy) a tiny service that reads tags and exposes this JSON shape. Keys must match the tag paths you type in the table below (e.g. <code>LIT02.Value</code> or <code>[MyShortcut]LIT02.Value</code> depending on your bridge).
+        Mock server for local dev: <code>node server/live-tags.mjs</code>
+      </p>
+    </details>
+
+    <details class="card" open>
+      <summary>Tag mapping &amp; fallbacks</summary>
+      <p class="hint" style="margin:0 0 0.5rem;">
+        <strong>Tag path</strong> = key returned by your API. Leave blank to always use the numeric fallback (constants, baffling, targets, or spare meters).
+      </p>
+      <div style="overflow-x:auto">
+        <table class="map" id="mapTable">
+          <thead>
+            <tr>
+              <th>Calculator field</th>
+              <th>Description</th>
+              <th>Tag path (OPC / HMI)</th>
+              <th>Live</th>
+              <th>Fallback value</th>
+            </tr>
+          </thead>
+          <tbody id="mapBody"></tbody>
+        </table>
+      </div>
+    </details>
+
+    <section class="results" aria-label="CT results">
+      <h2 style="font-family:var(--font-display);font-size:1.1rem;margin:0 0 0.65rem;">Results</h2>
+      <div class="tiles" id="summaryTiles"></div>
+      <div class="mini-wrap">
+        <h2>By step</h2>
+        <div style="overflow-x:auto"><table class="mini" id="stepTable"><thead></thead><tbody></tbody></table></div>
+      </div>
+    </section>
+  </div>
+
+  <script src="ct-tables.js"></script>
+  <script src="scripts/ct-engine.js"></script>
+  <script>
+    (function () {
+      "use strict";
+
+      var STORAGE_KEY = "live_ct_dashboard_v1";
+
+      var FIELDS = [
+        { id: "I23", label: "Clearwell full (m³)", hint: "Often engineering constant", fb: 100, tag: "" },
+        { id: "I24", label: "Pipe volume (m³)", hint: "Clearwell → tower", fb: 23.561944901923447, tag: "" },
+        { id: "I25", label: "Tower full (m³)", hint: "Main tank volume @100%", fb: 1000, tag: "" },
+        { id: "TADD", label: "Tower extra volume (m³)", hint: "Model add-on", fb: 300, tag: "" },
+        { id: "W7", label: "Clearwell level (%)", hint: "SCADA level", fb: 58.38, tag: "LIT02.Value" },
+        { id: "W16", label: "Clearwell baffling (0–1)", hint: "From study", fb: 0.1, tag: "" },
+        { id: "Y7", label: "Clearwell flow #1 (L/s)", hint: "Higher of pair used", fb: 9.97, tag: "FIT102.Value" },
+        { id: "P11", label: "Clearwell flow #2 (L/s)", hint: "Also pipe & tower compare", fb: 9.97, tag: "FIT102.Value" },
+        { id: "M13", label: "pH — clearwell / pipe", hint: "", fb: 6.98, tag: "PH03.Value" },
+        { id: "M11", label: "Cl₂ — clearwell / pipe (mg/L)", hint: "", fb: 1.06, tag: "FRC01.Value" },
+        { id: "E11", label: "Temperature (°C)", hint: "", fb: 2.61, tag: "TEM01.Value" },
+        { id: "J9", label: "Tower baffling (0–1)", hint: "", fb: 0.1, tag: "" },
+        { id: "L7", label: "Tower level (%)", hint: "", fb: 81.77, tag: "LIT03.Value" },
+        { id: "B14", label: "Tower outlet flow (L/s)", hint: "vs P11 max", fb: 3.88, tag: "FIT106.Value" },
+        { id: "B11", label: "Cl₂ — tower (mg/L)", hint: "", fb: 1.06, tag: "FRC01.Value" },
+        { id: "E14", label: "pH — tower", hint: "", fb: 6.98, tag: "PH03.Value" },
+        { id: "P20", label: "Giardia target", hint: "Permit / SOP", fb: 0.5, tag: "" },
+        { id: "P21", label: "Virus target", hint: "Permit / SOP", fb: 2, tag: "" },
+      ];
+
+      var PRESETS = {
+        "chalk-river": {
+          siteName: "Chalk River WTP",
+          apiUrl: "http://127.0.0.1:8787/api/tags",
+          pollMs: 2000,
+          dataMode: "api",
+          tags: {
+            W7: "LIT02.Value",
+            Y7: "FIT102.Value",
+            P11: "FIT102.Value",
+            M13: "PH03.Value",
+            M11: "FRC01.Value",
+            E11: "TEM01.Value",
+            L7: "LIT03.Value",
+            B14: "FIT106.Value",
+            B11: "FRC01.Value",
+            E14: "PH03.Value",
+          },
+        },
+        blank: {
+          siteName: "",
+          apiUrl: "http://127.0.0.1:8787/api/tags",
+          pollMs: 2000,
+          dataMode: "demo",
+          tags: {},
+        },
+      };
+
+      var demoState = {};
+      var lastTagPayload = {};
+      var pollTimer = null;
+      var demoTimer = null;
+
+      function loadConfig() {
+        try {
+          var raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) return null;
+          return JSON.parse(raw);
+        } catch (e) {
+          return null;
+        }
+      }
+
+      function saveConfig() {
+        var tags = {};
+        FIELDS.forEach(function (f) {
+          var ti = document.getElementById("tag-" + f.id);
+          if (ti && ti.value.trim()) tags[f.id] = ti.value.trim();
+        });
+        var cfg = {
+          siteName: document.getElementById("siteName").value.trim(),
+          apiUrl: document.getElementById("apiUrl").value.trim(),
+          pollMs: Math.max(500, +document.getElementById("pollMs").value || 2000),
+          dataMode: document.getElementById("dataMode").value,
+          tags: tags,
+          fallbacks: {},
+        };
+        FIELDS.forEach(function (f) {
+          var fi = document.getElementById("fb-" + f.id);
+          cfg.fallbacks[f.id] = fi ? fi.value : String(f.fb);
+        });
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(cfg));
+      }
+
+      function applyConfig(cfg) {
+        if (!cfg) return;
+        if (cfg.siteName != null) document.getElementById("siteName").value = cfg.siteName;
+        if (cfg.apiUrl != null) document.getElementById("apiUrl").value = cfg.apiUrl;
+        if (cfg.pollMs != null) document.getElementById("pollMs").value = String(cfg.pollMs);
+        if (cfg.dataMode != null) document.getElementById("dataMode").value = cfg.dataMode;
+        FIELDS.forEach(function (f) {
+          var ti = document.getElementById("tag-" + f.id);
+          var fi = document.getElementById("fb-" + f.id);
+          if (cfg.tags && cfg.tags[f.id] != null && ti) ti.value = cfg.tags[f.id];
+          if (cfg.fallbacks && cfg.fallbacks[f.id] != null && fi) fi.value = cfg.fallbacks[f.id];
+        });
+      }
+
+      function applyPreset(name) {
+        if (name === "chalk-river") {
+          var p = PRESETS["chalk-river"];
+          document.getElementById("siteName").value = p.siteName;
+          document.getElementById("apiUrl").value = p.apiUrl;
+          document.getElementById("pollMs").value = String(p.pollMs);
+          document.getElementById("dataMode").value = p.dataMode;
+          FIELDS.forEach(function (f) {
+            document.getElementById("tag-" + f.id).value = p.tags[f.id] || "";
+            document.getElementById("fb-" + f.id).value = String(f.fb);
+          });
+        } else if (name === "blank") {
+          var b = PRESETS.blank;
+          document.getElementById("siteName").value = b.siteName;
+          document.getElementById("apiUrl").value = b.apiUrl;
+          document.getElementById("pollMs").value = String(b.pollMs);
+          document.getElementById("dataMode").value = b.dataMode;
+          FIELDS.forEach(function (f) {
+            document.getElementById("tag-" + f.id).value = "";
+            document.getElementById("fb-" + f.id).value = String(f.fb);
+          });
+        }
+      }
+
+      function buildTable() {
+        var tb = document.getElementById("mapBody");
+        tb.innerHTML = FIELDS.map(function (f) {
+          return (
+            "<tr><td><code>" +
+            f.id +
+            "</code></td><td>" +
+            f.label +
+            "<br/><code>" +
+            (f.hint || "—") +
+            "</code></td><td><input class=\"tag-path\" type=\"text\" id=\"tag-" +
+            f.id +
+            "\" placeholder=\"e.g. LIT02.Value\" autocomplete=\"off\" /></td><td class=\"live-val stale\" id=\"live-" +
+            f.id +
+            "\">—</td><td><input type=\"number\" step=\"any\" id=\"fb-" +
+            f.id +
+            "\" value=\"" +
+            f.fb +
+            "\" /></td></tr>"
+          );
+        }).join("");
+      }
+
+      function initDemoState() {
+        demoState = {};
+        FIELDS.forEach(function (f) {
+          demoState[f.id] = +document.getElementById("fb-" + f.id).value || f.fb;
+        });
+      }
+
+      function tickDemo() {
+        FIELDS.forEach(function (f) {
+          var v = demoState[f.id];
+          var amp = f.id === "I23" || f.id === "I25" || f.id === "I24" || f.id === "TADD" ? 0.01 : f.id === "P20" || f.id === "P21" ? 0.002 : 0.04;
+          demoState[f.id] = v + (Math.random() - 0.5) * amp;
+          if (f.id === "W16" || f.id === "J9") demoState[f.id] = Math.min(1, Math.max(0.05, demoState[f.id]));
+          if (f.id === "W7" || f.id === "L7") demoState[f.id] = Math.min(100, Math.max(0, demoState[f.id]));
+          if (f.id === "M11" || f.id === "B11") demoState[f.id] = Math.max(0.05, demoState[f.id]);
+        });
+      }
+
+      function resolveValues() {
+        var mode = document.getElementById("dataMode").value;
+        var out = {};
+        var errEl = document.getElementById("stErr");
+        errEl.hidden = true;
+
+        FIELDS.forEach(function (f) {
+          var tagPath = document.getElementById("tag-" + f.id).value.trim();
+          var fb = +document.getElementById("fb-" + f.id).value;
+          if (Number.isNaN(fb)) fb = f.fb;
+
+          var liveCell = document.getElementById("live-" + f.id);
+          var used = fb;
+          var src = "fallback";
+
+          if (mode === "demo") {
+            used = demoState[f.id] != null ? demoState[f.id] : fb;
+            src = "demo";
+            liveCell.textContent = fmtNum(used);
+            liveCell.className = "live-val";
+          } else {
+            if (tagPath && Object.prototype.hasOwnProperty.call(lastTagPayload, tagPath)) {
+              var raw = lastTagPayload[tagPath];
+              var num = typeof raw === "number" ? raw : parseFloat(raw);
+              if (Number.isFinite(num)) {
+                used = num;
+                src = "api";
+              }
+            }
+            if (src === "fallback") {
+              liveCell.textContent = tagPath ? "—" : fmtNum(used);
+              liveCell.className = "live-val " + (tagPath ? "missing" : "stale");
+            } else {
+              liveCell.textContent = fmtNum(used);
+              liveCell.className = "live-val";
+            }
+          }
+
+          out[f.id] = used;
+        });
+
+        return out;
+      }
+
+      function fmtNum(n) {
+        if (!Number.isFinite(n)) return "—";
+        var a = Math.abs(n);
+        if (a >= 100) return n.toFixed(2);
+        if (a >= 10) return n.toFixed(2);
+        return n.toFixed(3);
+      }
+
+      function renderResults(vals) {
+        var eng = window.CT_ENGINE && window.CT_ENGINE.runCtFromInputs(vals);
+        var tiles = document.getElementById("summaryTiles");
+        var thead = document.querySelector("#stepTable thead");
+        var tbody = document.querySelector("#stepTable tbody");
+
+        if (!eng) {
+          tiles.innerHTML = "<div class=\"tile\"><h3>Error</h3><div class=\"val\">Load ct-tables.js</div></div>";
+          return;
+        }
+
+        var okG = Number.isFinite(eng.C27) && eng.C26 >= eng.C27;
+        var okV = Number.isFinite(eng.D27) && eng.D26 >= eng.D27;
+
+        tiles.innerHTML =
+          '<div class="tile"><h3>Giardia — total</h3><div class="val">' +
+          eng.capLogG(eng.C24) +
+          '</div></div><div class="tile"><h3>Viruses — total</h3><div class="val">' +
+          eng.capLogV(eng.D24) +
+          '</div></div><div class="tile"><h3>CT achieved</h3><div class="val">' +
+          eng.fmt(eng.C26, 3) +
+          '</div></div><div class="tile"><h3>CT needed — Giardia</h3><div class="val ' +
+          (okG ? "pass" : "fail") +
+          '">' +
+          (Number.isFinite(eng.C27) ? eng.fmt(eng.C27, 3) : "—") +
+          '</div></div><div class="tile"><h3>CT needed — viruses</h3><div class="val ' +
+          (okV ? "pass" : "fail") +
+          '">' +
+          (Number.isFinite(eng.D27) ? eng.fmt(eng.D27, 3) : "—") +
+          "</div></div>";
+
+        thead.innerHTML =
+          "<tr><th>Step</th><th>Effective contact (min)</th><th>Cl × contact</th><th>Giardia</th><th>Virus</th></tr>";
+        tbody.innerHTML = eng.segs
+          .map(function (s, i) {
+            return (
+              "<tr><td>" +
+              eng.names[i] +
+              "</td><td>" +
+              eng.fmt(s.G, 4) +
+              "</td><td>" +
+              eng.fmt(s.JG, 3) +
+              "</td><td>" +
+              eng.fmt(s.Q, 4) +
+              "</td><td>" +
+              eng.fmt(s.U, 4) +
+              "</td></tr>"
+            );
+          })
+          .join("");
+      }
+
+      function tick() {
+        var mode = document.getElementById("dataMode").value;
+        document.getElementById("stMode").textContent =
+          mode === "demo" ? "Demo simulation" : "Tag API";
+        document.getElementById("stTime").textContent = new Date().toLocaleTimeString();
+
+        if (mode === "demo") tickDemo();
+
+        var vals = resolveValues();
+        renderResults(vals);
+      }
+
+      function fetchTags() {
+        var url = document.getElementById("apiUrl").value.trim();
+        if (!url) {
+          document.getElementById("stErr").textContent = "Set Tag API URL or switch to Demo.";
+          document.getElementById("stErr").hidden = false;
+          return;
+        }
+        fetch(url, { cache: "no-store" })
+          .then(function (r) {
+            if (!r.ok) throw new Error("HTTP " + r.status);
+            return r.json();
+          })
+          .then(function (j) {
+            lastTagPayload = j && typeof j === "object" ? j : {};
+            document.getElementById("stErr").hidden = true;
+            tick();
+          })
+          .catch(function (e) {
+            document.getElementById("stErr").textContent = "API: " + (e.message || String(e));
+            document.getElementById("stErr").hidden = false;
+            tick();
+          });
+      }
+
+      function restartTimers() {
+        if (pollTimer) clearInterval(pollTimer);
+        if (demoTimer) clearInterval(demoTimer);
+        var mode = document.getElementById("dataMode").value;
+        var ms = Math.max(500, +document.getElementById("pollMs").value || 2000);
+        if (mode === "demo") {
+          initDemoState();
+          demoTimer = setInterval(function () {
+            tick();
+          }, Math.min(ms, 1000));
+          tick();
+        } else {
+          tick();
+          fetchTags();
+          pollTimer = setInterval(fetchTags, ms);
+        }
+      }
+
+      buildTable();
+      document.getElementById("mapBody").addEventListener("input", function () {
+        if (document.getElementById("dataMode").value === "demo") initDemoState();
+        tick();
+      });
+      var saved = loadConfig();
+      if (saved) applyConfig(saved);
+      else applyPreset("chalk-river");
+
+      document.getElementById("btnSave").addEventListener("click", function () {
+        saveConfig();
+        document.getElementById("presetSelect").value = "custom";
+        restartTimers();
+      });
+
+      document.getElementById("btnApplyPreset").addEventListener("click", function () {
+        var v = document.getElementById("presetSelect").value;
+        if (v !== "custom") applyPreset(v);
+        restartTimers();
+      });
+
+      document.getElementById("dataMode").addEventListener("change", restartTimers);
+      document.getElementById("pollMs").addEventListener("change", restartTimers);
+
+      initDemoState();
+      restartTimers();
+    })();
+  </script>
+</body>
+</html>
