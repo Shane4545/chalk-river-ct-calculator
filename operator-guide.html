@@ -1092,9 +1092,437 @@
         border: 1px solid #bbb !important;
       }
 
+      .ct-tool .no-print,
+      .ct-tool .action-bar,
+      .ct-tool .results-toolbar .no-print,
+      .ct-tool .formula-modal {
+        display: none !important;
+      }
+      .ct-tool fieldset,
+      .ct-tool .tile,
+      .ct-tool table {
+        background: #fff !important;
+        border-color: #ccc !important;
+      }
+      .ct-tool .tile .val {
+        color: #006080 !important;
+      }
+      .ct-tool .page-title__kicker {
+        color: #444 !important;
+      }
+      .ct-tool .page-title__main {
+        color: #000 !important;
+      }
+      .ct-tool .page-title__main::after {
+        background: #0a6f8e !important;
+      }
+
       @page {
         margin: 12mm;
       }
+    }
+
+    /* CT calculator (scoped — same logic as former ct-calculator.html) */
+    .ct-tool,
+    .ct-tool * {
+      box-sizing: border-box;
+    }
+    .ct-tool {
+      margin: 2.5rem 0 2rem;
+      padding: 2rem 0 1rem;
+      border-top: 1px solid var(--border);
+    }
+    .ct-tool .ct-inner {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .ct-tool .page-title {
+      margin: 0 0 0.5rem;
+    }
+    .ct-tool .page-title__kicker {
+      display: block;
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.3rem;
+    }
+    .ct-tool .page-title__main {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(1.35rem, 3.2vw, 1.85rem);
+      line-height: 1.2;
+      margin: 0;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+    .ct-tool .page-title__main::after {
+      content: "";
+      display: block;
+      width: 2.5rem;
+      height: 3px;
+      margin-top: 0.5rem;
+      border-radius: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--mint));
+    }
+    .ct-tool .sub {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 1.25rem;
+      max-width: 52ch;
+    }
+    .ct-tool .row {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 0.65rem;
+      margin-bottom: 0.65rem;
+    }
+    .ct-tool label {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+    .ct-tool label strong {
+      color: var(--text);
+      font-size: 0.9rem;
+    }
+    .ct-tool .flow-help {
+      font-size: 0.86rem;
+      color: var(--muted);
+      background: var(--accent-soft);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      margin: 0 0 1rem;
+      line-height: 1.45;
+    }
+    .ct-tool .flow-help strong {
+      color: var(--text);
+    }
+    .ct-tool .section-label {
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 0.5rem 0 0.4rem;
+      grid-column: 1 / -1;
+    }
+    .ct-tool .section-label:first-of-type {
+      margin-top: 0;
+    }
+    .ct-tool label .hint {
+      font-size: 0.72rem;
+      color: var(--muted);
+      line-height: 1.35;
+      margin-top: 0.15rem;
+    }
+    .ct-tool input {
+      padding: 0.45rem 0.5rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      font-size: 0.95rem;
+    }
+    .ct-tool fieldset {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem;
+      margin: 0 0 1rem;
+      background: var(--bg-panel);
+    }
+    .ct-tool legend {
+      font-family: var(--font-display);
+      font-weight: 700;
+      padding: 0 0.5rem;
+    }
+    .ct-tool .results {
+      display: grid;
+      gap: 1rem;
+    }
+    .ct-tool .big {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 0.75rem;
+    }
+    .ct-tool .tile {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem;
+      background: var(--bg-elevated);
+    }
+    .ct-tool .tile h3 {
+      margin: 0 0 0.5rem;
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .ct-tool .tile .val {
+      font-size: 1.55rem;
+      font-weight: 700;
+      font-family: var(--font-display);
+      color: var(--accent);
+    }
+    .ct-tool .tile .val.warn {
+      color: var(--amber);
+    }
+    .ct-tool .tile .val.ok {
+      color: var(--mint);
+    }
+    .ct-tool table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+    }
+    .ct-tool th,
+    .ct-tool td {
+      border: 1px solid var(--border);
+      padding: 0.35rem 0.45rem;
+      text-align: right;
+    }
+    .ct-tool th:first-child,
+    .ct-tool td:first-child {
+      text-align: left;
+    }
+    .ct-tool th {
+      background: var(--bg-elevated);
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .ct-tool .note {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 1rem;
+    }
+    .ct-tool a {
+      color: var(--accent);
+    }
+    .ct-tool .glossary {
+      font-size: 0.86rem;
+      color: var(--muted);
+      background: rgba(15, 118, 110, 0.06);
+      border: 1px solid rgba(15, 118, 110, 0.18);
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      margin: 0 0 1rem;
+      line-height: 1.5;
+    }
+    .ct-tool .glossary strong {
+      color: var(--text);
+    }
+    .ct-tool .action-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 1.25rem;
+      padding: 0.75rem 1rem;
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+    .ct-tool .btn-em {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 0.6rem 1.1rem;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.15s ease, transform 0.1s ease;
+    }
+    .ct-tool .btn-em:active {
+      transform: scale(0.98);
+    }
+    .ct-tool .btn-print {
+      background: var(--mint);
+      color: var(--on-accent);
+      box-shadow: 0 3px 14px rgba(15, 118, 110, 0.25);
+    }
+    .ct-tool .btn-print:hover {
+      filter: brightness(1.05);
+    }
+    .ct-tool .btn-formula {
+      background: var(--accent);
+      color: var(--on-accent);
+      box-shadow: 0 3px 14px rgba(10, 111, 142, 0.28);
+    }
+    .ct-tool .btn-formula:hover {
+      opacity: 0.92;
+    }
+    .ct-tool .action-bar .btn-link {
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 0.5rem 0.75rem;
+      border-radius: 8px;
+      border: 1px solid transparent;
+    }
+    .ct-tool .action-bar .btn-link:hover {
+      color: var(--accent);
+      border-color: var(--border);
+    }
+    .ct-tool .results-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 0.75rem;
+      margin: -0.25rem 0 0.65rem;
+    }
+    .ct-tool .formula-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 3000;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 1.5rem;
+      overflow-y: auto;
+      background: rgba(20, 35, 45, 0.55);
+      backdrop-filter: blur(6px);
+    }
+    .ct-tool .formula-modal[hidden] {
+      display: none;
+    }
+    .ct-tool .formula-panel {
+      width: 100%;
+      max-width: 640px;
+      max-height: calc(100vh - 3rem);
+      overflow-y: auto;
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.35rem 1.5rem 1.5rem;
+      box-shadow: 0 20px 50px rgba(20, 50, 70, 0.18);
+      margin-top: 0.5rem;
+    }
+    .ct-tool .formula-panel h2 {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      margin: 0 0 0.5rem;
+    }
+    .ct-tool .formula-panel .lead {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin: 0 0 1rem;
+      line-height: 1.5;
+    }
+    .ct-tool .formula-list {
+      margin: 0;
+      padding-left: 1.2rem;
+      color: var(--text);
+      font-size: 0.88rem;
+      line-height: 1.55;
+    }
+    .ct-tool .formula-list li {
+      margin-bottom: 1rem;
+    }
+    .ct-tool .formula-list strong {
+      color: var(--accent);
+    }
+    .ct-tool .math-line {
+      font-family: "Cambria Math", "STIX Two Math", "Times New Roman", serif;
+      font-size: 0.9rem;
+      margin: 0.45rem 0 0;
+      padding: 0.5rem 0.7rem;
+      background: var(--accent-soft);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 8px 8px 0;
+      color: var(--text);
+      line-height: 1.5;
+      overflow-x: auto;
+    }
+    .ct-tool .math-key {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin: 0 0 1rem;
+      padding: 0.65rem 0.75rem;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      line-height: 1.5;
+    }
+    .ct-tool .math-key code {
+      font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+      font-size: 0.78rem;
+      color: var(--mint);
+    }
+    .ct-tool .formula-complete {
+      margin: 1.25rem 0 1.5rem;
+      padding: 1rem 1.1rem;
+      background: var(--bg-elevated);
+      border: 1px solid rgba(15, 118, 110, 0.25);
+      border-radius: 12px;
+    }
+    .ct-tool .formula-complete h3 {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      margin: 0 0 0.35rem;
+      color: var(--mint);
+    }
+    .ct-tool .formula-complete .sub {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin: 0 0 0.75rem;
+      line-height: 1.45;
+    }
+    .ct-tool .formula-complete pre {
+      margin: 0 0 1rem;
+      padding: 0.75rem 0.85rem;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+      font-size: 0.74rem;
+      line-height: 1.6;
+      color: #1a3a45;
+      white-space: pre-wrap;
+      word-break: break-word;
+      overflow-x: auto;
+    }
+    .ct-tool .formula-complete pre:last-child {
+      margin-bottom: 0;
+    }
+    .ct-tool .formula-complete .pre-label {
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 0 0 0.35rem;
+    }
+    .ct-tool .formula-foot {
+      margin-top: 1.25rem;
+      padding-top: 1rem;
+      border-top: 1px dashed var(--border);
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .ct-tool .formula-close {
+      margin-top: 1rem;
+      font-family: var(--font-display);
+      font-weight: 700;
+      padding: 0.55rem 1.2rem;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--bg-elevated);
+      color: var(--text);
+      cursor: pointer;
+    }
+    .ct-tool .formula-close:hover {
+      border-color: var(--accent);
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1129,7 +1557,7 @@
       </p>
       <div class="hero-actions">
         <button type="button" class="btn btn-primary no-print" id="btnStartWizard">Start walkthrough</button>
-        <a href="ct-calculator.html" class="btn btn-secondary no-print" style="display:inline-flex;align-items:center;text-decoration:none;">Open CT calculator</a>
+        <a href="#ct-calculator" class="btn btn-secondary no-print" style="display:inline-flex;align-items:center;text-decoration:none;">CT calculator</a>
         <a href="#scada-map" class="btn btn-ghost no-print" style="display:inline-flex;align-items:center;text-decoration:none;">Plant SCADA map</a>
         <a href="#quick-facts" class="btn btn-ghost no-print" style="display:inline-flex;align-items:center;text-decoration:none;">30-second overview</a>
         <a href="#history-briefing" class="btn btn-ghost no-print" style="display:inline-flex;align-items:center;text-decoration:none;">Brief history</a>
@@ -1146,12 +1574,13 @@
 
     <nav class="toc" aria-label="Page sections">
       <a href="#quick-facts">Overview</a>
+      <a href="#ct-calculator">CT calculator</a>
       <a href="#history-briefing">History</a>
       <a href="#laws-penalties">Laws &amp; fines</a>
       <a href="#scada-map">SCADA</a>
       <a href="#wizard-anchor">Walkthrough</a>
       <a href="#sheets">Tool layout</a>
-      <a href="#inputs">Your inputs</a>
+      <a href="#inputs-help">What each field means</a>
       <a href="#reading">Read results</a>
       <a href="#tips">Tips</a>
       <a href="#faq">FAQ</a>
@@ -1180,6 +1609,327 @@
           The plant’s main CT file may have old template wording in the notes—follow <strong>Chalk River’s current procedure</strong> and SCADA tag names for your shift.
         </p>
       </div>
+    </section>
+
+    <section id="ct-calculator" class="ct-tool" aria-label="Chlorine contact calculator">
+      <div class="ct-inner">
+      <h1 class="page-title">
+        <span class="page-title__kicker">Chalk River WTP · Ontario</span>
+        <span class="page-title__main">Chlorine contact (CT) tool</span>
+      </h1>
+      <p class="sub">
+        <strong>Is there enough chlorine contact time?</strong>
+        <strong>Ontario, Canada</strong> — <strong>CT</strong> is: <strong>how strong the chlorine is</strong> × <strong>how long the water sits with it</strong> in three places: the <strong>clearwell</strong>, the <strong>pipe up to the tower</strong>, and the <strong>elevated tank</strong>. This page estimates parasite and virus disinfection credit using <strong>MECP’s CT tables</strong> (via the plant workbook), the same steps as the official Chalk River calculator.
+      </p>
+
+      <p class="glossary">
+        <strong>Giardia</strong> — A tiny parasite that can make people sick; in water it’s often talked about as hardy “cysts.” The <strong>Giardia</strong> number here is <strong>how well chlorine is knocking those down</strong> (not a SCADA tag name).<br />
+        <strong>Viruses</strong> — A separate score for <strong>viruses</strong>; same chlorine-contact idea, different rules and targets.
+      </p>
+
+      <div class="action-bar no-print">
+        <a href="#quick-facts" class="btn-link">↑ Start here</a>
+        <a href="#history-briefing" class="btn-link">Brief history</a>
+        <a href="#laws-penalties" class="btn-link">Laws &amp; fines</a>
+        <button type="button" class="btn-em btn-formula" id="btnShowFormulas">How the math works</button>
+        <button type="button" class="btn-em btn-print js-print">Print this page</button>
+      </div>
+
+      <form id="f" onsubmit="return false;">
+        <fieldset>
+          <legend>Tank &amp; pipe sizes (cubic metres)</legend>
+          <p class="hint" style="margin:0 0 0.75rem;color:var(--muted);font-size:0.82rem;">Most people leave these alone unless <strong>engineering or your supervisor</strong> gives you new numbers—the plant model was built with specific tank and pipe sizes.</p>
+          <div class="row">
+            <label>
+              <strong>Clearwell — size if it were 100% full</strong>
+              <span class="hint">How many cubic metres of water fit when the clearwell is completely full.</span>
+              <input type="number" step="any" id="I23" value="100" />
+            </label>
+            <label>
+              <strong>Pipe from clearwell to tower</strong>
+              <span class="hint">Rough volume of water sitting in that pipe run.</span>
+              <input type="number" step="any" id="I24" value="23.561944901923447" />
+            </label>
+            <label>
+              <strong>Elevated tank — main volume at 100% full</strong>
+              <span class="hint">Tank portion used before the extra “fixed” chunk below.</span>
+              <input type="number" step="any" id="I25" value="1000" />
+            </label>
+            <label>
+              <strong>Extra volume counted for the tower</strong>
+              <span class="hint">Added on top of the % full reading for the tower step (set by the plant model).</span>
+              <input type="number" step="any" id="TADD" value="300" />
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>What’s happening at the plant right now</legend>
+          <p class="flow-help">
+            You are <strong>not</strong> entering a “minimum” and “maximum” flow. Whenever two flow numbers are asked for, the math uses the <strong>higher</strong> of the two for that piece of the plant—that’s the cautious way to estimate contact time.
+          </p>
+
+          <div class="section-label">Clearwell (LIT‑02)</div>
+          <div class="row">
+            <label>
+              <strong>Clearwell level</strong>
+              <span class="hint">Percent full (0–100) from SCADA / level indicator.</span>
+              <input type="number" step="any" id="W7" value="58.38" />
+            </label>
+            <label>
+              <strong>How well the clearwell mixes (baffling)</strong>
+              <span class="hint">A number between 0 and 1 from the plant’s study. Lower = water shortcuts through faster = less credit for “sitting time.”</span>
+              <input type="number" step="any" id="W16" value="0.1" />
+            </label>
+            <label>
+              <strong>Flow reading #1 (litres per second)</strong>
+              <span class="hint">First flow meter for the clearwell. The math uses whichever is <strong>higher</strong>: this or reading #2.</span>
+              <input type="number" step="any" id="Y7" value="9.97" />
+            </label>
+            <label>
+              <strong>Flow reading #2 (litres per second)</strong>
+              <span class="hint">Second meter paired with #1 for the clearwell. This same value is also used for the <strong>pipe</strong> step, and compared to the tower flow for the <strong>tower</strong> step (again, the <strong>higher</strong> wins).</span>
+              <input type="number" step="any" id="P11" value="9.97" />
+            </label>
+          </div>
+
+          <div class="section-label">Water quality — clearwell &amp; pipe (use the same readings for both)</div>
+          <div class="row">
+            <label>
+              <strong>Acidity (pH)</strong>
+              <span class="hint">Where chlorine is working in the clearwell / pipe.</span>
+              <input type="number" step="any" id="M13" value="6.98" />
+            </label>
+            <label>
+              <strong>Free chlorine left in the water</strong>
+              <span class="hint">mg/L — same value is used for both the clearwell and the pipe section here.</span>
+              <input type="number" step="any" id="M11" value="1.06" />
+            </label>
+            <label>
+              <strong>Water temperature</strong>
+              <span class="hint">°C. Cold vs warm water changes how the rules count chlorine strength.</span>
+              <input type="number" step="any" id="E11" value="2.61" />
+            </label>
+          </div>
+
+          <div class="section-label">Elevated tank (tower)</div>
+          <div class="row">
+            <label>
+              <strong>Tower level</strong>
+              <span class="hint">Percent full (0–100).</span>
+              <input type="number" step="any" id="L7" value="81.77" />
+            </label>
+            <label>
+              <strong>How well the tower mixes (baffling)</strong>
+              <span class="hint">0–1 from the plant study, same idea as the clearwell.</span>
+              <input type="number" step="any" id="J9" value="0.1" />
+            </label>
+            <label>
+              <strong>Flow leaving the tower / going out to the system (L/s)</strong>
+              <span class="hint">Compared to <strong>flow reading #2</strong> above; the <strong>higher</strong> value is used for the tower step.</span>
+              <input type="number" step="any" id="B14" value="3.88" />
+            </label>
+            <label>
+              <strong>Free chlorine at the tower</strong>
+              <span class="hint">mg/L at the tower.</span>
+              <input type="number" step="any" id="B11" value="1.06" />
+            </label>
+            <label>
+              <strong>pH at the tower</strong>
+              <span class="hint">Reading at the tower.</span>
+              <input type="number" step="any" id="E14" value="6.98" />
+            </label>
+          </div>
+
+          <div class="section-label">Targets your permit or procedure asks for</div>
+          <div class="row">
+            <label>
+              <strong>Giardia — how much reduction you must show</strong>
+              <span class="hint">Small number from your permit or SOP (often around 0.5). Ask a supervisor if unsure.</span>
+              <input type="number" step="any" id="P20" value="0.5" />
+            </label>
+            <label>
+              <strong>Viruses — how much reduction you must show</strong>
+              <span class="hint">From your permit or SOP (often around 2). Ask a supervisor if unsure.</span>
+              <input type="number" step="any" id="P21" value="2" />
+            </label>
+          </div>
+        </fieldset>
+      </form>
+
+      <div class="results">
+        <div class="big" id="summaryTiles"></div>
+        <fieldset>
+          <legend>Breakdown by step (clearwell → pipe → tower)</legend>
+          <div class="results-toolbar no-print">
+            <button type="button" class="btn-em btn-print js-print">Print</button>
+          </div>
+          <p class="no-print" style="margin:0 0 0.75rem;font-size:0.82rem;color:var(--muted);">Tip: use <strong>Print</strong> above or in the top bar — your printer dialog opens from the browser.</p>
+          <div style="overflow-x:auto"><table id="segTable"><thead></thead><tbody></tbody></table></div>
+        </fieldset>
+      </div>
+
+      <p class="note">
+        Use this tool for quick checks and training. For official records and sign-off, follow <strong>your site’s procedure</strong> (usually the plant’s main CT file and logbook).
+      </p>
+      </div>
+
+      <div
+        id="formulaModal"
+        class="formula-modal no-print"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="formulaModalTitle"
+        aria-hidden="true"
+        hidden
+      >
+        <div class="formula-panel" role="document">
+        <h2 id="formulaModalTitle">How the math works</h2>
+        <p class="lead">
+          This calculator is for an <strong>Ontario, Canada</strong> plant. The embedded Giardia and virus factors match the <strong>CT tables in Ontario’s Procedure for Disinfection of Drinking Water</strong> (MECP, adopted under <strong>O. Reg. 170/03</strong>). Sheet logic is checked against <strong>Chalk River CT Calculator.xlsx</strong> — <strong>Calculations</strong> rows 8–10 and 24–27, with <strong>Giardia CT</strong> and <strong>Virus CT</strong> as in that workbook. Run <code style="font-size:0.85em;">scripts/verify_excel_parity.py</code> after workbook edits to re-check.
+        </p>
+        <p class="math-key">
+          <strong>Symbols (per step)</strong><br />
+          <code>V</code> = volume (m³) · <code>Q</code> = flow (L/s) · <code>t</code> = time in step (min) · <code>b</code> = baffling (0–1) · <code>G</code> = effective contact (min) · <code>pH</code>, <code>Cl</code> = measured pH and free chlorine (mg/L) for that step · <code>T</code> = water temperature (°C). <strong>CEILING(x, s)</strong> rounds <em>up</em> to the nearest multiple of <code>s</code>. <strong>FLOOR(x, s)</strong> rounds <em>down</em> to the nearest multiple of <code>s</code>.
+        </p>
+        <ol class="formula-list">
+          <li>
+            <strong>Water volume — clearwell</strong> — Full-tank size × level % ÷ 100.
+            <div class="math-line"><em>V</em><sub>clearwell</sub> = <em>V</em><sub>full</sub> × (level<sub>%</sub> ÷ 100)</div>
+          </li>
+          <li>
+            <strong>Water volume — pipe</strong> — Fixed pipe volume you enter (m³).
+            <div class="math-line"><em>V</em><sub>pipe</sub> = pipe volume (constant)</div>
+          </li>
+          <li>
+            <strong>Water volume — tower</strong> — Tower full size × level % ÷ 100, plus optional extra volume (default matches the plant file add-on).
+            <div class="math-line"><em>V</em><sub>tower</sub> = <em>V</em><sub>tower full</sub> × (level<sub>%</sub> ÷ 100) + <em>V</em><sub>extra</sub></div>
+          </li>
+          <li>
+            <strong>Flow — clearwell</strong> — Higher of the two clearwell-related flows (L/s).
+            <div class="math-line"><em>Q</em><sub>clearwell</sub> = max(<em>Q</em><sub>reading 1</sub>, <em>Q</em><sub>reading 2</sub>)</div>
+          </li>
+          <li>
+            <strong>Flow — pipe</strong> — Second clearwell flow only.
+            <div class="math-line"><em>Q</em><sub>pipe</sub> = <em>Q</em><sub>reading 2</sub></div>
+          </li>
+          <li>
+            <strong>Flow — tower</strong> — Higher of reading 2 and tower outlet flow.
+            <div class="math-line"><em>Q</em><sub>tower</sub> = max(<em>Q</em><sub>reading 2</sub>, <em>Q</em><sub>tower out</sub>)</div>
+          </li>
+          <li>
+            <strong>Time in step (minutes)</strong> — Converts m³ and L/s to minutes; zero if volume or flow is not positive.
+            <div class="math-line"><em>t</em> = (<em>V</em> &gt; 0 and <em>Q</em> &gt; 0) ? (<em>V</em> ÷ <em>Q</em>) × (1000 ÷ 60) : 0</div>
+          </li>
+          <li>
+            <strong>Effective contact</strong> — Nominal time × baffling. Pipe step uses <em>b</em> = 1.
+            <div class="math-line"><em>G</em> = <em>t</em> × <em>b</em></div>
+          </li>
+          <li>
+            <strong>pH for Giardia table</strong> — Rounded up to 0.5 to pick the strength column (then snapped to the 7–9 table range in software).
+            <div class="math-line">pH<sub>ceil</sub> = CEILING(pH, 0.5)</div>
+          </li>
+          <li>
+            <strong>Chlorine for Giardia <em>k</em> row</strong> — Negative chlorine → 0; else round up to 0.2 mg/L steps.
+            <div class="math-line">Cl<sub>round</sub> = (Cl &lt; 0) ? 0 : CEILING(Cl, 0.2)</div>
+          </li>
+          <li>
+            <strong>Giardia <em>k</em> (table path)</strong> — Same as <strong>Calculations</strong> column N: approximate VLOOKUP on rounded chlorine, return the column fixed by CEILING(pH, 0.5). The workbook range is <strong>Giardia CT</strong> <code>$S$4:$X$18</code> (0.5 °C <em>k</em> values; pH 7…9 across columns <strong>T–X</strong>). <em>Water temperature does not change this lookup</em> — it only affects the alternate Giardia path (0.933<sup>(<em>T</em>−5)</sup>) and virus steps.
+            <div class="math-line"><em>k</em><sub>Giardia</sub> = VLOOKUP<sub>approx</sub>(Cl<sub>round</sub>, table <em>S</em>:<em>X</em>, col = 2 × pH<sub>ceil</sub> − 12)</div>
+          </li>
+          <li>
+            <strong>Giardia score (one step)</strong> — Max of table path and alternate equation (raw pH, Cl, <em>T</em>).
+            <div class="math-line">score<sub>A</sub> = <em>k</em><sub>Giardia</sub> × Cl × <em>G</em></div>
+            <div class="math-line">score<sub>B</sub> = (Cl × <em>G</em>) ÷ ( 0.2828 × pH<sup>2.69</sup> × Cl<sup>0.15</sup> × 0.933<sup>(<em>T</em> − 5)</sup> ) &nbsp;&nbsp;(0 if Cl = 0)</div>
+            <div class="math-line">Giardia<sub>step</sub> = max(score<sub>A</sub>, score<sub>B</sub>)</div>
+          </li>
+          <li>
+            <strong>Temperature band for viruses</strong> — Below 5 °C use 0.5; else floor to 5 °C steps.
+            <div class="math-line"><em>M</em><sub>virus</sub> = (<em>T</em> &lt; 5) ? 0.5 : FLOOR(<em>T</em>, 5)</div>
+          </li>
+          <li>
+            <strong>Virus table factor</strong> — Approximate match on <em>M</em><sub>virus</sub>; zero if Cl<sub>round</sub> = 0.
+            <div class="math-line"><em>f</em><sub>virus</sub> = (Cl<sub>round</sub> = 0) ? 0 : lookup(<em>M</em><sub>virus</sub>)</div>
+          </li>
+          <li>
+            <strong>Virus score (one step)</strong> — Max of table path and exponential form.
+            <div class="math-line">score<sub>C</sub> = <em>f</em><sub>virus</sub> × Cl × <em>G</em></div>
+            <div class="math-line">score<sub>D</sub> = (Cl × <em>G</em> × e<sup>0.071 × <em>M</em><sub>virus</sub></sup> − 0.42) ÷ 2.94 &nbsp;&nbsp;(0 if Cl = 0)</div>
+            <div class="math-line">Virus<sub>step</sub> = max(score<sub>C</sub>, score<sub>D</sub>)</div>
+          </li>
+          <li>
+            <strong>Which inputs go where</strong> — Clearwell and pipe share the same pH, Cl, and <em>T</em> (“clearwell &amp; pipe”). Tower uses tower pH and Cl; <em>T</em> is the same for all three steps.
+          </li>
+          <li>
+            <strong>Total Giardia score</strong> — Sum of three steps; display caps at &gt; 3.
+            <div class="math-line">Giardia<sub>total</sub> = Giardia<sub>clearwell</sub> + Giardia<sub>pipe</sub> + Giardia<sub>tower</sub></div>
+          </li>
+          <li>
+            <strong>Total virus score</strong> — Sum of three steps; display caps at &gt; 4.
+            <div class="math-line">Virus<sub>total</sub> = Virus<sub>clearwell</sub> + Virus<sub>pipe</sub> + Virus<sub>tower</sub></div>
+          </li>
+          <li>
+            <strong>Contact × chlorine (achieved)</strong> — Sum of Cl × <em>G</em> over steps (same chlorine and <em>G</em> as in each step’s row).
+            <div class="math-line">CT<sub>achieved</sub> = (Cl × <em>G</em>)<sub>1</sub> + (Cl × <em>G</em>)<sub>2</sub> + (Cl × <em>G</em>)<sub>3</sub></div>
+          </li>
+          <li>
+            <strong>Contact × chlorine (needed)</strong> — Scales achieved CT by your target ÷ total log score (when total ≠ 0).
+            <div class="math-line">CT<sub>needed, Giardia</sub> = CT<sub>achieved</sub> × (target<sub>Giardia</sub> ÷ Giardia<sub>total</sub>)</div>
+            <div class="math-line">CT<sub>needed, virus</sub> = CT<sub>achieved</sub> × (target<sub>virus</sub> ÷ Virus<sub>total</sub>)</div>
+          </li>
+        </ol>
+
+        <div class="formula-complete">
+          <h3>Complete formulas (engineers)</h3>
+          <p class="sub">
+            Self-contained reference aligned to <strong>Calculations</strong> rows 8–10 and 24–27. Giardia <strong>N</strong> matches <code>VLOOKUP(K,'Giardia CT'!$S$4:$X$18,2*I−12)</code> — 0.5 °C table only; <strong>P</strong> uses raw <em>T</em> in 0.933<sup>(<em>T</em>−5)</sup>. Virus <strong>R</strong> matches <code>VLOOKUP(M,'Virus CT'!$H$6:$I$11,2)</code> (approximate). Tower volume in Excel uses <code>+300</code>; this page uses <em>V</em><sub>extra</sub> (default 300).
+          </p>
+          <p class="pre-label">Volumes (m³) and flows (L/s)</p>
+          <pre>V₁ = V_clearwell_full × (level_clearwell% ÷ 100)
+  V₂ = V_pipe_fixed
+  V₃ = V_tower_full × (level_tower% ÷ 100) + V_extra
+
+  q₁ = max(q_reading1, q_reading2)
+  q₂ = q_reading2
+  q₃ = max(q_reading2, q_tower_out)</pre>
+          <p class="pre-label">Per segment i ∈ {1,2,3}</p>
+          <pre>Use (Vᵢ, qᵢ, bᵢ, pHᵢ, Clᵢ) and shared water temperature T (°C).
+  Clearwell &amp; pipe share pH₁= pH₂, Cl₁ = Cl₂, T. Tower uses pH₃, Cl₃. Pipe baffling b₂ = 1.
+
+  tᵢ = (Vᵢ &gt; 0 and qᵢ &gt; 0) ? (Vᵢ ÷ qᵢ) × (1000 ÷ 60) : 0
+  Gᵢ = tᵢ × bᵢ
+
+  Iᵢ = CEILING(pHᵢ, 0.5)
+  Kᵢ = (Clᵢ &lt; 0) ? 0 : CEILING(Clᵢ, 0.2)
+
+  Nᵢ = VLOOKUP_approx(Kᵢ, 'Giardia CT'!S4:X18, 2×Iᵢ − 12)   ← 0.5 °C k matrix; T not used for N
+
+  Oᵢ = Nᵢ × Clᵢ × Gᵢ
+  Pᵢ = (Clᵢ = 0) ? 0 : (Clᵢ × Gᵢ) ÷ ( 0.2828 × pHᵢ^2.69 × Clᵢ^0.15 × 0.933^(T − 5) )
+  Giardiaᵢ = max(Oᵢ, Pᵢ)
+
+  M = (T &lt; 5) ? 0.5 : FLOOR(T, 5)
+  Rᵢ = (Kᵢ = 0) ? 0 : VirusTable(M)
+  Sᵢ = Rᵢ × Clᵢ × Gᵢ
+  Uᵢ = (Clᵢ = 0) ? 0 : (Clᵢ × Gᵢ × e^(0.071 × M) − 0.42) ÷ 2.94
+  Virusᵢ = max(Sᵢ, Uᵢ)</pre>
+          <p class="pre-label">Plant totals (same as results table)</p>
+          <pre>Giardia_total = Giardia₁ + Giardia₂ + Giardia₃
+  Virus_total   = Virus₁ + Virus₂ + Virus₃
+  CT_achieved   = Cl₁×G₁ + Cl₂×G₂ + Cl₃×G₃
+
+  CT_needed_Giardia = (Giardia_total ≠ 0) ? CT_achieved × (target_Giardia ÷ Giardia_total) : undefined
+  CT_needed_virus   = (Virus_total   ≠ 0) ? CT_achieved × (target_virus   ÷ Virus_total)   : undefined
+
+  Display: if Giardia_total &gt; 3 show “&gt; 3”; if Virus_total &gt; 4 show “&gt; 4”.</pre>
+        </div>
+
+        <p class="formula-foot">
+          If anything ever disagrees with the signed-off plant calculation, trust the plant file and tell engineering — this page is a convenience copy of the same rules.
+        </p>
+        <button type="button" class="formula-close" id="btnCloseFormulas">Close</button>
+      </div>
+    </div>
     </section>
 
     <section id="history-briefing">
@@ -1432,7 +2182,7 @@
       </details>
     </section>
 
-    <section id="inputs">
+    <section id="inputs-help">
       <h2><span class="num">IN</span> What goes where (typical layout)</h2>
       <div class="card">
         <p class="muted" style="margin-top:0;">Labels often match Chalk River SCADA; order on screen can vary slightly.</p>
@@ -1523,6 +2273,317 @@
     </div>
   </div>
 
+  <script src="ct-tables.js"></script>
+  <script>
+      (function () {
+        "use strict";
+
+        function ceiling(x, s) {
+          if (s <= 0) return x;
+          return s * Math.ceil(x / s - 1e-12);
+        }
+
+        function floorExcel(x, s) {
+          return s * Math.floor(x / s + 1e-12);
+        }
+
+        /** Excel VLOOKUP approximate: largest key ≤ lookup (first column ascending). */
+        function vlookupApprox(lookup, pairs) {
+          var pick = pairs[0][1];
+          for (var i = 0; i < pairs.length; i++) {
+            if (pairs[i][0] <= lookup) pick = pairs[i][1];
+            else break;
+          }
+          return pick;
+        }
+
+        function snapPhBlock(blocks, iceil) {
+          var ph = iceil;
+          if (ph < 7) ph = 7;
+          if (ph > 9) ph = 9;
+          var best = blocks[0];
+          var dmin = 99;
+          for (var b = 0; b < blocks.length; b++) {
+            var d = Math.abs(blocks[b].ph - ph);
+            if (d < dmin) {
+              dmin = d;
+              best = blocks[b];
+            }
+          }
+          return best;
+        }
+
+        /**
+         * Giardia k from table — matches workbook Calculations column N (e.g. N8):
+         * VLOOKUP(K,'Giardia CT'!$S$4:$X$18,2*CEILING(pH,0.5)-12,TRUE).
+         * S:X is the 0.5 °C matrix (chlorine col S, pH 7…9 in T–X). Temperature is not used for N;
+         * it still appears in the alternate path P via 0.933^(T−5).
+         */
+        function giardiaK(blocks, Kround, Iceil) {
+          var ti = 0;
+          var block = snapPhBlock(blocks, Iceil);
+          var rows = block.rows;
+          var pick = rows[0];
+          for (var r = 0; r < rows.length; r++) {
+            if (rows[r].cl <= Kround) pick = rows[r];
+            else break;
+          }
+          return pick.k[ti];
+        }
+
+        function virusK(table, M) {
+          var pairs = table.map(function (r) {
+            return [r[0], r[1]];
+          });
+          return vlookupApprox(M, pairs);
+        }
+
+        function computeSegment(args) {
+          var C = args.C,
+            D = args.D,
+            F = args.F,
+            H = args.H,
+            J = args.J,
+            L = args.L,
+            E11 = args.E11;
+          var E = C > 0 && D > 0 ? (C / D) * 1000 / 60 : 0;
+          var G = E * F;
+          var Iceil = ceiling(H, 0.5);
+          var Kround = J < 0 ? 0 : ceiling(J, 0.2);
+          var Mband = L < 5 ? 0.5 : floorExcel(L, 5);
+          var blocks = window.CT_TABLES.giardia_blocks;
+          var N = giardiaK(blocks, Kround, Iceil);
+          var O = N * J * G;
+          var P =
+            J === 0
+              ? 0
+              : (J * G) /
+                (0.2828 * Math.pow(H, 2.69) * Math.pow(J, 0.15) * Math.pow(0.933, L - 5));
+          var Q = Math.max(O, P);
+          var R = Kround === 0 ? 0 : virusK(window.CT_TABLES.virus_k, Mband);
+          var S = R * J * G;
+          var T = J === 0 ? 0 : (J * G * Math.exp(0.071 * Mband) - 0.42) / 2.94;
+          var U = Math.max(S, T);
+          return {
+            C: C,
+            D: D,
+            E: E,
+            F: F,
+            G: G,
+            H: H,
+            I: Iceil,
+            J: J,
+            K: Kround,
+            L: L,
+            M: Mband,
+            N: N,
+            O: O,
+            P: P,
+            Q: Q,
+            R: R,
+            S: S,
+            T: T,
+            U: U,
+            JG: J * G,
+          };
+        }
+
+        function fmt(n, d) {
+          if (n === null || n === undefined || Number.isNaN(n)) return "—";
+          if (!Number.isFinite(n)) return "—";
+          return n.toFixed(d != null ? d : 3);
+        }
+
+        function capLogG(x) {
+          if (x > 3) return "> 3";
+          return fmt(x, 4);
+        }
+        function capLogV(x) {
+          if (x > 4) return "> 4";
+          return fmt(x, 4);
+        }
+
+        function run() {
+          var I23 = +document.getElementById("I23").value;
+          var I24 = +document.getElementById("I24").value;
+          var I25 = +document.getElementById("I25").value;
+          var TADD = +document.getElementById("TADD").value;
+          var W7 = +document.getElementById("W7").value;
+          var W16 = +document.getElementById("W16").value;
+          var Y7 = +document.getElementById("Y7").value;
+          var P11 = +document.getElementById("P11").value;
+          var M13 = +document.getElementById("M13").value;
+          var M11 = +document.getElementById("M11").value;
+          var E11 = +document.getElementById("E11").value;
+          var J9 = +document.getElementById("J9").value;
+          var L7 = +document.getElementById("L7").value;
+          var B14 = +document.getElementById("B14").value;
+          var B11 = +document.getElementById("B11").value;
+          var E14 = +document.getElementById("E14").value;
+          var P20 = +document.getElementById("P20").value;
+          var P21 = +document.getElementById("P21").value;
+
+          var C8 = (I23 * W7) / 100;
+          var D8 = Math.max(Y7, P11);
+          var s8 = computeSegment({ C: C8, D: D8, F: W16, H: M13, J: M11, L: E11, E11: E11 });
+
+          var C9 = I24;
+          var D9 = P11;
+          var s9 = computeSegment({ C: C9, D: D9, F: 1, H: M13, J: M11, L: E11, E11: E11 });
+
+          var C10 = (I25 * L7) / 100 + TADD;
+          var D10 = Math.max(P11, B14);
+          var s10 = computeSegment({ C: C10, D: D10, F: J9, H: E14, J: B11, L: E11, E11: E11 });
+
+          var C24 = s8.Q + s9.Q + s10.Q;
+          var D24 = s8.U + s9.U + s10.U;
+          var C26 = s8.JG + s9.JG + s10.JG;
+          var D26 = C26;
+          var C27 = C24 !== 0 ? (C26 * P20) / C24 : NaN;
+          var D27 = D24 !== 0 ? (D26 * P21) / D24 : NaN;
+
+          var names = ["Clearwell", "Pipe (clearwell → tower)", "Elevated tank"];
+          var segs = [s8, s9, s10];
+
+          var thead = document.querySelector("#segTable thead");
+          var tbody = document.querySelector("#segTable tbody");
+          var hdr = [
+            "Step",
+            "Water in this step (m³)",
+            "Flow (L/s)",
+            "Minutes in tank/pipe",
+            "Effective contact (min)",
+            "pH",
+            "Chlorine (mg/L)",
+            "pH (rounded)",
+            "Chlorine (rounded)",
+            "Temp group (°C)",
+            "Strength factor (Giardia)",
+            "Giardia score",
+            "Virus score",
+            "Chlorine × contact",
+          ];
+          thead.innerHTML = "<tr>" + hdr.map(function (h) { return "<th>" + h + "</th>"; }).join("") + "</tr>";
+          tbody.innerHTML = segs
+            .map(function (s, i) {
+              return (
+                "<tr><td>" +
+                names[i] +
+                "</td><td>" +
+                fmt(s.C, 3) +
+                "</td><td>" +
+                fmt(s.D, 3) +
+                "</td><td>" +
+                fmt(s.E, 4) +
+                "</td><td>" +
+                fmt(s.G, 4) +
+                "</td><td>" +
+                fmt(s.H, 2) +
+                "</td><td>" +
+                fmt(s.J, 2) +
+                "</td><td>" +
+                fmt(s.I, 1) +
+                "</td><td>" +
+                fmt(s.K, 2) +
+                "</td><td>" +
+                fmt(s.M, 1) +
+                "</td><td>" +
+                fmt(s.N, 6) +
+                "</td><td>" +
+                fmt(s.Q, 4) +
+                "</td><td>" +
+                fmt(s.U, 4) +
+                "</td><td>" +
+                fmt(s.JG, 3) +
+                "</td></tr>"
+              );
+            })
+            .join("");
+
+          var tiles = document.getElementById("summaryTiles");
+          tiles.innerHTML =
+            '<div class="tile"><h3>Giardia — total score</h3><div class="val">' +
+            capLogG(C24) +
+            '</div></div><div class="tile"><h3>Viruses — total score</h3><div class="val">' +
+            capLogV(D24) +
+            '</div></div><div class="tile"><h3>Contact time × chlorine (achieved)</h3><div class="val">' +
+            fmt(C26, 3) +
+            '</div></div><div class="tile"><h3>Contact time × chlorine needed (Giardia)</h3><div class="val ' +
+            (Number.isFinite(C27) && C26 >= C27 ? "ok" : "warn") +
+            '">' +
+            (Number.isFinite(C27) ? fmt(C27, 3) : "—") +
+            '</div></div><div class="tile"><h3>Contact time × chlorine needed (viruses)</h3><div class="val ' +
+            (Number.isFinite(D27) && D26 >= D27 ? "ok" : "warn") +
+            '">' +
+            (Number.isFinite(D27) ? fmt(D27, 3) : "—") +
+            "</div></div>";
+        }
+
+        document.querySelectorAll(".js-print").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            window.print();
+          });
+        });
+
+        var formulaModal = document.getElementById("formulaModal");
+        var btnShowFormulas = document.getElementById("btnShowFormulas");
+        var btnCloseFormulas = document.getElementById("btnCloseFormulas");
+
+        function openFormulaModal() {
+          formulaModal.removeAttribute("hidden");
+          formulaModal.setAttribute("aria-hidden", "false");
+          btnCloseFormulas.focus();
+        }
+
+        function closeFormulaModal() {
+          formulaModal.setAttribute("hidden", "");
+          formulaModal.setAttribute("aria-hidden", "true");
+          btnShowFormulas.focus();
+        }
+
+        btnShowFormulas.addEventListener("click", openFormulaModal);
+        btnCloseFormulas.addEventListener("click", closeFormulaModal);
+        formulaModal.addEventListener("click", function (e) {
+          if (e.target === formulaModal) closeFormulaModal();
+        });
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "Escape" && !formulaModal.hidden) closeFormulaModal();
+        });
+
+        var ids = [
+          "I23",
+          "I24",
+          "I25",
+          "TADD",
+          "W7",
+          "W16",
+          "Y7",
+          "P11",
+          "M13",
+          "M11",
+          "E11",
+          "J9",
+          "L7",
+          "B14",
+          "B11",
+          "E14",
+          "P20",
+          "P21",
+        ];
+        ids.forEach(function (id) {
+          document.getElementById(id).addEventListener("input", run);
+          document.getElementById(id).addEventListener("change", run);
+        });
+
+        if (!window.CT_TABLES || !window.CT_TABLES.giardia_blocks) {
+          document.querySelector(".results").innerHTML =
+            '<p style="color:#f66">Missing ct-tables.js — keep it in the same folder as this HTML file.</p>';
+        } else {
+          run();
+        }
+      })();
+    </script>
+
   <script>
     document.querySelectorAll(".js-print").forEach(function (btn) {
       btn.addEventListener("click", function () {
@@ -1534,7 +2595,7 @@
       const steps = [
         {
           title: "Get started",
-          html: `<p>Open the plant’s CT tool to the <strong>inputs</strong> page. Optionally keep the <strong>results</strong> view open if you like seeing numbers update as you type.</p>
+          html: `<p>Scroll to the <strong><a href="#ct-calculator" style="color:var(--accent);">CT calculator</a></strong> on this page and type in the boxes. Results update as you go. Use <strong>What each field means</strong> in the menu if you need tag hints.</p>
             <ul class="checklist" data-checklist>
               <li><label><input type="checkbox" /> I’m using the file version my supervisor approved.</label></li>
               <li><label><input type="checkbox" /> I know which time window these readings are for.</label></li>

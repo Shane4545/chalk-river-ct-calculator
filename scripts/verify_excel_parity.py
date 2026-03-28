@@ -1,5 +1,5 @@
 """
-Cross-check Chalk River CT Calculator.xlsx against what ct-calculator.html implements.
+Cross-check Chalk River CT Calculator.xlsx against the calculator in operator-guide.html (#ct-calculator).
 
 Run from repo root:
   python scripts/verify_excel_parity.py
