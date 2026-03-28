@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.py[cod]
+.Python
+*.egg-info/
+.venv/
+venv/
+
+# OS / editor
+Thumbs.db
+.DS_Store
+*.swp
+*.swo
+
+# Optional: uncomment if the workbook should stay local only (large / sensitive)
+# *.xlsx

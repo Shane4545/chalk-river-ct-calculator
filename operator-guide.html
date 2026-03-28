@@ -1,0 +1,1831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Chalk River WTP — Ontario chlorine contact operator guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-deep: #e9eef2;
+      --bg-panel: #ffffff;
+      --bg-elevated: #f3f6f9;
+      --border: rgba(20, 60, 80, 0.12);
+      --accent: #0a6f8e;
+      --accent-dim: rgba(10, 111, 142, 0.4);
+      --accent-soft: rgba(10, 111, 142, 0.1);
+      --amber: #b45309;
+      --mint: #0f766e;
+      --text: #15232d;
+      --muted: #5a6b78;
+      --danger: #b91c1c;
+      --shadow: 0 10px 40px rgba(20, 50, 70, 0.08);
+      --on-accent: #ffffff;
+      --radius: 14px;
+      --font-display: "Syne", system-ui, sans-serif;
+      --font-body: "Atkinson Hyperlegible", Georgia, serif;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-body);
+      font-size: 1.05rem;
+      line-height: 1.55;
+      color: var(--text);
+      background: var(--bg-deep);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Light page wash */
+    .bg-mesh {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background:
+        radial-gradient(ellipse 80% 50% at 0% 0%, rgba(10, 111, 142, 0.08), transparent 55%),
+        radial-gradient(ellipse 60% 45% at 100% 10%, rgba(15, 118, 110, 0.06), transparent 50%),
+        radial-gradient(ellipse 70% 40% at 50% 100%, rgba(180, 83, 9, 0.04), transparent 45%),
+        var(--bg-deep);
+    }
+
+    .bg-grid {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background-image:
+        linear-gradient(rgba(20, 60, 80, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(20, 60, 80, 0.06) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: radial-gradient(ellipse 85% 75% at 50% 25%, black, transparent);
+      pointer-events: none;
+    }
+
+    .wrap {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 1.25rem 1.25rem 4rem;
+    }
+
+    header.hero {
+      padding: 2.5rem 0 2rem;
+      position: relative;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid var(--border);
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      margin-bottom: 1rem;
+      animation: fadeSlide 0.8s ease backwards;
+    }
+
+    .badge::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--mint);
+      box-shadow: 0 0 0 2px rgba(15, 118, 110, 0.2);
+      animation: pulse 2s ease infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(0.85); }
+    }
+
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-title {
+      margin: 0 0 1rem;
+      animation: fadeSlide 0.8s ease 0.1s backwards;
+    }
+
+    .hero-title__kicker {
+      display: block;
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 0.82rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .hero-title__main {
+      display: block;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(1.65rem, 4.2vw, 2.35rem);
+      line-height: 1.18;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      max-width: 20ch;
+    }
+
+    .hero-title__main::after {
+      content: "";
+      display: block;
+      width: 2.75rem;
+      height: 4px;
+      margin-top: 0.65rem;
+      border-radius: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--mint));
+    }
+
+    .hero-lead {
+      font-size: 1.15rem;
+      color: var(--muted);
+      max-width: 36rem;
+      margin: 0 0 1.5rem;
+      animation: fadeSlide 0.8s ease 0.2s backwards;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      animation: fadeSlide 0.8s ease 0.3s backwards;
+    }
+
+    .btn {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.9rem;
+      border: none;
+      cursor: pointer;
+      padding: 0.85rem 1.35rem;
+      border-radius: 10px;
+      transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--on-accent);
+      box-shadow: 0 4px 16px rgba(10, 111, 142, 0.28);
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.05);
+      box-shadow: 0 6px 22px rgba(10, 111, 142, 0.35);
+    }
+
+    .btn-secondary {
+      background: var(--bg-panel);
+      color: var(--accent);
+      border: 2px solid var(--accent);
+      box-shadow: none;
+    }
+
+    .btn-secondary:hover {
+      background: var(--accent-soft);
+    }
+
+    .btn-ghost {
+      background: var(--bg-panel);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--accent-dim);
+      background: var(--accent-soft);
+    }
+
+    /* Sticky nav */
+    nav.toc {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      margin: 1.5rem -1.25rem 2rem;
+      padding: 0.65rem 1.25rem;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      align-items: center;
+      justify-content: center;
+    }
+
+    nav.toc a {
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 0.4rem 0.65rem;
+      border-radius: 8px;
+      transition: color 0.2s, background 0.2s;
+    }
+
+    nav.toc a:hover,
+    nav.toc a:focus-visible {
+      color: var(--accent);
+      background: var(--accent-soft);
+      outline: none;
+    }
+
+    nav.toc button.js-print:hover,
+    nav.toc button.js-print:focus-visible {
+      color: var(--accent);
+      border-color: var(--accent-dim);
+      background: var(--accent-soft);
+      outline: none;
+    }
+
+    section {
+      margin-bottom: 3rem;
+      scroll-margin-top: 5rem;
+    }
+
+    h2 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.5rem;
+      margin: 0 0 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    h2 .num {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--on-accent);
+      background: var(--accent);
+      width: 2rem;
+      height: 2rem;
+      border-radius: 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .card {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.35rem;
+      box-shadow: var(--shadow);
+    }
+
+    .card + .card {
+      margin-top: 1rem;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .callout {
+      border-left: 4px solid var(--amber);
+      padding: 0.75rem 1rem;
+      margin: 1rem 0;
+      background: rgba(255, 184, 77, 0.08);
+      border-radius: 0 10px 10px 0;
+      font-size: 0.95rem;
+    }
+
+    .callout.safe {
+      border-left-color: var(--mint);
+      background: rgba(94, 233, 168, 0.08);
+    }
+
+    .history-panels {
+      display: grid;
+      gap: 0.85rem;
+      margin-top: 1rem;
+    }
+    @media (min-width: 640px) {
+      .history-panels {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    .history-panel {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0.9rem 1rem;
+    }
+    .history-panel h3 {
+      font-family: var(--font-display);
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 0 0 0.45rem;
+    }
+    .history-panel p {
+      margin: 0;
+      font-size: 0.92rem;
+      line-height: 1.5;
+      color: var(--text);
+    }
+    .history-panel p + p {
+      margin-top: 0.5rem;
+    }
+    .history-foot {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px dashed var(--border);
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    .history-more {
+      margin-top: 1.15rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--bg-elevated);
+      overflow: hidden;
+    }
+    .history-more summary {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.88rem;
+      padding: 0.85rem 1rem;
+      cursor: pointer;
+      list-style: none;
+      color: var(--accent);
+    }
+    .history-more summary::-webkit-details-marker {
+      display: none;
+    }
+    .history-more summary::after {
+      content: " +";
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .history-more[open] summary::after {
+      content: " −";
+    }
+    .history-more .history-more-body {
+      padding: 0 1rem 1rem;
+      font-size: 0.9rem;
+      line-height: 1.55;
+      color: var(--text);
+      border-top: 1px solid var(--border);
+    }
+    .history-more .history-more-body p {
+      margin: 0.75rem 0 0;
+    }
+    .history-more .history-more-body p:first-child {
+      margin-top: 0.75rem;
+    }
+    .history-links {
+      margin: 0.85rem 0 0;
+      padding-left: 1.15rem;
+      font-size: 0.84rem;
+      color: var(--muted);
+    }
+    .history-links a {
+      color: var(--accent);
+      word-break: break-word;
+    }
+
+    .law-list {
+      margin: 0.65rem 0 0;
+      padding-left: 1.2rem;
+      color: var(--text);
+      font-size: 0.92rem;
+      line-height: 1.55;
+    }
+    .law-list li { margin-bottom: 0.4rem; }
+    .law-list a { color: var(--accent); word-break: break-word; }
+    .penalty-table-wrap {
+      overflow-x: auto;
+      margin: 0.85rem 0 0.25rem;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+    table.penalty-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+    }
+    table.penalty-table th,
+    table.penalty-table td {
+      border-bottom: 1px solid var(--border);
+      padding: 0.5rem 0.6rem;
+      text-align: left;
+      vertical-align: top;
+    }
+    table.penalty-table tr:last-child th,
+    table.penalty-table tr:last-child td {
+      border-bottom: none;
+    }
+    table.penalty-table th {
+      background: var(--bg-elevated);
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      width: 28%;
+    }
+    table.penalty-table caption {
+      caption-side: top;
+      text-align: left;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.82rem;
+      padding: 0.65rem 0.75rem;
+      background: var(--accent-soft);
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+    }
+    .legal-disclaimer {
+      margin-top: 1rem;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      border: 1px dashed var(--amber);
+      background: rgba(255, 184, 77, 0.06);
+      font-size: 0.86rem;
+      color: var(--muted);
+    }
+
+    /* Interactive wizard */
+    .wizard {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .wizard-top {
+      padding: 1.25rem 1.35rem 0;
+    }
+
+    .progress {
+      display: flex;
+      gap: 0.35rem;
+      margin-bottom: 1rem;
+    }
+
+    .progress-dot {
+      flex: 1;
+      height: 4px;
+      border-radius: 2px;
+      background: var(--bg-elevated);
+      transition: background 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    .progress-dot.done,
+    .progress-dot.active {
+      background: var(--accent);
+      box-shadow: 0 0 12px var(--accent-dim);
+    }
+
+    .progress-dot.active {
+      animation: barPulse 1.5s ease infinite;
+    }
+
+    @keyframes barPulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.65; }
+    }
+
+    .step-label {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.35rem;
+    }
+
+    .wizard h3 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.35rem;
+      margin: 0 0 0.75rem;
+    }
+
+    .wizard-body {
+      padding: 0 1.35rem 1.25rem;
+      min-height: 14rem;
+    }
+
+    .wizard-body ul {
+      margin: 0.5rem 0 0;
+      padding-left: 1.2rem;
+    }
+
+    .wizard-body li {
+      margin-bottom: 0.45rem;
+    }
+
+    .checklist {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0 0;
+    }
+
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+      margin-bottom: 0.65rem;
+      cursor: pointer;
+      padding: 0.5rem 0.65rem;
+      border-radius: 10px;
+      transition: background 0.2s;
+    }
+
+    .checklist li:hover {
+      background: var(--accent-soft);
+    }
+
+    .checklist input {
+      width: 1.15rem;
+      height: 1.15rem;
+      margin-top: 0.2rem;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+
+    .wizard-nav {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding: 1rem 1.35rem;
+      background: var(--bg-elevated);
+      border-top: 1px solid var(--border);
+    }
+
+    .wizard-nav .btn {
+      flex: 1;
+      max-width: 160px;
+    }
+
+    .wizard-nav .btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    /* Accordions */
+    details.accordion {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 0.65rem;
+      overflow: hidden;
+    }
+
+    details.accordion summary {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 1rem 1.1rem;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      transition: background 0.2s;
+    }
+
+    details.accordion summary::-webkit-details-marker {
+      display: none;
+    }
+
+    details.accordion summary::after {
+      content: "+";
+      font-size: 1.25rem;
+      color: var(--accent);
+      font-weight: 300;
+      transition: transform 0.25s ease;
+    }
+
+    details.accordion[open] summary::after {
+      transform: rotate(45deg);
+    }
+
+    details.accordion summary:hover {
+      background: var(--accent-soft);
+    }
+
+    details.accordion .acc-body {
+      padding: 0 1.1rem 1.1rem;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    details.accordion[open] {
+      border-color: var(--accent-dim);
+    }
+
+    /* Sheet pills */
+    .pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 1rem 0;
+    }
+
+    .pill {
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.4rem 0.75rem;
+      border-radius: 8px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    .pill.input {
+      border-color: rgba(94, 233, 168, 0.4);
+      color: var(--mint);
+    }
+
+    .pill.calc {
+      border-color: var(--accent-dim);
+      color: var(--accent);
+    }
+
+    /* Mini quiz */
+    .quiz {
+      margin-top: 1.25rem;
+      padding: 1rem;
+      background: var(--bg-elevated);
+      border-radius: 12px;
+      border: 1px dashed var(--border);
+    }
+
+    .quiz-q {
+      font-family: var(--font-display);
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: var(--text);
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .quiz-options button {
+      font-family: var(--font-body);
+      text-align: left;
+      padding: 0.65rem 0.85rem;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--bg-panel);
+      color: var(--text);
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .quiz-options button:hover {
+      border-color: var(--accent-dim);
+    }
+
+    .quiz-options button.correct {
+      border-color: var(--mint);
+      background: rgba(94, 233, 168, 0.12);
+    }
+
+    .quiz-options button.wrong {
+      border-color: var(--danger);
+      background: rgba(255, 107, 107, 0.1);
+    }
+
+    .quiz-feedback {
+      margin-top: 0.75rem;
+      font-size: 0.9rem;
+      min-height: 1.4em;
+    }
+
+    .quiz-feedback.ok {
+      color: var(--mint);
+    }
+
+    .quiz-feedback.no {
+      color: var(--danger);
+    }
+
+    kbd {
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      padding: 0.15rem 0.45rem;
+      border-radius: 6px;
+      color: var(--accent);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      color: var(--muted);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border);
+      margin-top: 2rem;
+    }
+
+    /* SCADA interactive map */
+    section#scada-map {
+      max-width: 1100px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .scada-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .scada-toolbar .hint {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .btn-sm {
+      padding: 0.55rem 1rem;
+      font-size: 0.8rem;
+    }
+
+    .scada-viewport {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: #dce3e9;
+      box-shadow: var(--shadow);
+    }
+
+    .scada-viewport img {
+      width: 100%;
+      height: auto;
+      display: block;
+      vertical-align: middle;
+    }
+
+    .hotspot {
+      position: absolute;
+      width: 2rem;
+      height: 2rem;
+      margin: -1rem 0 0 -1rem;
+      border: none;
+      padding: 0;
+      border-radius: 50%;
+      cursor: pointer;
+      background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.35), var(--accent));
+      box-shadow:
+        0 0 0 2px rgba(255, 255, 255, 0.95),
+        0 0 20px rgba(10, 111, 142, 0.45);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      z-index: 2;
+    }
+
+    .hotspot:hover,
+    .hotspot:focus-visible {
+      transform: scale(1.12);
+      outline: none;
+      box-shadow:
+        0 0 0 2px var(--mint),
+        0 0 32px rgba(94, 233, 168, 0.55);
+    }
+
+    .hotspot[aria-pressed="true"] {
+      background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.45), var(--mint));
+      box-shadow:
+        0 0 0 3px var(--mint),
+        0 0 28px rgba(94, 233, 168, 0.65);
+    }
+
+    .hotspot-ring {
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      opacity: 0.45;
+      animation: hotspotRing 2.4s ease-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes hotspotRing {
+      0% { transform: scale(0.85); opacity: 0.6; }
+      100% { transform: scale(1.35); opacity: 0; }
+    }
+
+    .scada-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-top: 1rem;
+    }
+
+    .scada-chip {
+      font-family: var(--font-display);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 0.4rem 0.65rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--bg-elevated);
+      color: var(--muted);
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+
+    .scada-chip:hover,
+    .scada-chip:focus-visible {
+      outline: none;
+      border-color: var(--accent-dim);
+      color: var(--text);
+    }
+
+    .scada-chip[aria-pressed="true"] {
+      border-color: var(--mint);
+      color: var(--mint);
+      background: rgba(15, 118, 110, 0.1);
+    }
+
+    .scada-detail {
+      margin-top: 1.15rem;
+      padding: 1rem 1.1rem;
+      border-radius: 12px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      min-height: 5.5rem;
+    }
+
+    .scada-detail h4 {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      margin: 0 0 0.5rem;
+      color: var(--accent);
+    }
+
+    .scada-detail dl {
+      margin: 0;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.35rem 1rem;
+      font-size: 0.92rem;
+    }
+
+    .scada-detail dt {
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .scada-detail dd {
+      margin: 0;
+      color: var(--text);
+    }
+
+    .scada-detail .scada-hint {
+      margin-top: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 1px dashed var(--border);
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    #scadaDetailContent .muted {
+      color: var(--muted);
+    }
+
+    /* Lightbox */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(20, 35, 45, 0.88);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .lightbox.is-open {
+      display: flex;
+    }
+
+    .lightbox-inner {
+      position: relative;
+      max-width: min(96vw, 1600px);
+      max-height: 92vh;
+    }
+
+    .lightbox-inner img {
+      max-width: 100%;
+      max-height: 88vh;
+      width: auto;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .lightbox-close {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 0.65rem 1.1rem;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--bg-panel);
+      color: var(--text);
+      cursor: pointer;
+      z-index: 201;
+    }
+
+    .lightbox-close:hover,
+    .lightbox-close:focus-visible {
+      border-color: var(--accent);
+      outline: none;
+    }
+
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* Print — uses system dialog; default printer is pre-selected */
+    @media print {
+      .no-print,
+      .bg-mesh,
+      .bg-grid,
+      nav.toc,
+      .hotspot,
+      .wizard-nav,
+      .lightbox {
+        display: none !important;
+      }
+
+      body {
+        background: #fff !important;
+        color: #111 !important;
+        font-size: 11pt;
+        overflow: visible !important;
+      }
+
+      .wrap {
+        max-width: 100% !important;
+        padding: 0.5rem 0 !important;
+      }
+
+      section#scada-map .card {
+        max-width: 100% !important;
+      }
+
+      .card,
+      .wizard,
+      details.accordion,
+      .scada-viewport,
+      .scada-detail,
+      .quiz {
+        background: #fff !important;
+        border: 1px solid #ccc !important;
+        box-shadow: none !important;
+        break-inside: avoid;
+      }
+
+      .scada-viewport {
+        border-radius: 4px !important;
+      }
+
+      .scada-viewport img {
+        max-height: none !important;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      .step-label,
+      .badge {
+        color: #000 !important;
+      }
+
+      .hero-title__main {
+        color: #0a4d66 !important;
+      }
+
+      .hero-title__main::after {
+        background: #0a6f8e !important;
+      }
+
+      .muted,
+      .acc-body,
+      .scada-detail dd,
+      .scada-detail dt {
+        color: #333 !important;
+      }
+
+      a {
+        color: #000 !important;
+        text-decoration: underline;
+      }
+
+      details.accordion summary::after {
+        display: none;
+      }
+
+      details.accordion {
+        border: 1px solid #bbb !important;
+      }
+
+      @page {
+        margin: 12mm;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      html {
+        scroll-behavior: auto;
+      }
+      .hotspot-ring {
+        animation: none;
+        opacity: 0.25;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-mesh" aria-hidden="true"></div>
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <header class="hero">
+      <div class="badge">Operator reference · Ontario</div>
+      <h1 class="hero-title">
+        <span class="hero-title__kicker">Chalk River WTP</span>
+        <span class="hero-title__main">Chlorine contact — operator guide</span>
+      </h1>
+      <p class="hero-lead">
+        Plain-language help for <strong>Ontario</strong> operators at Chalk River: <strong>chlorine contact (CT)</strong> checks under <strong>MECP</strong> rules—what the numbers mean, what to type in, and how to read green vs red flags. No chemistry degree required.
+      </p>
+      <div class="hero-actions">
+        <button type="button" class="btn btn-primary no-print" id="btnStartWizard">Start walkthrough</button>
+        <a href="ct-calculator.html" class="btn btn-secondary no-print" style="display:inline-flex;align-items:center;text-decoration:none;">Open CT calculator</a>
+        <a href="#scada-map" class="btn btn-ghost no-print" style="display:inline-flex;align-items:center;text-decoration:none;">Plant SCADA map</a>
+        <a href="#quick-facts" class="btn btn-ghost no-print" style="display:inline-flex;align-items:center;text-decoration:none;">30-second overview</a>
+        <a href="#history-briefing" class="btn btn-ghost no-print" style="display:inline-flex;align-items:center;text-decoration:none;">Brief history</a>
+        <a href="#laws-penalties" class="btn btn-ghost no-print" style="display:inline-flex;align-items:center;text-decoration:none;">Laws &amp; fines</a>
+        <button
+          type="button"
+          class="btn btn-ghost no-print js-print"
+          aria-label="Print — opens the print dialog with your default printer selected"
+        >
+          Print
+        </button>
+      </div>
+    </header>
+
+    <nav class="toc" aria-label="Page sections">
+      <a href="#quick-facts">Overview</a>
+      <a href="#history-briefing">History</a>
+      <a href="#laws-penalties">Laws &amp; fines</a>
+      <a href="#scada-map">SCADA</a>
+      <a href="#wizard-anchor">Walkthrough</a>
+      <a href="#sheets">Tool layout</a>
+      <a href="#inputs">Your inputs</a>
+      <a href="#reading">Read results</a>
+      <a href="#tips">Tips</a>
+      <a href="#faq">FAQ</a>
+      <button
+        type="button"
+        class="no-print js-print"
+        style="font-family:var(--font-display);font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);background:transparent;border:1px solid var(--border);padding:0.4rem 0.65rem;border-radius:8px;cursor:pointer;"
+        aria-label="Print — opens the print dialog with your default printer selected"
+      >
+        Print
+      </button>
+    </nav>
+
+    <section id="quick-facts">
+      <h2><span class="num">!</span> Start here</h2>
+      <div class="card">
+        <p><strong>CT</strong> is a short way of saying: <strong>how much chlorine is in the water</strong> × <strong>how long the water sits with it</strong> in the clearwell, pipes, and tower. This site is written for <strong>Ontario, Canada</strong>: the targets come from <strong>MECP’s disinfection procedure</strong> (under <strong>O. Reg. 170/03</strong>). The tool uses your flows, tank levels, pH, temperature, and chlorine readings to estimate whether you’re meeting those <strong>Ontario</strong> targets for <strong>Giardia</strong> (parasite cysts) and <strong>viruses</strong>.</p>
+        <p class="muted" style="margin:0.75rem 0 0;border-left:3px solid var(--mint);padding-left:0.85rem;line-height:1.55;">
+          <strong style="color:var(--text)">Giardia</strong> — a bug that can make people sick; here it’s a <strong>score for chlorine vs parasite cysts</strong>, not a screen tag.<br />
+          <strong style="color:var(--text)">Viruses</strong> — a <strong>separate score for viruses</strong>; same general idea, different rules.
+        </p>
+        <div class="callout safe">
+          <strong>Stay safe:</strong> Only change the fields your <strong>procedure or supervisor</strong> says you may edit. If something is locked or looks like a table of numbers, leave it alone unless engineering tells you otherwise.
+        </div>
+        <p class="muted" style="margin-bottom:0;">
+          The plant’s main CT file may have old template wording in the notes—follow <strong>Chalk River’s current procedure</strong> and SCADA tag names for your shift.
+        </p>
+      </div>
+    </section>
+
+    <section id="history-briefing">
+      <h2><span class="num">◈</span> Brief history — who, what, where, when, why</h2>
+      <p class="muted" style="margin-top:-0.35rem;max-width:52ch;">
+        A short briefing for <strong>operators</strong>, <strong>engineers</strong>, and anyone new to the jargon. Official rules live with the province and your plant approvals; this is the story behind the CT check.
+      </p>
+      <div class="card">
+        <p style="margin-top:0;">
+          <strong>In plain language:</strong> Ontario law requires drinking-water systems to <strong>treat</strong> water properly and to be able to <strong>show</strong> that disinfection is doing its job. The province’s procedure tells plants to compare a <strong>calculated CT</strong> (chlorine × effective contact time) to published tables for <strong>Giardia</strong> cysts and <strong>viruses</strong>. The procedure expects that comparison to hold <strong>whenever the plant is running</strong>—so sites build operating habits (often <strong>each shift or day</strong>) around fresh flows, levels, pH, temperature, and chlorine, not because one magic calendar word is engraved in law, but because conditions change constantly.
+        </p>
+        <div class="history-panels">
+          <div class="history-panel">
+            <h3>Who</h3>
+            <p><strong>MECP</strong> (Ministry of the Environment, Conservation and Parks) publishes the <strong>Procedure for Disinfection of Drinking Water in Ontario</strong>, adopted by reference in <strong>O. Reg. 170/03</strong>. <strong>Engineers</strong> stamp site-specific models; <strong>operators</strong> run the plant and collect readings; <strong>the licence and your SOP</strong> say how often CT is calculated and logged.</p>
+          </div>
+          <div class="history-panel">
+            <h3>What</h3>
+            <p>The procedure’s <strong>appendix CT tables</strong> are the legal “ruler.” Your Chalk River <strong>Excel</strong> workbook encodes those tables into <em>k</em> factors and plant hydraulics. No single person “invented” the whole sheet—it's <strong>regulatory tables + engineering layout + spreadsheet logic</strong>.</p>
+          </div>
+          <div class="history-panel">
+            <h3>Where</h3>
+            <p><strong>Laurentian Hills — Chalk River WTP</strong> is an <strong>Ontario</strong> system regulated under the <strong>Safe Drinking Water Act, 2002</strong> and <strong>O. Reg. 170/03</strong>. The <strong>CT table numbers</strong> you work with are the ones <strong>MECP publishes in Ontario’s disinfection procedure</strong> (adopted by reference into law). <strong>Tank sizes, piping, flows, and baffling credits</strong> in the spreadsheet are <strong>site-specific</strong> to this plant.</p>
+          </div>
+          <div class="history-panel">
+            <h3>When (Ontario)</h3>
+            <p>After the <strong>Walkerton</strong> tragedy (<strong>May 2000</strong>), Ontario overhauled drinking-water law. The <strong>Safe Drinking Water Act, 2002</strong> and <strong>O. Reg. 170/03</strong> (in force <strong>2003</strong>) tightened treatment, monitoring, and accountability. The current disinfection procedure (ontario.ca, updated <strong>August 2024</strong> at time of writing) replaced older MOE guidance such as <strong>B13-3</strong> (2001).</p>
+          </div>
+          <div class="history-panel" style="grid-column:1/-1;">
+            <h3>Why &amp; where the math comes from</h3>
+            <p>Waterborne outbreaks showed that <strong>filtration alone</strong> and <strong>weak chlorination</strong> are not enough. Regulators set <strong>health targets</strong> (for example high log-reductions for Giardia cysts and viruses through the treatment train) and turned lab and field kill data into <strong>CT tables</strong> by pH and temperature so every plant uses the same science.</p>
+            <p class="muted" style="margin-top:0.5rem;margin-bottom:0;"><strong>Engineers:</strong> The <strong>legal</strong> source for the CT values used in Ontario is the <strong>Procedure for Disinfection of Drinking Water in Ontario</strong> on <strong>ontario.ca</strong>, incorporated into <strong>O. Reg. 170/03</strong>. Those tables reflect <strong>accepted disinfection science</strong> (chlorine, pH, temperature, and log-inactivation targets) that Canadian provinces apply in their own rules—your workbook encodes <strong>Ontario’s</strong> published tables. The alternate Giardia path (constants such as 0.2828, 2.69, 0.15, 0.933) is a <strong>standard engineering form</strong> seen in many Canadian plant calculation sheets; it is not unique to Chalk River.</p>
+            <p class="muted" style="margin-top:0.5rem;margin-bottom:0;"><strong>Operators:</strong> the approved plant file + logbook win if anything disagrees. <strong>Engineers:</strong> verify against the current MECP procedure and your Director’s conditions.</p>
+          </div>
+        </div>
+
+        <details class="history-more">
+          <summary>More detail — Walkerton, “daily” calcs, and official links</summary>
+          <div class="history-more-body">
+            <p><strong>Why Ontario tightened the screws:</strong> The <strong>Walkerton</strong> <em>E. coli</em> outbreak killed seven people and sickened thousands when contamination entered the system and chlorination was inadequate. Justice <strong>O’Connor</strong>’s public inquiry led to new legislation and technical rules so treatment and monitoring could not be treated casually. Archives Ontario hosts the inquiry records: <a href="https://www.archives.gov.on.ca/en/e_records/walkerton/">https://www.archives.gov.on.ca/en/e_records/walkerton/</a></p>
+            <p><strong>Does the law say “every day”?</strong> O. Reg. 170/03 and the procedure require <strong>compliance at all times during operation</strong> and continuous / prescribed monitoring depending on your system category. Plants typically run CT worksheets <strong>every operating day or shift</strong> because flows and chemistry change—that’s operational good practice and what many licences and SOPs expect, even if your exact frequency is set by your approval.</p>
+            <p><strong>Who invented CT?</strong> The <strong>CT</strong> idea (concentration × time) comes from long-standing <strong>disinfection kinetics</strong> used in public health engineering worldwide. The <strong>exact numbers</strong> in your shift work are not invented at the plant: they are the values <strong>Ontario</strong> fixed in its <strong>legal procedure</strong> after setting health targets (how many logs of Giardia cyst and virus inactivation treatment must achieve). For “what law do I follow?” the answer is <strong>Ontario</strong>—<a href="https://www.ontario.ca/laws/statute/02s32">Safe Drinking Water Act, 2002</a>, <a href="https://www.ontario.ca/laws/regulation/030170">O. Reg. 170/03</a>, and the <a href="https://www.ontario.ca/document/procedure-disinfection-drinking-water-ontario">disinfection procedure</a> on <strong>ontario.ca</strong>.</p>
+            <ul class="history-links">
+              <li><a href="https://www.ontario.ca/document/procedure-disinfection-drinking-water-ontario">Procedure for Disinfection of Drinking Water in Ontario</a></li>
+              <li><a href="https://www.ontario.ca/laws/regulation/030170">O. Reg. 170/03 — Drinking-Water Systems</a></li>
+              <li><a href="https://www.ontario.ca/laws/statute/02s32">Safe Drinking Water Act, 2002</a></li>
+            </ul>
+          </div>
+        </details>
+
+        <p class="history-foot" style="margin-bottom:0;">
+          <strong>This browser guide and the HTML calculator</strong> are for training and quick checks — not a substitute for the <strong>approved calculation package</strong>, your licence, or the current text on ontario.ca.
+        </p>
+      </div>
+    </section>
+
+    <section id="laws-penalties">
+      <h2><span class="num">R</span> Laws, regulations &amp; penalties</h2>
+      <p class="muted" style="margin-top:-0.35rem;max-width:58ch;">
+        What legally backs disinfection and treatment in Ontario, and what the <strong>Safe Drinking Water Act, 2002</strong> says about <strong>maximum</strong> court penalties. This is <strong>not legal advice</strong>—actual outcomes depend on facts, prosecution, and the court.
+      </p>
+      <div class="card">
+        <h3 style="margin:0 0 0.5rem;font-family:var(--font-display);font-size:1rem;font-weight:800;">Statute &amp; main regulations</h3>
+        <ul class="law-list" style="margin-top:0;">
+          <li>
+            <strong><a href="https://www.ontario.ca/laws/statute/02s32">Safe Drinking Water Act, 2002</a></strong> (S.O. 2002, c. 32) — parent law for drinking-water systems, licences, offences, administrative penalties, and ministry powers.
+          </li>
+          <li>
+            <strong><a href="https://www.ontario.ca/laws/regulation/030170">O. Reg. 170/03</a></strong> — Drinking-Water Systems (treatment categories, operational requirements, and adoption <strong>by reference</strong> of the <a href="https://www.ontario.ca/document/procedure-disinfection-drinking-water-ontario">Procedure for Disinfection of Drinking Water in Ontario</a>, which holds the CT tables your plant uses).
+          </li>
+          <li>
+            <strong><a href="https://www.ontario.ca/laws/regulation/030169">O. Reg. 169/03</a></strong> — Ontario Drinking Water Quality Standards (microbiological, chemical, and radiological standards for water supplied to users).
+          </li>
+          <li>
+            <strong><a href="https://www.ontario.ca/laws/regulation/040128">O. Reg. 128/04</a></strong> — Certification of drinking-water system operators and water quality analysts (competence, training, and related operational rules tied to certificates).
+          </li>
+          <li>
+            <strong><a href="https://www.ontario.ca/laws/regulation/050242">O. Reg. 242/05</a></strong> — Compliance and enforcement (inspections, mandatory follow-up when deficiencies are found, reporting timelines in defined cases).
+          </li>
+        </ul>
+        <p class="muted" style="margin:1rem 0 0;font-size:0.88rem;">
+          Other regulations and <strong>your licence, permit, or Director’s orders</strong> can add site-specific duties (monitoring frequency, corrective actions). A CT worksheet supports proof of disinfection performance; violating treatment rules, licence conditions, orders, or reporting duties is where enforcement usually attaches—not a single arithmetic mistake read in isolation.
+        </p>
+      </div>
+
+      <div class="card" style="margin-top:1rem;">
+        <h3 style="margin:0 0 0.5rem;font-family:var(--font-display);font-size:1rem;font-weight:800;">Enforcement tools (overview)</h3>
+        <p style="margin:0;font-size:0.92rem;line-height:1.55;">
+          MECP can use <strong>inspections</strong>, <strong>Director’s orders</strong>, <strong>licence conditions</strong>, requirements for operational plans, and court applications to <strong>restrain contraventions</strong>. The Act also allows <strong>administrative penalties</strong> (orders to pay money for prescribed contraventions, without a full court trial process in the usual sequence) and <strong>provincial offence prosecutions</strong> leading to fines or jail within the ranges below. Officers, directors, employees, or agents can be prosecuted when they commit acts for which a corporation would be liable.
+        </p>
+      </div>
+
+      <div class="card" style="margin-top:1rem;">
+        <h3 style="margin:0 0 0.5rem;font-family:var(--font-display);font-size:1rem;font-weight:800;">Maximum fines &amp; jail (court convictions)</h3>
+        <p class="muted" style="margin:0 0 0.65rem;font-size:0.88rem;">
+          Summarized from <strong>sections 141–143</strong> of the <a href="https://www.ontario.ca/laws/statute/02s32">Safe Drinking Water Act, 2002</a>. Amounts are <strong>per day or part of a day</strong> the offence occurs or continues unless the section says otherwise. “Subsequent conviction” depends on prior convictions listed in the Act (including certain other environmental statutes—see <strong>section 144</strong>).
+        </p>
+        <div class="penalty-table-wrap">
+          <table class="penalty-table">
+            <caption>General offences (typical regulatory contraventions) — s. 141</caption>
+            <tr><th scope="row">Individual — first conviction</th><td>Up to <strong>$20,000</strong> for each day or part of a day.</td></tr>
+            <tr><th scope="row">Individual — subsequent</th><td>Up to <strong>$50,000</strong> per day or part day, or imprisonment up to <strong>one year</strong>, or both.</td></tr>
+            <tr><th scope="row">Corporation — first</th><td>Up to <strong>$100,000</strong> per day or part day.</td></tr>
+            <tr><th scope="row">Corporation — subsequent</th><td>Up to <strong>$200,000</strong> per day or part day.</td></tr>
+          </table>
+        </div>
+        <div class="penalty-table-wrap" style="margin-top:0.75rem;">
+          <table class="penalty-table">
+            <caption>Higher tier — listed serious offences (e.g. false/misleading information, some order breaches, offences that <em>could have resulted</em> in a drinking-water health hazard) — s. 142</caption>
+            <tr><th scope="row">Corporation</th><td>Up to <strong>$250,000</strong> (first) or <strong>$500,000</strong> (subsequent) per day or part day, in substitution for s. 141.</td></tr>
+            <tr><th scope="row">Individual</th><td>Up to <strong>$50,000</strong> (first) or <strong>$100,000</strong> (subsequent) per day or part day, or up to <strong>one year</strong> imprisonment, or both.</td></tr>
+          </table>
+        </div>
+        <div class="penalty-table-wrap" style="margin-top:0.75rem;">
+          <table class="penalty-table">
+            <caption>Offences involving a <strong>drinking water health hazard</strong> or certain treatment-standard failures — s. 143</caption>
+            <tr><th scope="row">Corporation</th><td>Up to <strong>$6 million</strong> (first) or <strong>$10 million</strong> (subsequent) for each day or part of a day.</td></tr>
+            <tr><th scope="row">Individual</th><td>Up to <strong>$4 million</strong> (first) or <strong>$7 million</strong> (subsequent) per day or part day, or imprisonment up to <strong>five years less a day</strong>, or both.</td></tr>
+          </table>
+        </div>
+        <p class="muted" style="margin:0.85rem 0 0;font-size:0.88rem;">
+          <strong>Administrative penalties:</strong> Under <strong>section 121</strong>, an order may impose a penalty up to <strong>$100,000 per contravention</strong> (plus possible disgorgement of economic benefit), as further detailed in regulations made under the Act. This is separate from court fines above.
+        </p>
+        <p class="muted" style="margin:0.5rem 0 0;font-size:0.88rem;">
+          <strong>Victim fine surcharge:</strong> Convictions under provincial offence procedures may also attract a <strong>surcharge</strong> on top of the fine (see the <a href="https://www.ontario.ca/laws/statute/90p33">Provincial Offences Act</a> and current surcharge rules).
+        </p>
+        <p class="muted" style="margin:0.5rem 0 0;font-size:0.88rem;">
+          <strong>Published examples:</strong> Ontario has reported SDWA prosecutions with fines in the tens of thousands of dollars (for example reporting and operational failures)—well below the statutory maximums. Search the Ontario Newsroom or court bulletins for current cases; they are illustrations only.
+        </p>
+        <div class="legal-disclaimer" style="margin-top:1rem;margin-bottom:0;">
+          <strong>Disclaimer:</strong> Penalties apply to specific contraventions proved in law. They are not automatic because a training-page CT value disagrees with the spreadsheet. For any inspection, order, or charge, follow <strong>your utility’s legal counsel</strong> and MECP direction.
+        </div>
+      </div>
+    </section>
+
+    <section id="scada-map">
+      <h2><span class="num">◇</span> Plant overview (SCADA)</h2>
+      <p class="muted" style="margin-top:-0.35rem;">
+        <strong>Laurentian Hills — Chalk River WTP.</strong> Same screen you use on shift: tap the pulsing dots on the picture, or the tag buttons, to see which readings usually go into the <strong>calculator input form</strong>.
+      </p>
+
+      <div class="card" style="max-width:1100px;margin-left:auto;margin-right:auto;">
+        <div class="scada-toolbar">
+          <p class="hint">Screenshot for training — live values will differ. Dots are approximate; use tag list if your display layout changes.</p>
+          <div class="no-print" style="display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;">
+            <button type="button" class="btn btn-ghost btn-sm" id="btnScadaFullscreen">Full screen</button>
+            <button
+              type="button"
+              class="btn btn-ghost btn-sm js-print"
+              aria-label="Print — opens the print dialog with your default printer selected"
+            >
+              Print
+            </button>
+          </div>
+        </div>
+
+        <div class="scada-viewport" id="scadaViewport">
+          <img
+            id="scadaImg"
+            src="images/scada-plant-overview.png"
+            alt="Chalk River water treatment plant SCADA overview: low-lift pumps and raw water FIT101, chemical dosing, mixers and settling, filters with turbidity TUR01 and TUR02, clearwell LIT02 with high-lift pumps, elevated tank LIT03 with FRC01 chlorine and distribution FIT106."
+            loading="lazy"
+            decoding="async"
+          />
+          <button type="button" class="hotspot" id="hs-tower" style="left: 20%; top: 22%;" aria-label="Elevated tank zone" aria-pressed="false" data-region="tower">
+            <span class="hotspot-ring" aria-hidden="true"></span>
+          </button>
+          <button type="button" class="hotspot" id="hs-clearwell" style="left: 48%; top: 50%;" aria-label="Clearwell zone" aria-pressed="false" data-region="clearwell">
+            <span class="hotspot-ring" aria-hidden="true"></span>
+          </button>
+          <button type="button" class="hotspot" id="hs-raw" style="left: 14%; top: 78%;" aria-label="Raw water intake zone" aria-pressed="false" data-region="raw">
+            <span class="hotspot-ring" aria-hidden="true"></span>
+          </button>
+          <button type="button" class="hotspot" id="hs-filters" style="left: 86%; top: 44%;" aria-label="Filtration zone" aria-pressed="false" data-region="filters">
+            <span class="hotspot-ring" aria-hidden="true"></span>
+          </button>
+        </div>
+
+        <div class="scada-chips" id="scadaChips" role="toolbar" aria-label="SCADA tags for CT calculator">
+          <button type="button" class="scada-chip" data-region="tower">LIT03 · Tower</button>
+          <button type="button" class="scada-chip" data-region="clearwell">LIT02 · Clearwell</button>
+          <button type="button" class="scada-chip" data-region="raw">FIT101 · Raw flow</button>
+          <button type="button" class="scada-chip" data-region="dist">FIT106 · Distribution</button>
+          <button type="button" class="scada-chip" data-region="chlor">FRC01 · Cl₂ residual</button>
+          <button type="button" class="scada-chip" data-region="quality">PH03 · TEM01</button>
+          <button type="button" class="scada-chip" data-region="filters">TUR01 · TUR02</button>
+        </div>
+
+        <div class="scada-detail" id="scadaDetail" aria-live="polite">
+          <h4 id="scadaDetailTitle">Pick a zone or tag</h4>
+          <div id="scadaDetailContent">
+            <p class="muted" style="margin:0;">
+              Choose a pulsing dot or a tag button. You’ll see what each reading is for and where it usually gets typed in.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="wizard-anchor">
+      <h2><span class="num">→</span> Interactive walkthrough</h2>
+      <p class="muted" style="margin-top:-0.5rem;">Use <kbd>←</kbd> <kbd>→</kbd> arrow keys when this box is focused. Check off items as you go.</p>
+
+      <div class="wizard" id="wizard" tabindex="0" aria-label="Step by step operator walkthrough">
+        <div class="wizard-top">
+          <div class="progress" id="progressBar" role="progressbar" aria-valuemin="1" aria-valuemax="6" aria-valuenow="1" aria-label="Walkthrough progress"></div>
+          <div class="step-label" id="stepTag">Step 1 of 6</div>
+          <h3 id="stepTitle">Get started</h3>
+        </div>
+        <div class="wizard-body">
+          <div id="stepContent"></div>
+        </div>
+        <div class="wizard-nav">
+          <button type="button" class="btn btn-ghost" id="btnPrev">Back</button>
+          <button type="button" class="btn btn-primary" id="btnNext">Next</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="sheets">
+      <h2><span class="num">5</span> Parts of the CT tool (main file)</h2>
+      <div class="pills">
+        <span class="pill input">You type here</span>
+        <span class="pill calc">Auto-calculated</span>
+      </div>
+
+      <details class="accordion" open>
+        <summary>Inputs — where operators type readings</summary>
+        <div class="acc-body">
+          This is where you enter <strong>flows (L/s)</strong>, <strong>free chlorine (mg/L)</strong>, <strong>pH</strong>, <strong>temperature (°C)</strong>, <strong>how full</strong> tanks are (%), and <strong>baffling</strong> factors. You may also set <strong>targets</strong> for Giardia and viruses if your procedure says so. Names like FIT-, FRC-, PH- usually match what you see on SCADA.
+        </div>
+      </details>
+      <details class="accordion">
+        <summary>Results — read only</summary>
+        <div class="acc-body">
+          Shows each chunk of the plant (clearwell, pipe, tower): how much water, how long it sits, effective “contact” time after baffling, and scores for Giardia and viruses. The <strong>bottom summary</strong> is what most people check first. There may be a <strong>forecast</strong> block—use it only if your SOP says so.
+        </div>
+      </details>
+      <details class="accordion">
+        <summary>Lookup tables (Giardia &amp; viruses)</summary>
+        <div class="acc-body">
+          Big tables of official-style numbers the tool looks up automatically. <strong>Do not edit</strong> unless an engineer tells you to after a formal change.
+        </div>
+      </details>
+      <details class="accordion">
+        <summary>Notes &amp; assumptions</summary>
+        <div class="acc-body">
+          Explains limits, warnings, and history. Worth reading once; skim again after any update. Some displays cap high scores as “&gt;3” or “&gt;4” instead of showing a bigger number.
+        </div>
+      </details>
+    </section>
+
+    <section id="inputs">
+      <h2><span class="num">IN</span> What goes where (typical layout)</h2>
+      <div class="card">
+        <p class="muted" style="margin-top:0;">Labels often match Chalk River SCADA; order on screen can vary slightly.</p>
+        <details class="accordion">
+          <summary>Elevated water tower</summary>
+          <div class="acc-body">Usually <strong>how full</strong> the tank is (%) and <strong>how fast</strong> water is moving (L/s). <strong>Mixing / baffling</strong> changes how much “sitting time” really counts.</div>
+        </details>
+        <details class="accordion">
+          <summary>Clearwell</summary>
+          <div class="acc-body">How much water is in the clearwell depends on <strong>level</strong>. <strong>Flow</strong> often uses the <strong>higher</strong> of two meters where the model asks for a pair. Low baffling = water shortcuts through = less contact credit.</div>
+        </details>
+        <details class="accordion">
+          <summary>Chlorine &amp; water quality</summary>
+          <div class="acc-body"><strong>Free chlorine</strong> (mg/L), <strong>pH</strong>, and <strong>temperature</strong> at the sampling points your procedure names. The tool rounds some values to match the official tables.</div>
+        </details>
+        <details class="accordion">
+          <summary>Targets (what the permit asks for)</summary>
+          <div class="acc-body">The <strong>targets</strong> your permit asks for (Giardia and viruses) decide how <strong>required contact</strong> compares to <strong>what you actually have</strong> on the summary.</div>
+        </details>
+      </div>
+    </section>
+
+    <section id="reading">
+      <h2><span class="num">OUT</span> Reading the results</h2>
+      <div class="card">
+        <ul>
+          <li><strong>Contact × chlorine (achieved)</strong> — how much “chlorine power × time” you actually have through the clearwell, pipe, and tower.</li>
+          <li><strong>Contact × chlorine (required)</strong> — what the rules say you need, based on your targets and the scores shown.</li>
+          <li><strong>Giardia / virus scores</strong> — may show <strong>&gt; 3</strong> or <strong>&gt; 4</strong> when the display tops out; the real value can be higher.</li>
+        </ul>
+        <div class="callout">
+          If numbers look wrong, first check <strong>flow = 0</strong> anywhere it should not be, <strong>pH/temperature</strong> in realistic ranges, and <strong>baffling factors</strong> against your approved study or SOP.
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:1rem;">
+        <h3 style="font-family:var(--font-display);font-size:1.1rem;margin:0 0 0.75rem;">Quick check</h3>
+        <div class="quiz" id="quiz1">
+          <div class="quiz-q">Where should you type today’s free chlorine residual?</div>
+          <div class="quiz-options">
+            <button type="button" data-correct="false">In the big Giardia lookup table</button>
+            <button type="button" data-correct="true">In the <strong>inputs</strong> area next to the chlorine labels (mg/L)</button>
+            <button type="button" data-correct="false">In the auto-calculated results section</button>
+          </div>
+          <div class="quiz-feedback" id="quiz1fb" role="status"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tips">
+      <h2><span class="num">★</span> Operator tips</h2>
+      <div class="card">
+        <ul>
+          <li>Fill in the <strong>input</strong> section <strong>top to bottom</strong> each shift (or whenever your SOP says)—don’t skip flows.</li>
+          <li>When a tank is moving a lot, update both <strong>how full it is</strong> and <strong>flow</strong> for the moment you’re checking.</li>
+          <li>If files were ever copied from another plant, confirm <strong>tank sizes and tag names</strong> with engineering.</li>
+          <li>Keep a copy of the tool’s <strong>notes / assumptions</strong> page handy for limits and special cases.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="faq">
+      <h2><span class="num">?</span> FAQ</h2>
+      <details class="accordion">
+        <summary>Why does the math use two ways to score the same step?</summary>
+        <div class="acc-body">The model often takes the <strong>stricter (higher)</strong> of two approved methods so you don’t accidentally claim too much credit. Day to day, trust the <strong>summary</strong> at the bottom, not every middle column.</div>
+      </details>
+      <details class="accordion">
+        <summary>What is “effective contact time”?</summary>
+        <div class="acc-body">Roughly: <strong>how long water sits</strong> in that tank or pipe × a <strong>baffling</strong> factor. Poor mixing (low baffling) means water shortcuts through—you get less credit for “sitting time.”</div>
+      </details>
+      <details class="accordion">
+        <summary>Can I change locked or calculated areas?</summary>
+        <div class="acc-body">Only if your site’s <strong>change control</strong> allows it. If numbers look wrong, write down your readings and call <strong>engineering or water quality</strong>.</div>
+      </details>
+    </section>
+
+    <footer>
+      Chalk River CT — operator guide. The plant picture file <code style="color:var(--accent);">images/scada-plant-overview.png</code> should sit beside this page so the map loads.
+    </footer>
+  </div>
+
+  <div class="lightbox" id="scadaLightbox" role="dialog" aria-modal="true" aria-labelledby="lightboxTitle" aria-hidden="true">
+    <h2 id="lightboxTitle" class="visually-hidden">Plant overview full screen</h2>
+    <button type="button" class="lightbox-close" id="btnLightboxClose">Close · Esc</button>
+    <div class="lightbox-inner">
+      <img src="images/scada-plant-overview.png" alt="Chalk River WTP SCADA plant overview (full size)." decoding="async" />
+    </div>
+  </div>
+
+  <script>
+    document.querySelectorAll(".js-print").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        window.print();
+      });
+    });
+
+    (function () {
+      const steps = [
+        {
+          title: "Get started",
+          html: `<p>Open the plant’s CT tool to the <strong>inputs</strong> page. Optionally keep the <strong>results</strong> view open if you like seeing numbers update as you type.</p>
+            <ul class="checklist" data-checklist>
+              <li><label><input type="checkbox" /> I’m using the file version my supervisor approved.</label></li>
+              <li><label><input type="checkbox" /> I know which time window these readings are for.</label></li>
+            </ul>`,
+        },
+        {
+          title: "Flows first",
+          html: `<p>Type all <strong>flows (L/s)</strong> the procedure asks for (clearwell, tower, distribution, etc.). A flow left at <strong>zero</strong> can wipe out contact time for that path.</p>
+            <p class="muted" style="margin:0.5rem 0 0;">Tip: use the <a href="#scada-map" style="color:var(--accent);">plant map</a> to match tags like <strong>FIT101</strong> / <strong>FIT106</strong> to the right boxes.</p>
+            <ul class="checklist" data-checklist>
+              <li><label><input type="checkbox" /> Flows match SCADA for the same time.</label></li>
+              <li><label><input type="checkbox" /> I didn’t leave a live path at zero by mistake.</label></li>
+            </ul>`,
+        },
+        {
+          title: "Tank levels & mixing",
+          html: `<p>Enter <strong>how full</strong> each tank is (%) and <strong>baffling</strong> factors from the plant study or SOP. Baffling changes how much “sitting time” counts—when in doubt, ask before guessing.</p>
+            <ul class="checklist" data-checklist>
+              <li><label><input type="checkbox" /> Clearwell and tower levels match what I see on SCADA.</label></li>
+              <li><label><input type="checkbox" /> Baffling numbers match the written study (not made up).</label></li>
+            </ul>`,
+        },
+        {
+          title: "Chlorine, pH, temperature",
+          html: `<p>Enter <strong>free chlorine (mg/L)</strong>, <strong>pH</strong>, and <strong>temperature (°C)</strong> only in the spots your procedure marks for operators. The tool may round some values to match official tables.</p>
+            <ul class="checklist" data-checklist>
+              <li><label><input type="checkbox" /> Analyzer / sample times match the flows I entered.</label></li>
+              <li><label><input type="checkbox" /> Numbers look normal for the plant.</label></li>
+            </ul>`,
+        },
+        {
+          title: "Targets & bottom line",
+          html: `<p>If your SOP says so, confirm <strong>Giardia and virus targets</strong>. On the summary, check <strong>contact×chlorine achieved vs required</strong> and the <strong>Giardia / virus scores</strong>. Dig into the middle columns only if you’re troubleshooting with a lead.</p>
+            <ul class="checklist" data-checklist>
+              <li><label><input type="checkbox" /> Targets match the permit / ops limits I was given.</label></li>
+              <li><label><input type="checkbox" /> I know “&gt;3” or “&gt;4” can mean “display maxed out.”</label></li>
+            </ul>`,
+        },
+        {
+          title: "Log it & speak up",
+          html: `<p>Record results the way your site requires (logbook, LIMS, etc.). If <strong>required contact</strong> is <strong>more than you have</strong>, or readings are out of range, follow your <strong>alarm / response</strong> steps and tell supervision.</p>
+            <div class="callout safe" style="margin-top:1rem;">Walkthrough complete — use the links at the top anytime.</div>`,
+        },
+      ];
+
+      let idx = 0;
+      const progressBar = document.getElementById("progressBar");
+      const stepTag = document.getElementById("stepTag");
+      const stepTitle = document.getElementById("stepTitle");
+      const stepContent = document.getElementById("stepContent");
+      const btnPrev = document.getElementById("btnPrev");
+      const btnNext = document.getElementById("btnNext");
+      const wizard = document.getElementById("wizard");
+
+      function buildProgress() {
+        progressBar.innerHTML = "";
+        steps.forEach((_, i) => {
+          const d = document.createElement("div");
+          d.className = "progress-dot";
+          if (i < idx) d.classList.add("done");
+          if (i === idx) d.classList.add("active");
+          progressBar.appendChild(d);
+        });
+        progressBar.setAttribute("aria-valuenow", String(idx + 1));
+        progressBar.setAttribute("aria-valuemax", String(steps.length));
+      }
+
+      function render() {
+        buildProgress();
+        stepTag.textContent = `Step ${idx + 1} of ${steps.length}`;
+        stepTitle.textContent = steps[idx].title;
+        stepContent.innerHTML = steps[idx].html;
+        btnPrev.disabled = idx === 0;
+        btnNext.textContent = idx === steps.length - 1 ? "Finish" : "Next";
+      }
+
+      btnPrev.addEventListener("click", () => {
+        if (idx > 0) {
+          idx--;
+          render();
+        }
+      });
+
+      btnNext.addEventListener("click", () => {
+        if (idx < steps.length - 1) {
+          idx++;
+          render();
+        } else {
+          idx = 0;
+          render();
+          document.getElementById("quick-facts").scrollIntoView({ behavior: "smooth" });
+        }
+      });
+
+      wizard.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowRight") {
+          e.preventDefault();
+          btnNext.click();
+        } else if (e.key === "ArrowLeft") {
+          e.preventDefault();
+          btnPrev.click();
+        }
+      });
+
+      document.getElementById("btnStartWizard").addEventListener("click", () => {
+        idx = 0;
+        render();
+        wizard.focus();
+        document.getElementById("wizard-anchor").scrollIntoView({ behavior: "smooth" });
+      });
+
+      render();
+
+      // Quiz
+      const quiz = document.getElementById("quiz1");
+      const fb = document.getElementById("quiz1fb");
+      quiz.querySelectorAll(".quiz-options button").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          quiz.querySelectorAll(".quiz-options button").forEach((b) => {
+            b.classList.remove("correct", "wrong");
+          });
+          const ok = btn.getAttribute("data-correct") === "true";
+          btn.classList.add(ok ? "correct" : "wrong");
+          fb.className = "quiz-feedback " + (ok ? "ok" : "no");
+          fb.textContent = ok
+            ? "Right — chlorine and quality readings go in the inputs area, not in lookup tables or results."
+            : "Not quite — don’t type into the big tables or the auto-calculated section.";
+        });
+      });
+    })();
+
+    (function () {
+      const REGIONS = {
+        tower: {
+          title: "Elevated tank — LIT03",
+          rows: [
+            ["Screen tag", "What it is", "Usually type into"],
+            ["LIT03", "Tank level %", "Tower / tank % full on the calculator inputs"],
+            ["FIT106", "L/s to distribution", "Flow leaving storage toward town—often a tower flow box"],
+            ["PH03", "pH", "pH at the tower if that’s your contact point"],
+            ["FRC01", "mg/L free Cl₂", "Free chlorine for the tower step"],
+            ["TEM01", "°C", "Water temperature for the disinfection rules"],
+          ],
+          hint: "These sit by the tower on the picture. Use the <strong>same time stamp</strong> as your flow readings.",
+        },
+        clearwell: {
+          title: "Clearwell — LIT02",
+          rows: [
+            ["Screen tag", "What it is", "Usually type into"],
+            ["LIT02", "Clearwell level %", "How full the clearwell is (drives water volume)"],
+            ["FIT102 (typ.)", "L/s", "A clearwell / transfer flow—match what your procedure names"],
+            ["HLP3–5", "Pump mode", "Shows what’s running—not typed in; use the flow meters your SOP lists"],
+          ],
+          hint: "<strong>Mixing / baffling</strong> for the clearwell comes from the plant study, not SCADA—use the number you were given.",
+        },
+        raw: {
+          title: "Raw water intake",
+          rows: [
+            ["Screen tag", "What it is", "Usually type into"],
+            ["FIT101", "L/s raw flow", "Only if your CT check includes this part of the plant"],
+            ["PH01", "pH", "Raw pH—only if your procedure says to enter it"],
+            ["TUR03", "NTU", "Clarity check—usually not part of CT unless SOP says so"],
+          ],
+          hint: "Chlorine contact is often counted <em>after</em> some treatment. Ask engineering which raw numbers belong in your CT run.",
+        },
+        filters: {
+          title: "Filtration — Filters 1 & 2",
+          rows: [
+            ["Screen tag", "What it is", "Usually type into"],
+            ["TUR01 / TUR02", "NTU filtered", "How clean filters run—usually for process checks, not CT boxes"],
+            ["Filter status", "Running / backwash", "Helps explain flows—still use real flow meters for CT inputs"],
+          ],
+          hint: "Notes may mention <strong>filtration credit</strong>. Don’t change that unless you’re told to.",
+        },
+        dist: {
+          title: "Distribution flow — FIT106",
+          rows: [
+            ["Screen tag", "What it is", "Usually type into"],
+            ["FIT106", "L/s", "Water heading out toward distribution"],
+          ],
+          hint: "Even if the tower level barely moves, this flow still matters for time-in-pipe in the model.",
+        },
+        chlor: {
+          title: "Chlorine residual — FRC01",
+          rows: [
+            ["Screen tag", "What it is", "Usually type into"],
+            ["FRC01", "mg/L", "Free chlorine—often labeled like FRC-01 on inputs"],
+            ["CL2 CW pump", "% / Hz", "Shows pump effort; the <strong>residual number</strong> is what CT uses"],
+          ],
+          hint: "Type chlorine only in the <strong>operator input</strong> spots—never over the big Giardia/virus lookup grids.",
+        },
+        quality: {
+          title: "pH & temperature — PH03 · TEM01",
+          rows: [
+            ["Screen tag", "What it is", "Usually type into"],
+            ["PH03", "pH", "The tool may round pH to match official tables"],
+            ["TEM01", "°C", "Temperature is grouped into bands for the rules"],
+          ],
+          hint: "Use the probes your procedure ties to <strong>chlorine contact</strong>—not every pH on the drawing.",
+        },
+      };
+
+      const hotspotGroup = {
+        tower: "tower",
+        clearwell: "clearwell",
+        raw: "raw",
+        filters: "filters",
+        dist: "tower",
+        chlor: "tower",
+        quality: "tower",
+      };
+
+      const detailTitle = document.getElementById("scadaDetailTitle");
+      const detailContent = document.getElementById("scadaDetailContent");
+      const hotspots = document.querySelectorAll(".hotspot");
+      const chips = document.querySelectorAll(".scada-chip");
+      const lightbox = document.getElementById("scadaLightbox");
+      const btnFs = document.getElementById("btnScadaFullscreen");
+      const btnClose = document.getElementById("btnLightboxClose");
+
+      function renderDetail(id) {
+        const d = REGIONS[id];
+        if (!d || !detailTitle || !detailContent) return;
+        detailTitle.textContent = d.title;
+        let html = "";
+        if (d.rows && d.rows.length > 1) {
+          html += "<dl>";
+          d.rows.slice(1).forEach((row) => {
+            html += `<dt>${row[0]}</dt><dd><strong>${row[1]}</strong> — ${row[2]}</dd>`;
+          });
+          html += "</dl>";
+        }
+        html += `<div class="scada-hint">${d.hint}</div>`;
+        detailContent.innerHTML = html;
+      }
+
+      function setPressedHotspot(group) {
+        hotspots.forEach((h) => {
+          const r = h.getAttribute("data-region");
+          h.setAttribute("aria-pressed", r === group ? "true" : "false");
+        });
+      }
+
+      function setPressedChip(activeId) {
+        chips.forEach((c) => {
+          c.setAttribute("aria-pressed", c.getAttribute("data-region") === activeId ? "true" : "false");
+        });
+      }
+
+      function selectRegion(id) {
+        if (!REGIONS[id]) return;
+        renderDetail(id);
+        const g = hotspotGroup[id] || id;
+        setPressedHotspot(g);
+        setPressedChip(id);
+      }
+
+      hotspots.forEach((h) => {
+        h.addEventListener("click", () => selectRegion(h.getAttribute("data-region")));
+      });
+
+      chips.forEach((c) => {
+        c.addEventListener("click", () => selectRegion(c.getAttribute("data-region")));
+      });
+
+      function openLightbox() {
+        lightbox.classList.add("is-open");
+        lightbox.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+        btnClose.focus();
+      }
+
+      function closeLightbox() {
+        lightbox.classList.remove("is-open");
+        lightbox.setAttribute("aria-hidden", "true");
+        document.body.style.overflow = "";
+        if (btnFs) btnFs.focus();
+      }
+
+      if (btnFs) btnFs.addEventListener("click", openLightbox);
+      if (btnClose) btnClose.addEventListener("click", closeLightbox);
+      lightbox.addEventListener("click", (e) => {
+        if (e.target === lightbox) closeLightbox();
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && lightbox.classList.contains("is-open")) {
+          e.preventDefault();
+          closeLightbox();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
