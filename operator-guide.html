@@ -145,6 +145,13 @@
       max-height: 46px;
       max-width: min(280px, 100%);
     }
+    .partner-logos-hint {
+      margin: -0.2rem 0 1.1rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.45;
+      max-width: 38rem;
+    }
 
     .badge {
       display: inline-flex;
@@ -1649,7 +1656,10 @@
   <div class="wrap">
     <header class="hero">
       <div class="badge">Operator reference · Ontario</div>
-      <div class="partner-logos no-print" aria-label="Municipality and industry references">
+      <div
+        class="partner-logos no-print"
+        aria-label="Municipality and industry references; each link opens in a new browser tab"
+      >
         <a href="https://www.laurentianhills.ca/" target="_blank" rel="noopener noreferrer" title="Town of Laurentian Hills — official site">
           <img class="logo-town" src="images/laurentian-hills-logo.jpg" width="572" height="600" alt="Town of Laurentian Hills, Ontario" loading="lazy" decoding="async" />
         </a>
@@ -1675,6 +1685,9 @@
           />
         </a>
       </div>
+      <p class="partner-logos-hint no-print" role="note">
+        Partner logos open in a <strong>new tab</strong> so this guide stays here. To return, switch back to this tab or close the tab that opened.
+      </p>
       <h1 class="hero-title">
         <span class="hero-title__kicker">Chalk River WTP</span>
         <span class="hero-title__main">Chlorine contact — operator guide</span>
