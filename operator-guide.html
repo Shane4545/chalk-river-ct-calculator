@@ -2851,11 +2851,14 @@
     </div>
 
     <section id="live-ct" class="live-ct-app" hidden aria-label="Live CT dashboard">
-      <div class="lc-kicker">Tag-driven · any PLC / site</div>
+      <div class="lc-kicker">Live CT · demo or local tag API</div>
       <h2 class="lc-title">Live chlorine contact (CT)</h2>
+      <p id="lc-publicNotice" class="lc-hint" hidden style="border-left: 4px solid var(--accent); padding: 0.65rem 0.85rem; background: var(--accent-soft); margin: 0 0 0.75rem">
+        <strong>Public site:</strong> Demo simulation only. Tag API and plant bridges are disabled here. For a local deployment with your own JSON bridge, clone the repository and run it on your network — never expose PLC bridges to the internet.
+      </p>
       <p class="lc-lead">
-        Map OPC / HMI tag paths to CT inputs. Use <strong>Demo</strong> without a server, or set <strong>Tag API URL</strong> to a service that returns JSON
-        <code>{"Your.Tag": 12.3, ...}</code> (keys must match the paths you enter below).
+        Map tag paths to CT inputs for a <strong>local</strong> HTTP JSON service if you run one on your network. Use <strong>Demo</strong> for simulated values with no server. Keys must match your API, e.g.
+        <code>{"Your.Tag": 12.3, ...}</code>.
       </p>
 
       <div class="lc-status" id="lc-statusBar" aria-live="polite">
@@ -2888,7 +2891,7 @@
           </label>
           <label class="lc-f">
             <strong>Tag API URL</strong>
-            <input type="url" id="lc-apiUrl" placeholder="http://127.0.0.1:8787/api/tags" />
+            <input type="url" id="lc-apiUrl" placeholder="Local bridge URL (your network only)" />
           </label>
           <label class="lc-f">
             <strong>Poll interval (ms)</strong>
@@ -2900,7 +2903,7 @@
           <button type="button" class="lc-btn secondary" id="lc-btnApplyPreset">Apply preset</button>
         </div>
         <p class="lc-hint">
-          <strong>OPC / Linx:</strong> use a small bridge service. Mock: <code>node server/live-tags.mjs</code>
+          <strong>Local deployment:</strong> a small bridge on your SCADA PC can serve JSON for Tag API mode. The repository includes a <strong>development-only</strong> mock under <code>server/</code> (localhost, not for production or public exposure).
         </p>
       </details>
 
@@ -2914,7 +2917,7 @@
             <thead>
               <tr>
                 <th>Input</th>
-                <th>Tag path (OPC / HMI)</th>
+                <th>Tag path (JSON key)</th>
                 <th>Live</th>
                 <th>Fallback value</th>
               </tr>

@@ -17,44 +17,45 @@
     { id: "I24", label: "Pipe volume (m³)", hint: "Clearwell → tower", fb: 23.561944901923447, tag: "" },
     { id: "I25", label: "Tower full (m³)", hint: "Main tank volume @100%", fb: 1000, tag: "" },
     { id: "TADD", label: "Tower extra volume (m³)", hint: "Model add-on", fb: 300, tag: "" },
-    { id: "W7", label: "Clearwell level (%)", hint: "SCADA level", fb: 58.38, tag: "LIT02.Value" },
+    { id: "W7", label: "Clearwell level (%)", hint: "SCADA level", fb: 58.38, tag: "" },
     { id: "W16", label: "Clearwell baffling (0–1)", hint: "From study", fb: 0.1, tag: "" },
-    { id: "Y7", label: "Clearwell flow #1 (L/s)", hint: "Higher of pair used", fb: 9.97, tag: "FIT102.Value" },
-    { id: "P11", label: "Clearwell flow #2 (L/s)", hint: "Also pipe & tower compare", fb: 9.97, tag: "FIT102.Value" },
-    { id: "M13", label: "pH — clearwell / pipe", hint: "", fb: 6.98, tag: "PH03.Value" },
-    { id: "M11", label: "Cl₂ — clearwell / pipe (mg/L)", hint: "", fb: 1.06, tag: "FRC01.Value" },
-    { id: "E11", label: "Temperature (°C)", hint: "", fb: 2.61, tag: "TEM01.Value" },
+    { id: "Y7", label: "Clearwell flow #1 (L/s)", hint: "Higher of pair used", fb: 9.97, tag: "" },
+    { id: "P11", label: "Clearwell flow #2 (L/s)", hint: "Also pipe & tower compare", fb: 9.97, tag: "" },
+    { id: "M13", label: "pH — clearwell / pipe", hint: "", fb: 6.98, tag: "" },
+    { id: "M11", label: "Cl₂ — clearwell / pipe (mg/L)", hint: "", fb: 1.06, tag: "" },
+    { id: "E11", label: "Temperature (°C)", hint: "", fb: 2.61, tag: "" },
     { id: "J9", label: "Tower baffling (0–1)", hint: "", fb: 0.1, tag: "" },
-    { id: "L7", label: "Tower level (%)", hint: "", fb: 81.77, tag: "LIT03.Value" },
-    { id: "B14", label: "Tower outlet flow (L/s)", hint: "vs P11 max", fb: 3.88, tag: "FIT106.Value" },
-    { id: "B11", label: "Cl₂ — tower (mg/L)", hint: "", fb: 1.06, tag: "FRC01.Value" },
-    { id: "E14", label: "pH — tower", hint: "", fb: 6.98, tag: "PH03.Value" },
+    { id: "L7", label: "Tower level (%)", hint: "", fb: 81.77, tag: "" },
+    { id: "B14", label: "Tower outlet flow (L/s)", hint: "vs P11 max", fb: 3.88, tag: "" },
+    { id: "B11", label: "Cl₂ — tower (mg/L)", hint: "", fb: 1.06, tag: "" },
+    { id: "E14", label: "pH — tower", hint: "", fb: 6.98, tag: "" },
     { id: "P20", label: "Giardia target", hint: "Permit / SOP", fb: 0.5, tag: "" },
     { id: "P21", label: "Virus target", hint: "Permit / SOP", fb: 2, tag: "" },
   ];
 
+  /** Example tag keys for local JSON API only — not plant addresses; GitHub Pages uses Demo only. */
   var PRESETS = {
     "chalk-river": {
       siteName: "Chalk River WTP",
-      apiUrl: "http://127.0.0.1:8787/api/tags",
+      apiUrl: "",
       pollMs: 2000,
       dataMode: "api",
       tags: {
-        W7: "LIT02.Value",
-        Y7: "FIT102.Value",
-        P11: "FIT102.Value",
-        M13: "PH03.Value",
-        M11: "FRC01.Value",
-        E11: "TEM01.Value",
-        L7: "LIT03.Value",
-        B14: "FIT106.Value",
-        B11: "FRC01.Value",
-        E14: "PH03.Value",
+        W7: "EXAMPLE_CLEARWELL_LEVEL.Value",
+        Y7: "EXAMPLE_FLOW_A.Value",
+        P11: "EXAMPLE_FLOW_A.Value",
+        M13: "EXAMPLE_PH.Value",
+        M11: "EXAMPLE_CL2.Value",
+        E11: "EXAMPLE_TEMP.Value",
+        L7: "EXAMPLE_TOWER_LEVEL.Value",
+        B14: "EXAMPLE_OUTLET_FLOW.Value",
+        B11: "EXAMPLE_CL2_TOWER.Value",
+        E14: "EXAMPLE_PH_TOWER.Value",
       },
     },
     blank: {
       siteName: "",
-      apiUrl: "http://127.0.0.1:8787/api/tags",
+      apiUrl: "",
       pollMs: 2000,
       dataMode: "demo",
       tags: {},
@@ -66,6 +67,24 @@
   var pollTimer = null;
   var demoTimer = null;
   var setupDone = false;
+
+  /** True on GitHub Pages — no Tag API, demo only (no network to plant/SCADA). */
+  function isPublicStaticHost() {
+    var h = (location.hostname || "").toLowerCase();
+    return h === "github.io" || h.endsWith(".github.io");
+  }
+
+  function applyPublicStaticGuard() {
+    if (!isPublicStaticHost()) return;
+    var optApi = gid("dataMode").querySelector('option[value="api"]');
+    if (optApi) optApi.disabled = true;
+    var notice = document.getElementById(PRE + "publicNotice");
+    if (notice) notice.hidden = false;
+    applyPreset("blank");
+    gid("dataMode").value = "demo";
+    gid("apiUrl").value = "";
+    gid("presetSelect").value = "blank";
+  }
 
   function loadConfig() {
     try {
@@ -298,6 +317,7 @@
   }
 
   function fetchTags() {
+    if (isPublicStaticHost()) return;
     var url = gid("apiUrl").value.trim();
     if (!url) {
       gid("stErr").textContent = "Set Tag API URL or switch to Demo.";
@@ -352,9 +372,13 @@
       if (gid("dataMode").value === "demo") initDemoState();
       tick();
     });
-    var saved = loadConfig();
-    if (saved) applyConfig(saved);
-    else applyPreset("chalk-river");
+    if (isPublicStaticHost()) {
+      applyPublicStaticGuard();
+    } else {
+      var saved = loadConfig();
+      if (saved) applyConfig(saved);
+      else applyPreset("chalk-river");
+    }
 
     gid("btnSave").addEventListener("click", function () {
       saveConfig();

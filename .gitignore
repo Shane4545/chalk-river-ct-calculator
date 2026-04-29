@@ -14,3 +14,7 @@ Thumbs.db
 
 # Optional: uncomment if the workbook should stay local only (large / sensitive)
 # *.xlsx
+
+# Rockwell / plant exports — do not publish in public static site repo
+*.ACD
+*.L5X

@@ -1,26 +1,29 @@
 /**
- * Mock tag API for developing live-ct.html before OPC is wired.
+ * LOCAL DEVELOPMENT ONLY — bind to 127.0.0.1; do not expose to the internet.
+ * Optional mock JSON for Live CT “Tag API” mode when running the site from localhost.
  * Run: node server/live-tags.mjs
- * GET http://127.0.0.1:8787/api/tags → JSON { "LIT02.Value": number, ... }
- * CORS: * (dev only)
  */
 import http from "http";
 
 const state = {
-  "LIT02.Value": 58.38,
-  "LIT03.Value": 81.77,
-  "FIT102.Value": 9.97,
-  "FIT106.Value": 3.88,
-  "FRC01.Value": 1.06,
-  "PH03.Value": 6.98,
-  "TEM01.Value": 2.61,
+  "EXAMPLE_CLEARWELL_LEVEL.Value": 58.38,
+  "EXAMPLE_TOWER_LEVEL.Value": 81.77,
+  "EXAMPLE_FLOW_A.Value": 9.97,
+  "EXAMPLE_OUTLET_FLOW.Value": 3.88,
+  "EXAMPLE_CL2.Value": 1.06,
+  "EXAMPLE_CL2_TOWER.Value": 1.06,
+  "EXAMPLE_PH.Value": 6.98,
+  "EXAMPLE_PH_TOWER.Value": 6.98,
+  "EXAMPLE_TEMP.Value": 2.61,
 };
 
 function nudge() {
   for (const k of Object.keys(state)) {
     const v = state[k];
     const delta = (Math.random() - 0.5) * 0.08;
-    state[k] = Math.max(0.01, v + delta * (k.includes("LIT") ? 0.5 : k.includes("PH") ? 0.02 : 0.15));
+    const level = k.includes("LEVEL");
+    const ph = k.includes("PH");
+    state[k] = Math.max(0.01, v + delta * (level ? 0.5 : ph ? 0.02 : 0.15));
   }
 }
 
